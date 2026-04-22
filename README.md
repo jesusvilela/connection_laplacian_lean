@@ -1,65 +1,49 @@
-# Connection Laplacian — verified spectral/balance stack
+# Connection Laplacian (Lean 4 Formalization)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TBD.svg)](https://doi.org/10.5281/zenodo.TBD)
 [![Code License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
 
-> **DOI placeholder.** The `TBD` DOI resolves once the repo is enabled on
-> Zenodo and a GitHub release is cut — see [Archival](#archival-zenodo-doi).
+This repository contains a Lean 4 / Mathlib formalization of core results on
+the ℤ/2 connection Laplacian on finite simple graphs, including structural,
+kernel-dimension, and spectral statements.
 
-This directory contains the active Lean 4 formalization for the
-connection-Laplacian line of the study. It began as a two-theorem seed and now
-builds as a larger imported spine from `Basic` through
-`L17_TracesAndLipschitz`.
+The accompanying paper is available under `paper/` and has been submitted as a
+candidate to the upcoming FLoC Lisbon cycle.
 
-## Current state (2026-04-22)
+> **DOI placeholder:** `10.5281/zenodo.TBD` will resolve after Zenodo archival
+> is enabled and a release is minted.
 
-- `lake build` passes in this environment against
-  `leanprover/lean4:v4.11.0` + Mathlib v4.11.0.
-- No file imported by `ConnectionLaplacian.lean` currently contains `sorry`.
-- Round 5 landed three new exact files:
-  `L13_PSD.lean`, `L14_CycleEw.lean`, `L15_BridgeMonotone.lean`.
-- Round 6 stage 1 produced additional alpha/beta/gamma claim candidates in
-  `findings/round6/stage1_negator_A/`, but those remain empirical until they
-  are formalized.
+## Project status (2026-04-22)
 
-## Imported modules
+- The imported Lean development currently runs from `Basic` through
+  `L17_TracesAndLipschitz`.
+- Files imported by `ConnectionLaplacian.lean` are maintained as `sorry`-free.
+- Round-6 exploratory outputs in `findings/` are explicitly empirical and are
+  not part of the verified theorem set until formalized in Lean.
 
-- `ConnectionLaplacian/Basic.lean` — `ConnGraph`, flat/Mobius Laplacians,
-  symmetric matrix infrastructure.
-- `ConnectionLaplacian/KernelDimension.lean` — scalar/signed/Mobius kernel
-  decomposition and counting infrastructure.
-- `ConnectionLaplacian/CycleSpectrum.lean` — explicit cycle spectra.
-- `ConnectionLaplacian/L5_Cover.lean` — orientation double cover and scalar
-  cover splitting.
-- `ConnectionLaplacian/L6_Cohomology.lean` — balance, fiber structure, and
-  cohomological language.
-- `ConnectionLaplacian/L8_Recognition.lean` — recognition theorems bridging
-  balance and kernels.
-- `ConnectionLaplacian/L9_Bounds.lean` — trace formulas and kernel
-  inequalities.
-- `ConnectionLaplacian/L10_CoverCharpoly.lean` — cover characteristic
-  polynomial factorization.
-- `ConnectionLaplacian/L11_Trees.lean` — tree balance and tree kernel
-  corollaries.
-- `ConnectionLaplacian/L12_WalkH1.lean` — closed-walk parity characterisation
-  of balance.
-- `ConnectionLaplacian/L13_PSD.lean` — positive semidefiniteness of the signed
-  Mobius Laplacian.
-- `ConnectionLaplacian/L14_CycleEw.lean` — Eulerian-walk cycle parity
-  specialization.
-- `ConnectionLaplacian/L15_BridgeMonotone.lean` — bridge-monotonicity for the
-  number of balanced components.
-- `ConnectionLaplacian/L16_SpectrumUnion.lean` — Möbius characteristic
-  polynomial as a product, with spectrum as the union of scalar and signed
-  spectra.
-- `ConnectionLaplacian/L17_TracesAndLipschitz.lean` — trace and Frobenius
-  identities, cross-polarisation between scalar and signed parts.
+## Verified development (import spine)
 
-## Exact floor
+The formalized library currently imports:
 
-Representative exact results already in the imported build:
+- `ConnectionLaplacian/Basic.lean`
+- `ConnectionLaplacian/KernelDimension.lean`
+- `ConnectionLaplacian/CycleSpectrum.lean`
+- `ConnectionLaplacian/L5_Cover.lean`
+- `ConnectionLaplacian/L6_Cohomology.lean`
+- `ConnectionLaplacian/L8_Recognition.lean`
+- `ConnectionLaplacian/L9_Bounds.lean`
+- `ConnectionLaplacian/L10_CoverCharpoly.lean`
+- `ConnectionLaplacian/L11_Trees.lean`
+- `ConnectionLaplacian/L12_WalkH1.lean`
+- `ConnectionLaplacian/L13_PSD.lean`
+- `ConnectionLaplacian/L14_CycleEw.lean`
+- `ConnectionLaplacian/L15_BridgeMonotone.lean`
+- `ConnectionLaplacian/L16_SpectrumUnion.lean`
+- `ConnectionLaplacian/L17_TracesAndLipschitz.lean`
+
+Representative machine-checked theorems include:
 
 - `cover_charpoly_eq_scalar_times_mobius`
 - `isBalanced_iff_closedWalk_wrap_even`
@@ -69,63 +53,51 @@ Representative exact results already in the imported build:
 - `frobenius_laplacian_decomposes`
 - `trace_mul_scalar_signed_eq`
 
-These are machine-checkable. They are not merely narrative summaries.
+## Empirical findings (not yet theorems)
 
-## Empirical frontier
+Exploratory artifacts are stored under:
 
-The current empirical frontier is organized sheaf-wise:
+- `findings/round6/stage1_negator_A/sheaf_alpha/`
+- `findings/round6/stage1_negator_A/sheaf_beta/`
+- `findings/round6/stage1_negator_A/sheaf_gamma/`
 
-- `findings/round6/stage1_negator_A/sheaf_alpha/` — edge-operation claims
-- `findings/round6/stage1_negator_A/sheaf_beta/` — spectral claims
-- `findings/round6/stage1_negator_A/sheaf_gamma/` — balance/cohomology claims
+These files track conjectural or pipeline-generated claims and should be treated
+as research evidence rather than verified Lean results.
 
-High-leverage stage-1 candidates include:
+## Build and verification
 
-- `A8` parity-matching subdivision invariance,
-- `B7` spectral multiset union,
-- `B9` `dim ker L_mob = #components + beta`,
-- `G12` switching invariance of `beta`,
-- `G15` `dim ker L_signed = beta`.
-
-Treat these as empirical until they land in Lean.
-
-## Build
-
-From inside this directory:
+Prerequisite: `elan` on your `PATH` (toolchain pinned by `lean-toolchain`).
 
 ```bash
+lake update
 lake build
 ```
 
-To check a single file:
+Check one file:
 
 ```bash
 lake env lean ConnectionLaplacian/L13_PSD.lean
 ```
 
-## Scope
+Additional build guidance is available in `BUILD.md`.
 
-This repository is the verified spectral/balance core of the connection-Laplacian
-line — nothing more and nothing less.
+## Repository scope
 
-- Only the files imported by `ConnectionLaplacian.lean` are part of the
-  verified build. Everything under `findings/` is empirical evidence for
-  future formalisation candidates, not theorems.
-- Empirical round-6 candidates in `findings/round6/stage1_negator_A/`
-  (α/β/γ sheaves) are not promoted to theorem status until they land in
-  Lean as `sorry`-free proofs.
-- Claims that failed earlier rounds are not revived; the adversarial
-  pipeline's output lives in `findings/` as archival evidence.
+- **Verified content:** files imported by `ConnectionLaplacian.lean`.
+- **Research frontier:** `findings/` (empirical candidates pending
+  formalization).
+- **Paper materials:** `paper/paper.tex` and `paper/paper.pdf`.
 
 ## Paper
 
 - Source: `paper/paper.tex`
-- Built PDF: `paper/paper.pdf`
-- Title: *Kernel Dimension of the ℤ/2 Connection Laplacian on a Finite Simple Graph (A Formalisation in Lean 4 / Mathlib v4.11.0)*
+- PDF: `paper/paper.pdf`
+- Title: *Kernel Dimension of the ℤ/2 Connection Laplacian on a Finite Simple
+  Graph (A Formalisation in Lean 4 / Mathlib v4.11.0)*
 - Author: Jesús Vilela Jato (Independent)
-- Bibliography is embedded in `paper.tex` (no separate `.bib`).
+- Bibliography is embedded in `paper.tex` (no separate `.bib` file).
 
-Compile with any LaTeX engine supporting `amsart`. Example with Tectonic:
+Build with a LaTeX engine supporting `amsart` (example):
 
 ```bash
 tectonic paper/paper.tex
@@ -133,24 +105,18 @@ tectonic paper/paper.tex
 
 ## Citation
 
-A machine-readable citation record lives in `CITATION.cff` — GitHub renders
-a "Cite this repository" button from it. Once the Zenodo DOI is minted (see
-below), cite the **concept DOI** so references remain valid across future
-versions.
+Machine-readable metadata is in `CITATION.cff` (used by GitHub’s **Cite this
+repository** panel).
 
-Human-readable form:
+Until Zenodo DOI minting is finalized, please use:
 
-> Vilela Jato, J. *Connection Laplacian — verified spectral/balance stack*
-> (Lean 4 / Mathlib v4.11.0), 2026.
-> DOI: 10.5281/zenodo.TBD — https://github.com/jesusvilela/connection_laplacian_lean
+> Vilela Jato, J. *Connection Laplacian (Lean 4 Formalization)*, 2026.  
+> DOI: 10.5281/zenodo.TBD  
+> https://github.com/jesusvilela/connection_laplacian_lean
 
 ## Licensing
 
-Split by artifact type:
+- **Code and formalization artifacts:** Apache-2.0 (`LICENSE`)
+- **Paper artifacts:** CC BY 4.0 (`LICENSE-paper`)
 
-- **Code** (Lean files, Python fuzzers, build configuration) — Apache-2.0.
-  See `LICENSE`.
-- **Paper** (`paper/paper.tex`, `paper/paper.pdf`) — CC BY 4.0.
-  See `LICENSE-paper`.
-
-Full rationale and attribution template: `LICENSING.md`.
+See `LICENSING.md` for full rationale and attribution guidance.
