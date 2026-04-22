@@ -154,20 +154,3 @@ Split by artifact type:
   See `LICENSE-paper`.
 
 Full rationale and attribution template: `LICENSING.md`.
-
-## Archival (Zenodo DOI)
-
-The repository is prepared for Zenodo archival. To mint the DOI after the
-initial push:
-
-1. Visit <https://zenodo.org/account/settings/github/> and sign in with GitHub.
-2. Flip the toggle for `jesusvilela/connection_laplacian_lean`.
-3. On GitHub: create a release — tag `v0.1.0`, release notes = paper abstract.
-4. Zenodo mints two DOIs automatically: a *concept DOI* (always latest) and
-   a *version DOI* for `v0.1.0`. Usually under a minute.
-5. Open a follow-up commit that replaces every `10.5281/zenodo.TBD` occurrence
-   across `CITATION.cff`, `README.md`, `LICENSING.md`, and `LICENSE-paper`
-   with the concept DOI. Tag `v0.1.1` so Zenodo mints a matching version DOI.
-
-Cite the **concept DOI** (not the per-version DOI) in the paper and in any
-arXiv endorsement emails — future versions inherit it automatically.
