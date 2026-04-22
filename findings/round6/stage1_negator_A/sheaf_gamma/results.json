@@ -1,0 +1,212 @@
+[
+  {
+    "idx": "G1",
+    "name": "#switching classes on G == 2^{\u03b2_1(G)}",
+    "hypothesis": "any G; wrap subsets modulo W ~ W \u25b3 \u03b4(S)",
+    "tested": 49,
+    "passed": 49,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=49)",
+    "counterexample": null
+  },
+  {
+    "idx": "G2",
+    "name": "parity of |W \u2229 \u03b3| on each cycle \u03b3 is switching invariant",
+    "hypothesis": "for any W, S \u2286 V, every cycle \u03b3: |W\u2229\u03b3| \u2261 |(W\u25b3\u03b4S)\u2229\u03b3| mod 2",
+    "tested": 4736,
+    "passed": 4736,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=4736)",
+    "counterexample": null
+  },
+  {
+    "idx": "G3",
+    "name": "G balanced iff every cycle \u03b3 has |W \u2229 \u03b3| even",
+    "hypothesis": "G connected; check equivalence of balance and global cycle-even",
+    "tested": 156,
+    "passed": 156,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=156)",
+    "counterexample": null
+  },
+  {
+    "idx": "G4",
+    "name": "switching-class \u2192 (parity on each basis cycle) is a bijection",
+    "hypothesis": "G connected; basis cycles \u03b3\u2081,...,\u03b3_m; map W \u21a6 (|W\u2229\u03b3_i| mod 2)_i",
+    "tested": 29,
+    "passed": 29,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=29)",
+    "counterexample": null
+  },
+  {
+    "idx": "G5",
+    "name": "# \u03b5 witnessing balance == 2^{#\u03c0\u2080(G)} when all comps balanced, else 0",
+    "hypothesis": "if any component unbalanced, count = 0; else 2^{#\u03c0\u2080}",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "G6",
+    "name": "bal_radius(G,W) == min_S |W \u25b3 \u03b4(S)|",
+    "hypothesis": "any G,W",
+    "tested": 178,
+    "passed": 178,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=178)",
+    "counterexample": null
+  },
+  {
+    "idx": "G7",
+    "name": "max_W bal_radius(G,W) \u2264 |E| / 2  (rounded-up)",
+    "hypothesis": "connected G, any W",
+    "tested": 156,
+    "passed": 156,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=156)",
+    "counterexample": null
+  },
+  {
+    "idx": "G8",
+    "name": "bridge-gluing: (G1 \u2294 G2 + bridge e, W) balanced iff each side balanced",
+    "hypothesis": "G1,G2 small; new bridge connects v1\u2208V(G1) and v2\u2208V(G2); e may or may not be wrap",
+    "tested": 288,
+    "passed": 288,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=288)",
+    "counterexample": null
+  },
+  {
+    "idx": "G9",
+    "name": "vertex-identification gluing preserves balance iff each side balanced",
+    "hypothesis": "identify v1\u2208V(G1) with v2\u2208V(G2), keep wraps",
+    "tested": 108,
+    "passed": 108,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=108)",
+    "counterexample": null
+  },
+  {
+    "idx": "G10",
+    "name": "kernel_dim(L_m\u00f6b) is a switching invariant",
+    "hypothesis": "kernel_dim(L_m\u00f6b(G,W)) == kernel_dim(L_m\u00f6b(G,W\u25b3\u03b4S)) for any S",
+    "tested": 1231,
+    "passed": 1231,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=1231)",
+    "counterexample": null
+  },
+  {
+    "idx": "G11",
+    "name": "W is a coboundary iff every cycle has even intersection with W",
+    "hypothesis": "any G,W",
+    "tested": 178,
+    "passed": 178,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=178)",
+    "counterexample": null
+  },
+  {
+    "idx": "G12",
+    "name": "\u03b2(G,W) == \u03b2(G, W\u25b3\u03b4(S))",
+    "hypothesis": "any G,W and S \u2286 V",
+    "tested": 107528,
+    "passed": 107528,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=107528)",
+    "counterexample": null
+  },
+  {
+    "idx": "G13",
+    "name": "#coboundaries = 2^{|V|\u2212#\u03c0\u2080}; # cocycle classes = 2^{\u03b2_1}",
+    "hypothesis": "any G; cocycle class = switching class of wrap; coboundary = \u03b4(S)",
+    "tested": 49,
+    "passed": 49,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=49)",
+    "counterexample": null
+  },
+  {
+    "idx": "G14",
+    "name": "|V|\u2212|E| == #\u03c0\u2080(G) \u2212 \u03b2_1(G)",
+    "hypothesis": "Euler characteristic \u03c7(G) for any graph",
+    "tested": 49,
+    "passed": 49,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=49)",
+    "counterexample": null
+  },
+  {
+    "idx": "G15",
+    "name": "dim ker(L_signed(G,W)) == \u03b2(G,W)",
+    "hypothesis": "any G,W; signed Laplacian = D \u2212 A_W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "G16",
+    "name": "rank(L_signed(G,W)) == |V| \u2212 \u03b2(G,W)",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "G17",
+    "name": "distinct switching classes have min_S |W\u25b3W'\u25b3\u03b4(S)| \u2265 1",
+    "hypothesis": "trivial separator lemma",
+    "tested": 413,
+    "passed": 413,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=413)",
+    "counterexample": null
+  },
+  {
+    "idx": "G18",
+    "name": "#switching classes(G) = \u220f_i 2^{\u03b2_1(C_i)}",
+    "hypothesis": "G with possibly multiple components",
+    "tested": 15,
+    "passed": 15,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=15)",
+    "counterexample": null
+  },
+  {
+    "idx": "G19",
+    "name": "bipartite G: bal_radius(G,W) \u2264 min(|W|, |E|\u2212|W|)",
+    "hypothesis": "G bipartite (\u2205 and E are both coboundaries)",
+    "tested": 50,
+    "passed": 50,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=50)",
+    "counterexample": null
+  },
+  {
+    "idx": "G20",
+    "name": "ker(L_signed) on balanced connected G matches \u03b5-partition",
+    "hypothesis": "G connected, balanced; ker vector v has sign = (\u22121)^{\u03b5(u)} up to global sign",
+    "tested": 392,
+    "passed": 392,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=392)",
+    "counterexample": null
+  },
+  {
+    "idx": "G21",
+    "name": "#coboundaries \u00b7 #switching-classes == 2^|E|",
+    "hypothesis": "short exact sequence of Z/2 cochain complex",
+    "tested": 15,
+    "passed": 15,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=15)",
+    "counterexample": null
+  }
+]

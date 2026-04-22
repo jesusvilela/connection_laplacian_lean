@@ -1,0 +1,311 @@
+[
+  {
+    "idx": "R1",
+    "name": "beta(G,W) >= beta(G-e,W) for non-bridge non-wrap e",
+    "hypothesis": "e non-bridge, e not in W",
+    "tested": 13100,
+    "passed": 12062,
+    "tau": 0.920763,
+    "verdict": "NEAR-TRUE (tau=0.9208)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "removed_edge": [
+        0,
+        2
+      ],
+      "beta_G": 0,
+      "beta_G_minus_e": 1
+    }
+  },
+  {
+    "idx": "R2",
+    "name": "beta(G,W) == beta(G-e,W) for non-bridge non-wrap e on connected G",
+    "hypothesis": "G connected, e non-bridge, e not in W",
+    "tested": 12724,
+    "passed": 11782,
+    "tau": 0.925967,
+    "verdict": "NEAR-TRUE (tau=0.9260)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "removed_edge": [
+        0,
+        2
+      ],
+      "beta_G": 0,
+      "beta_Ge": 1
+    }
+  },
+  {
+    "idx": "R3",
+    "name": "beta(G,W) == beta(G, E\\W) when W is a coboundary",
+    "hypothesis": "W = delta(S) for some S (Z/2 coboundary)",
+    "tested": 489,
+    "passed": 165,
+    "tau": 0.337423,
+    "verdict": "MIXED (tau=0.3374)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [],
+      "W_complement": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "beta_W": 1,
+      "beta_Ec": 0
+    }
+  },
+  {
+    "idx": "R4",
+    "name": "beta(G,W) == beta(G, E\\W) for bipartite G",
+    "hypothesis": "G bipartite",
+    "tested": 245,
+    "passed": 245,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=245)",
+    "counterexample": null
+  },
+  {
+    "idx": "R5",
+    "name": "Pr[beta>=1] non-increasing in |E| (uniform W, iso graphs)",
+    "hypothesis": "averaged over iso classes on each n",
+    "tested": 19,
+    "passed": 19,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=19)",
+    "counterexample": null
+  },
+  {
+    "idx": "R6",
+    "name": "Subdividing a non-wrap edge preserves beta",
+    "hypothesis": "e not in W; replace by path u-w-v with both new edges non-wrap",
+    "tested": 398,
+    "passed": 398,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=398)",
+    "counterexample": null
+  },
+  {
+    "idx": "R7",
+    "name": "Subdividing a wrap edge (1 new wrap + 1 new non-wrap) preserves beta",
+    "hypothesis": "e in W; one of new edges is wrap, the other is not",
+    "tested": 398,
+    "passed": 398,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=398)",
+    "counterexample": null
+  },
+  {
+    "idx": "R8",
+    "name": "Contracting a bridge non-wrap edge preserves beta",
+    "hypothesis": "e bridge, e not in W",
+    "tested": 46,
+    "passed": 46,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=46)",
+    "counterexample": null
+  },
+  {
+    "idx": "R9",
+    "name": "lambda_2(L_signed) >= 0 (L_signed PSD, 2nd eig)",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "R10",
+    "name": "lambda_min(L_signed) == 0 iff beta >= 1",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "R11",
+    "name": "tr(L_mob^2) == tr(L_scalar^2) + tr(L_signed^2)",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "R12",
+    "name": "tr(L_mob^k) == tr(L_scalar^k) + tr(L_signed^k) for k in {3,4}",
+    "hypothesis": "any G,W",
+    "tested": 6906,
+    "passed": 6906,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=6906)",
+    "counterexample": null
+  },
+  {
+    "idx": "R13",
+    "name": "ker(L_signed) has +/- 1 basis vector per balanced component",
+    "hypothesis": "beta >= 1; check each balanced component yields +/-1 kernel vector",
+    "tested": 392,
+    "passed": 392,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=392)",
+    "counterexample": null
+  },
+  {
+    "idx": "R14",
+    "name": "rank(L_mob restricted to fiber over C) = 2|C| - (1+[C balanced])",
+    "hypothesis": "C is a connected component",
+    "tested": 3690,
+    "passed": 3690,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3690)",
+    "counterexample": null
+  },
+  {
+    "idx": "R15",
+    "name": "#{W : G balanced} == 2^(|V|-#comps)",
+    "hypothesis": "any connected component structure",
+    "tested": 49,
+    "passed": 49,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=49)",
+    "counterexample": null
+  },
+  {
+    "idx": "R16",
+    "name": "min nonzero coboundary size == edge-connectivity",
+    "hypothesis": "G connected, n >= 2",
+    "tested": 29,
+    "passed": 29,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=29)",
+    "counterexample": null
+  },
+  {
+    "idx": "R17",
+    "name": "spectral interlacing under non-wrap edge removal (L_signed)",
+    "hypothesis": "e not in W",
+    "tested": 13543,
+    "passed": 13543,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=13543)",
+    "counterexample": null
+  },
+  {
+    "idx": "R18",
+    "name": "tr(L_signed) == tr(L_scalar) == 2|E|",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "R19",
+    "name": "||L_mob||_F^2 == 2*sum(deg^2) + 4|E|",
+    "hypothesis": "any G,W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "R20",
+    "name": "beta(G1 U G2, W1 U W2) == beta(G1,W1) + beta(G2,W2)",
+    "hypothesis": "disjoint union",
+    "tested": 144,
+    "passed": 144,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=144)",
+    "counterexample": null
+  },
+  {
+    "idx": "R21",
+    "name": "connected G balanced => wrap subgraph (V,W) is bipartite",
+    "hypothesis": "G connected, balanced",
+    "tested": 392,
+    "passed": 392,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=392)",
+    "counterexample": null
+  },
+  {
+    "idx": "R22",
+    "name": "ker(L_mob) splits as orthogonal (sym, anti) spaces",
+    "hypothesis": "for any G,W: sym ker = lift of ker(L_scalar); anti ker = lift of ker(L_signed)",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  }
+]

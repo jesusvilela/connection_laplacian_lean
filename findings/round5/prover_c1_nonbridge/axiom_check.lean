@@ -1,0 +1,13 @@
+import ConnectionLaplacian.L15_BridgeMonotone
+
+#print axioms
+  ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonwrap_nonbridge
+
+#print axioms
+  ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonwrap_nonbridge'
+
+#print axioms ConnectionLaplacian.ConnGraph.eraseEdge
+
+#print axioms ConnectionLaplacian.ConnGraph.reachable_iff_reachable_eraseEdge
+
+#print axioms ConnectionLaplacian.ConnGraph.isBalanced_eraseEdge_of_isBalanced

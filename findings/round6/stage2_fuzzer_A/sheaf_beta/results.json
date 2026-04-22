@@ -1,0 +1,102 @@
+{
+  "date": "2026-04-22",
+  "seed": 20260428,
+  "mp_prec_bits": 50,
+  "n6_iso_classes": 156,
+  "n6_configs": 3507,
+  "n7_configs": 220,
+  "tol_n6": 1e-10,
+  "tol_n7": 1e-07,
+  "claims": {
+    "M6": {
+      "key": "M6",
+      "desc": "spec(L_mob) = spec(L_s) U spec(L_sig) (multiset)",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 1.5461261234176587e-15,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "M7": {
+      "key": "M7",
+      "desc": "p_{L_mob}(x) = p_{L_s}(x) * p_{L_sig}(x)",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 9.699944913596353e-15,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B2": {
+      "key": "B2",
+      "desc": "tr(L_s * L_sig) = Sum deg(u)^2 + 2m - 4|W|",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 0.0,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B14": {
+      "key": "B14",
+      "desc": "|lambda_i(L_sig W) - lambda_i(L_sig W dt e)| <= 2",
+      "tested": 29745,
+      "passed": 29745,
+      "tau": 1.0,
+      "max_rel_diff": 1.0000000000000027,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B15": {
+      "key": "B15",
+      "desc": "lambda_i(L_sig(G-E')) interlace by k=|E'| both directions",
+      "tested": 46990,
+      "passed": 46990,
+      "tau": 1.0,
+      "max_rel_diff": 0.0,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B16": {
+      "key": "B16",
+      "desc": "G connected, beta=0 implies lambda_min(L_sig) > 0",
+      "tested": 2308,
+      "passed": 2308,
+      "tau": 1.0,
+      "max_rel_diff": 2.8273438288029666,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "G15": {
+      "key": "G15",
+      "desc": "dim ker L_sig = beta(G,W)",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 0.0,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B9": {
+      "key": "B9",
+      "desc": "dim ker L_mob = #components + beta(G,W)",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 0.0,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    },
+    "B21": {
+      "key": "B21",
+      "desc": "sum sign(eig(L_sig)) = n - beta(G,W)",
+      "tested": 3727,
+      "passed": 3727,
+      "tau": 1.0,
+      "max_rel_diff": 0.0,
+      "verdict": "HOLDS",
+      "counterexamples": []
+    }
+  }
+}

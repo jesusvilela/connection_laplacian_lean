@@ -1,0 +1,376 @@
+[
+  {
+    "idx": "B1",
+    "name": "tr(L_mob^k)=tr(L_s^k)+tr(L_sig^k) for k in {5,6,7,8}",
+    "hypothesis": "any G, any W",
+    "tested": 13812,
+    "passed": 13812,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=13812)",
+    "counterexample": null
+  },
+  {
+    "idx": "B2",
+    "name": "tr(L_s * L_sig) = sum_u deg(u)^2 + 2*m - 4*|W|",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B3",
+    "name": "tr((L_s (x) I_2) . L_mob) = 2 * tr(L_s^2)",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 49,
+    "tau": 0.014191,
+    "verdict": "COUNTEREXAMPLE-RICH (tau=0.0142)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "lhs": 4.0,
+      "rhs": 8.0
+    }
+  },
+  {
+    "idx": "B4",
+    "name": "tr(L_sig^(k+1)) <= tr(L_sig^k) * ||L_sig||_op",
+    "hypothesis": "any G, any W (Perron-style monotonicity for PSD)",
+    "tested": 10359,
+    "passed": 10359,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=10359)",
+    "counterexample": null
+  },
+  {
+    "idx": "B5",
+    "name": "lambda_max(L_sig) <= lambda_max(L_s)",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 601,
+    "tau": 0.174052,
+    "verdict": "MIXED (tau=0.1741)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "lmax_s": 3.0,
+      "lmax_sig": 3.9999999999999987
+    }
+  },
+  {
+    "idx": "B6",
+    "name": "lambda_max(L_mob) = max(lambda_max(L_s), lambda_max(L_sig))",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B7",
+    "name": "spec(L_mob) = spec(L_s) U spec(L_sig) (multiset)",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B8",
+    "name": "lambda_2(L_s) >= lambda_min(L_sig) on connected G",
+    "hypothesis": "G connected",
+    "tested": 3244,
+    "passed": 3244,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3244)",
+    "counterexample": null
+  },
+  {
+    "idx": "B9",
+    "name": "dim ker(L_mob) = #components(G) + beta(G,W)",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B10",
+    "name": "||L_sig||_op <= ||L_s||_op",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 601,
+    "tau": 0.174052,
+    "verdict": "MIXED (tau=0.1741)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "lhs": 3.9999999999999987,
+      "rhs": 3.0
+    }
+  },
+  {
+    "idx": "B11",
+    "name": "support(v in ker L_sig) = union of balanced comps",
+    "hypothesis": "any G, any W",
+    "tested": 726,
+    "passed": 726,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=726)",
+    "counterexample": null
+  },
+  {
+    "idx": "B12",
+    "name": "tr(exp(-t L_mob)) = tr(exp(-t L_s)) + tr(exp(-t L_sig))",
+    "hypothesis": "t in {0.5, 2.0}",
+    "tested": 6906,
+    "passed": 6906,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=6906)",
+    "counterexample": null
+  },
+  {
+    "idx": "B13",
+    "name": "tr((zI-L_mob)^{-1}) = tr((zI-L_s)^{-1}) + tr((zI-L_sig)^{-1})",
+    "hypothesis": "z = -1",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B14",
+    "name": "|lambda_i(L_sig(G,W)) - lambda_i(L_sig(G,W-e))| <= 2",
+    "hypothesis": "e is an edge, W contains e (flip to non-wrap)",
+    "tested": 13543,
+    "passed": 13543,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=13543)",
+    "counterexample": null
+  },
+  {
+    "idx": "B15",
+    "name": "lambda_i(L_sig(G-E')) >= lambda_{i-k}(L_sig(G)) for k=|E'| non-wrap edges",
+    "hypothesis": "E' a set of non-wrap edges",
+    "tested": 24885,
+    "passed": 24885,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=24885)",
+    "counterexample": null
+  },
+  {
+    "idx": "B16",
+    "name": "connected G, beta=0 => lambda_min(L_sig) > 0",
+    "hypothesis": "G connected, beta(G,W)=0",
+    "tested": 2852,
+    "passed": 2852,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=2852)",
+    "counterexample": null
+  },
+  {
+    "idx": "B17",
+    "name": "||L_mob||_F^2 = ||L_s||_F^2 + ||L_sig||_F^2",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B18",
+    "name": "p_{L_mob} = p_{L_s} * p_{L_sig}",
+    "hypothesis": "any G, any W -- polynomial identity",
+    "tested": 13812,
+    "passed": 13812,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=13812)",
+    "counterexample": null
+  },
+  {
+    "idx": "B19",
+    "name": "smallest-positive-eig(L_mob) = min(smallest-pos(L_s), smallest-pos(L_sig))",
+    "hypothesis": "any G, any W, smallest positive = first eig > TOL",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B20",
+    "name": "tr(L_mob) = 2 * tr(L_s) = 2 * tr(L_sig) = 4 * |E|",
+    "hypothesis": "any G, any W",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B21",
+    "name": "tr(sign(L_sig)) = n - beta(G,W)",
+    "hypothesis": "sign defined via eigenvalue sign; L_sig PSD so signs in {0,1}",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=3453)",
+    "counterexample": null
+  },
+  {
+    "idx": "B15+n6",
+    "name": "lambda_i(L_sig(G-E')) >= lambda_{i-k}(L_sig(G)) for k=|E'| non-wrap edges",
+    "hypothesis": "E' a set of non-wrap edges",
+    "tested": 2371,
+    "passed": 2371,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=2371)",
+    "counterexample": null
+  },
+  {
+    "idx": "B1+n6",
+    "name": "tr(L_mob^k)=tr(L_s^k)+tr(L_sig^k) for k in {5,6,7,8}",
+    "hypothesis": "any G, any W",
+    "tested": 1456,
+    "passed": 1456,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=1456)",
+    "counterexample": null
+  },
+  {
+    "idx": "B18+n6",
+    "name": "p_{L_mob} = p_{L_s} * p_{L_sig}",
+    "hypothesis": "any G, any W -- polynomial identity",
+    "tested": 1520,
+    "passed": 1520,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=1520)",
+    "counterexample": null
+  },
+  {
+    "idx": "B14+n6",
+    "name": "|lambda_i(L_sig(G,W)) - lambda_i(L_sig(G,W-e))| <= 2",
+    "hypothesis": "e is an edge, W contains e (flip to non-wrap)",
+    "tested": 1433,
+    "passed": 1433,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=1433)",
+    "counterexample": null
+  },
+  {
+    "idx": "B4+n6",
+    "name": "tr(L_sig^(k+1)) <= tr(L_sig^k) * ||L_sig||_op",
+    "hypothesis": "any G, any W (Perron-style monotonicity for PSD)",
+    "tested": 1143,
+    "passed": 1143,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=1143)",
+    "counterexample": null
+  },
+  {
+    "idx": "B12+n6",
+    "name": "tr(exp(-t L_mob)) = tr(exp(-t L_s)) + tr(exp(-t L_sig))",
+    "hypothesis": "t in {0.5, 2.0}",
+    "tested": 768,
+    "passed": 768,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=768)",
+    "counterexample": null
+  },
+  {
+    "idx": "B2+n6",
+    "name": "tr(L_s * L_sig) = sum_u deg(u)^2 + 2*m - 4*|W|",
+    "hypothesis": "any G, any W",
+    "tested": 372,
+    "passed": 372,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=372)",
+    "counterexample": null
+  },
+  {
+    "idx": "B6+n6",
+    "name": "lambda_max(L_mob) = max(lambda_max(L_s), lambda_max(L_sig))",
+    "hypothesis": "any G, any W",
+    "tested": 396,
+    "passed": 396,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=396)",
+    "counterexample": null
+  },
+  {
+    "idx": "B7+n6",
+    "name": "spec(L_mob) = spec(L_s) U spec(L_sig) (multiset)",
+    "hypothesis": "any G, any W",
+    "tested": 384,
+    "passed": 384,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=384)",
+    "counterexample": null
+  },
+  {
+    "idx": "B9+n6",
+    "name": "dim ker(L_mob) = #components(G) + beta(G,W)",
+    "hypothesis": "any G, any W",
+    "tested": 396,
+    "passed": 396,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=396)",
+    "counterexample": null
+  }
+]

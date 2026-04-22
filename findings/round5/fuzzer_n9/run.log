@@ -1,0 +1,13 @@
+C:\Users\HAL900\AppData\Roaming\Python\Python313\site-packages\networkx\algorithms\graph_hashing.py:211: UserWarning: The hashes produced for graphs without node or edge attributes changed in v3.5 due to a bugfix (see documentation).
+  node_labels = _init_node_labels(G, edge_attr, node_attr)
+n=2: 2 non-iso graphs (exhaustive, Track B on)
+[n=2] graph 2/2 configs=3 t=0.0s maxCP=0.00e+00 (det=2.13e-16, ld=0.00e+00, sp=0.00e+00)
+n=3: 4 non-iso graphs (exhaustive, Track B on)
+[n=3] graph 4/4 configs=15 t=0.0s maxCP=0.00e+00 (det=1.72e-15, ld=7.58e-13, sp=0.00e+00)
+n=4: 11 non-iso graphs (exhaustive, Track B on)
+[n=4] graph 10/11 configs=99 t=0.4s maxCP=0.00e+00 (det=2.84e-14, ld=2.18e-10, sp=0.00e+00)
+[n=4] graph 11/11 configs=163 t=0.7s maxCP=0.00e+00 (det=3.41e-13, ld=6.40e-10, sp=0.00e+00)
+n=5: 34 non-iso graphs (exhaustive, Track B on)
+[n=5] graph 10/34 configs=75 t=0.3s maxCP=0.00e+00 (det=7.39e-15, ld=2.24e-09, sp=0.00e+00)
+[n=5] graph 20/34 configs=331 t=1.5s maxCP=0.00e+00 (det=1.14e-13, ld=4.47e-09, sp=0.00e+00)
+[n=5] graph 30/34 configs=1227 t=6.2s maxCP=0.00e+00 (det=1.02e-12, ld=7.15e-08, sp=0.00e+00)

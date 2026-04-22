@@ -1,0 +1,58 @@
+C:\Users\HAL900\AppData\Roaming\Python\Python313\site-packages\networkx\algorithms\graph_hashing.py:211: UserWarning: The hashes produced for graphs without node or edge attributes changed in v3.5 due to a bugfix (see documentation).
+  node_labels = _init_node_labels(G, edge_attr, node_attr)
+n=2: 2 non-iso graphs (exhaustive)
+[n=2] graph 2/2  configs=3 t=0.0s
+n=3: 4 non-iso graphs (exhaustive)
+[n=3] graph 4/4  configs=15 t=0.0s
+n=4: 11 non-iso graphs (exhaustive)
+[n=4] graph 11/11  configs=163 t=0.1s
+n=5: 34 non-iso graphs (exhaustive)
+[n=5] graph 25/34  configs=651 t=0.3s
+[n=5] graph 34/34  configs=3275 t=1.6s
+n=6: 156 non-iso graphs (exhaustive graphs; wrap cap 4096)
+[n=6] graph 25/156  configs=419 t=0.2s
+[n=6] graph 50/156  configs=1763 t=1.0s
+[n=6] graph 75/156  configs=4707 t=3.2s
+[n=6] graph 100/156  configs=10723 t=7.7s
+[n=6] graph 125/156  configs=24035 t=17.5s
+[n=6] graph 150/156  configs=68067 t=49.1s
+[n=6] graph 156/156  configs=92643 t=67.4s
+n=7: sampled 512 non-iso graphs (wrap cap 1024)
+[n=7] graph 25/512  configs=15143 t=15.2s
+[n=7] graph 50/512  configs=29687 t=29.6s
+[n=7] graph 75/512  configs=45823 t=45.6s
+[n=7] graph 100/512  configs=63275 t=61.2s
+[n=7] graph 125/512  configs=81883 t=77.0s
+[n=7] graph 150/512  configs=100315 t=92.2s
+[n=7] graph 175/512  configs=116907 t=106.1s
+[n=7] graph 200/512  configs=133379 t=119.9s
+[n=7] graph 225/512  configs=151027 t=134.5s
+[n=7] graph 250/512  configs=169363 t=150.7s
+[n=7] graph 275/512  configs=182995 t=162.5s
+[n=7] graph 300/512  configs=200819 t=177.5s
+[n=7] graph 325/512  configs=220723 t=194.5s
+[n=7] graph 350/512  configs=238451 t=209.5s
+[n=7] graph 375/512  configs=255891 t=224.2s
+[n=7] graph 400/512  configs=273939 t=239.5s
+[n=7] graph 425/512  configs=288803 t=251.7s
+[n=7] graph 450/512  configs=309235 t=267.1s
+[n=7] graph 475/512  configs=329011 t=282.1s
+[n=7] graph 500/512  configs=352563 t=300.3s
+[n=7] graph 512/512  configs=360851 t=306.6s
+Traceback (most recent call last):
+  File "H:\NP Completeness Bunny UTAI study\connection_laplacian_lean\findings\round3\fuzzer_extended\fuzz_ext.py", line 734, in <module>
+    main()
+    ~~~~^^
+  File "H:\NP Completeness Bunny UTAI study\connection_laplacian_lean\findings\round3\fuzzer_extended\fuzz_ext.py", line 728, in main
+    (out_dir / "report.md").write_text("\n".join(md))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\pathlib\_local.py", line 555, in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\pathlib\_abc.py", line 652, in write_text
+    return f.write(data)
+           ~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2294' in position 290: character maps to <undefined>

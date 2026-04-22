@@ -1,0 +1,48 @@
+# Lean / Lake
+.lake/
+build/
+*.olean
+*.ilean
+*.trace
+
+# LaTeX intermediate output (paper.pdf is committed; everything else is disposable)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.nav
+paper/*.snm
+paper/*.vrb
+
+# Local LaTeX engine copies — users install their own
+tools/tectonic.exe
+tools/tectonic.zip
+tools/*.exe
+
+# Python fuzzer caches / venvs
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Secrets — belt and suspenders, none present at scaffold time
+.env
+.env.*
+*.key
+*.pem
+secrets/

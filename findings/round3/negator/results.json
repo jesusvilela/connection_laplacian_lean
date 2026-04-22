@@ -1,0 +1,162 @@
+[
+  {
+    "claim": "C1: dim ker L_mob == dim ker L_scalar iff G balanced",
+    "tested": 145248,
+    "passed": 3212,
+    "verdict": "FALSE (counterexample found)",
+    "counterexample": {
+      "n": 3,
+      "edges": [],
+      "wrap": [],
+      "ks": 3,
+      "ksig": 3,
+      "km": 6,
+      "balanced_all_components": true,
+      "lhs_km_eq_ks": false
+    }
+  },
+  {
+    "claim": "C2: L_signed is PSD (all eigvals >= 0)",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C3: lambda_min(L_mob) == min(lambda_min(L_scalar), lambda_min(L_signed))",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C4: lambda_max(L_signed) <= 2 * max_deg",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C5: tr(L_mob^2) == tr(L_scalar^2) + tr(L_signed^2)",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C6: dim ker L_signed >= dim ker L_scalar - |W|",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C7: connected G + |W|=1 => G NOT balanced",
+    "tested": 1111,
+    "passed": 976,
+    "verdict": "FALSE (counterexample found)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "wrap": [
+        [
+          0,
+          1
+        ]
+      ],
+      "wrap_is_bridge": true,
+      "balanced": true
+    }
+  },
+  {
+    "claim": "C8: #fiber(C) + #fiber(C') >= #fiber(C U C') for any two components",
+    "tested": 8936,
+    "passed": 8004,
+    "verdict": "FALSE (counterexample found)",
+    "counterexample": {
+      "n": 3,
+      "edges": [],
+      "wrap": [],
+      "A_nodes": [
+        0
+      ],
+      "B_nodes": [
+        1,
+        2
+      ],
+      "fiberA": 2,
+      "fiberB": 4,
+      "fiberAB": 8
+    }
+  },
+  {
+    "claim": "C9: integrality of dim ker L_mob - dim ker L_scalar (vacuous)",
+    "tested": 145248,
+    "passed": 145248,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null
+  },
+  {
+    "claim": "C10: structural invariants (contraction/subdivision/disjoint union)",
+    "tested": 1,
+    "passed": 1,
+    "verdict": "TRUE (no counterexample in search envelope)",
+    "counterexample": null,
+    "extra": {
+      "disjoint_union_pass": 225,
+      "disjoint_union_fail": 0,
+      "contract_nonwrap_preserved": 2730,
+      "contract_nonwrap_changed": 663,
+      "contract_counterexample": {
+        "part": "10b contract non-wrap",
+        "G_edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ]
+        ],
+        "contracted": [
+          0,
+          2
+        ],
+        "H_edges": [
+          [
+            0,
+            1
+          ]
+        ],
+        "Wh": [
+          [
+            0,
+            1
+          ]
+        ],
+        "ker_G": 1,
+        "ker_H": 2
+      }
+    }
+  }
+]

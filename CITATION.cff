@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this formalization or the accompanying paper, please cite it as below."
+title: "Connection Laplacian — verified spectral/balance stack (Lean 4 / Mathlib v4.11.0)"
+authors:
+  - family-names: "Vilela Jato"
+    given-names: "Jesús"
+    email: "jesusvilela@outlook.com"
+    affiliation: "Independent"
+type: software
+version: "0.1.0"
+date-released: "2026-04-22"
+repository-code: "https://github.com/jesusvilela/connection_laplacian_lean"
+license: Apache-2.0
+doi: "10.5281/zenodo.TBD"
+keywords:
+  - "signed graph"
+  - "connection Laplacian"
+  - "double cover"
+  - "balanced component"
+  - "formal proof"
+  - "Lean 4"
+  - "Mathlib"
+  - "spectral graph theory"
+preferred-citation:
+  type: article
+  title: "Kernel Dimension of the Z/2 Connection Laplacian on a Finite Simple Graph (A Formalisation in Lean 4 / Mathlib v4.11.0)"
+  authors:
+    - family-names: "Vilela Jato"
+      given-names: "Jesús"
+      email: "jesusvilela@outlook.com"
+      affiliation: "Independent"
+  year: 2026
+  doi: "10.5281/zenodo.TBD"
+  url: "https://github.com/jesusvilela/connection_laplacian_lean/blob/main/paper/paper.pdf"

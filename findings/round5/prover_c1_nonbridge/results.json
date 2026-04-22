@@ -1,0 +1,14 @@
+{
+  "claim": "beta(G) <= beta(G - e) for non-wrap non-bridge edge e",
+  "envelope": "all non-iso graphs n in {3,4,5}, all wrap subsets",
+  "tested": 13100,
+  "passed": 13100,
+  "tau": 1.0,
+  "num_counterexamples": 0,
+  "counterexamples": [],
+  "orig_c1_unrefined": {
+    "total_nonwrap_edges_tried": 13543,
+    "failures": 1481,
+    "note": "Failures of the UNrefined C1 (non-wrap edges including bridges)."
+  }
+}

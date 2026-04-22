@@ -1,0 +1,242 @@
+[
+  {
+    "idx": 1,
+    "name": "C1: beta(G) >= beta(G - e) for non-wrap edge e",
+    "tested": 13543,
+    "passed": 12062,
+    "tau": 0.890645,
+    "verdict": "MOSTLY TRUE (tau=0.8906)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ],
+      "wrap": [],
+      "removed_edge": [
+        0,
+        1
+      ],
+      "beta_G": 2,
+      "beta_G_minus_e": 3
+    }
+  },
+  {
+    "idx": 2,
+    "name": "C2: beta(G) <= beta(G + non-wrap edge between components)",
+    "tested": 209,
+    "passed": 0,
+    "tau": 0.0,
+    "verdict": "COUNTEREXAMPLE-RICH (tau=0.0000)",
+    "counterexample": {
+      "n": 3,
+      "edges": [],
+      "wrap": [],
+      "added_edge": [
+        0,
+        1
+      ],
+      "beta_G": 3,
+      "beta_Gp": 2
+    }
+  },
+  {
+    "idx": 3,
+    "name": "C3: lambda_min(L_mob)=0 iff >=1 balanced component",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 4,
+    "name": "C4: sorted spectrum(L_mob) == sorted (spec(L_scalar)+spec(L_signed))",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 5,
+    "name": "C5: beta(G,W) == beta(G, E\\W)  (full wrap flip)",
+    "tested": 3453,
+    "passed": 2805,
+    "tau": 0.812337,
+    "verdict": "MOSTLY TRUE (tau=0.8123)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [],
+      "beta_W": 1,
+      "beta_complement": 0,
+      "W_complement": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  },
+  {
+    "idx": 6,
+    "name": "C6: single-vertex switching preserves beta",
+    "tested": 17072,
+    "passed": 17072,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 7,
+    "name": "C7: for every connected component C, #fiber(C) in {1,2}",
+    "tested": 3690,
+    "passed": 3690,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 8,
+    "name": "C8: det(L_s+aI)*det(L_sig+aI) == det(L_mob+aI) for random a>0",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 9,
+    "name": "C9: dim ker L_signed <= dim ker L_scalar  (re-test, wider envelope)",
+    "tested": 6640,
+    "passed": 6640,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 10,
+    "name": "C10: dim ker L_mob == dim ker (L_mob)^2",
+    "tested": 3453,
+    "passed": 3453,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 11,
+    "name": "C11: single-edge wrap flip preserves spec(L_mob)",
+    "tested": 27086,
+    "passed": 3062,
+    "tau": 0.113047,
+    "verdict": "COUNTEREXAMPLE-RICH (tau=0.1130)",
+    "counterexample": {
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "wrap": [],
+      "flipped_edge": [
+        0,
+        1
+      ],
+      "spec_before_top2": [
+        -1.1102230246251565e-16,
+        1.6653345369377348e-16
+      ],
+      "spec_after_top2": [
+        3.716107611933584e-17,
+        0.9999999999999994
+      ]
+    }
+  },
+  {
+    "idx": 12,
+    "name": "C12: W=empty => spec(L_mob) is spec(L_scalar) doubled",
+    "tested": 49,
+    "passed": 49,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 13,
+    "name": "C13: cocycle switching (K_4) preserves beta",
+    "tested": 896,
+    "passed": 896,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 14,
+    "name": "C14: ker(L_scalar) + ker(L_signed) == ker(L_mob)",
+    "tested": 6640,
+    "passed": 6640,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000)",
+    "counterexample": null
+  },
+  {
+    "idx": 15,
+    "name": "C15: P[beta>=1] non-increasing in |W|  (sampled on K_5 and C_6)",
+    "tested": 23,
+    "passed": 14,
+    "tau": 0.608696,
+    "verdict": "MOSTLY TRUE (tau=0.6087)",
+    "counterexample": {
+      "graph": "K5",
+      "k": 3,
+      "p_k": 0.0,
+      "p_kp1": 0.03,
+      "all_ps": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.03,
+        0.0,
+        0.045,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+]

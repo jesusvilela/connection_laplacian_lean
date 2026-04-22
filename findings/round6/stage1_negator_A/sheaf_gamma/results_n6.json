@@ -1,0 +1,51 @@
+[
+  {
+    "idx": "G3_n6",
+    "passed": 156,
+    "tested": 156,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G5_n6",
+    "passed": 3837,
+    "tested": 3837,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G11_n6",
+    "passed": 178,
+    "tested": 178,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G12_n6",
+    "passed": 119176,
+    "tested": 119176,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G14_n6",
+    "passed": 73,
+    "tested": 73,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G15_n6",
+    "passed": 3794,
+    "tested": 3794,
+    "tau": 1.0,
+    "counterexample": null
+  },
+  {
+    "idx": "G16_n6",
+    "passed": 3825,
+    "tested": 3825,
+    "tau": 1.0,
+    "counterexample": null
+  }
+]

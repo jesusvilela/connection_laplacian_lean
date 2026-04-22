@@ -1,0 +1,889 @@
+{
+  "n": 6,
+  "iso_classes": 112,
+  "total_seconds": 65.31,
+  "claims": [
+    {
+      "idx": "G1",
+      "name": "#switching-classes(G) = 2^{beta_1(G)}",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G2",
+      "name": "parity |W cap gamma| on cycle basis is switching-invariant",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G3",
+      "name": "G balanced iff every fundamental cycle has even |W cap gamma|",
+      "tested": 138112,
+      "passed": 138112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G4",
+      "name": "switching-class <-> parity vector on cycle basis is bijection",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G5",
+      "name": "#epsilon witnesses = 2^{#pi_0} if all comps balanced else 0",
+      "tested": 138112,
+      "passed": 138112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G12",
+      "name": "beta(G,W) = beta(G, W xor delta(S))",
+      "tested": 5169152,
+      "passed": 5169152,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G13",
+      "name": "#coboundaries = 2^{|V|-#pi_0}",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G14",
+      "name": "|V|-|E| = #pi_0 - beta_1 (Euler)",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G18",
+      "name": "#switching-classes = prod_i 2^{beta_1(C_i)}",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "G21",
+      "name": "#coboundaries * #switching-classes = 2^{|E|}",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "M2",
+      "name": "beta switching-invariance (merge: G12 + G2 + G3)",
+      "tested": 112,
+      "passed": 112,
+      "tau": 1.0,
+      "counterexample": null
+    },
+    {
+      "idx": "M5",
+      "name": "balance iff every cycle in cycle-space has even wrap-count",
+      "tested": 138112,
+      "passed": 138112,
+      "tau": 1.0,
+      "counterexample": null
+    }
+  ],
+  "per_class_timing": [
+    {
+      "idx": 0,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.007
+    },
+    {
+      "idx": 1,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.009
+    },
+    {
+      "idx": 2,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.016
+    },
+    {
+      "idx": 3,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.007
+    },
+    {
+      "idx": 4,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.009
+    },
+    {
+      "idx": 5,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.019
+    },
+    {
+      "idx": 6,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.016
+    },
+    {
+      "idx": 7,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.039
+    },
+    {
+      "idx": 8,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.02
+    },
+    {
+      "idx": 9,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.038
+    },
+    {
+      "idx": 10,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.036
+    },
+    {
+      "idx": 11,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.077
+    },
+    {
+      "idx": 12,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.081
+    },
+    {
+      "idx": 13,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.172
+    },
+    {
+      "idx": 14,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.013
+    },
+    {
+      "idx": 15,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.036
+    },
+    {
+      "idx": 16,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.08
+    },
+    {
+      "idx": 17,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.008
+    },
+    {
+      "idx": 18,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.016
+    },
+    {
+      "idx": 19,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.034
+    },
+    {
+      "idx": 20,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.016
+    },
+    {
+      "idx": 21,
+      "m": 5,
+      "pi0": 1,
+      "beta1": 0,
+      "dt_sec": 0.008
+    },
+    {
+      "idx": 22,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.015
+    },
+    {
+      "idx": 23,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.017
+    },
+    {
+      "idx": 24,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.034
+    },
+    {
+      "idx": 25,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.019
+    },
+    {
+      "idx": 26,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.037
+    },
+    {
+      "idx": 27,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.091
+    },
+    {
+      "idx": 28,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.033
+    },
+    {
+      "idx": 29,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.086
+    },
+    {
+      "idx": 30,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.015
+    },
+    {
+      "idx": 31,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.039
+    },
+    {
+      "idx": 32,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.032
+    },
+    {
+      "idx": 33,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.072
+    },
+    {
+      "idx": 34,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.074
+    },
+    {
+      "idx": 35,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.164
+    },
+    {
+      "idx": 36,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.014
+    },
+    {
+      "idx": 37,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.037
+    },
+    {
+      "idx": 38,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.034
+    },
+    {
+      "idx": 39,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.074
+    },
+    {
+      "idx": 40,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.033
+    },
+    {
+      "idx": 41,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.077
+    },
+    {
+      "idx": 42,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.035
+    },
+    {
+      "idx": 43,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.076
+    },
+    {
+      "idx": 44,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.077
+    },
+    {
+      "idx": 45,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.168
+    },
+    {
+      "idx": 46,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.162
+    },
+    {
+      "idx": 47,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.365
+    },
+    {
+      "idx": 48,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.035
+    },
+    {
+      "idx": 49,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.07
+    },
+    {
+      "idx": 50,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.172
+    },
+    {
+      "idx": 51,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.035
+    },
+    {
+      "idx": 52,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.076
+    },
+    {
+      "idx": 53,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.168
+    },
+    {
+      "idx": 54,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.074
+    },
+    {
+      "idx": 55,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.186
+    },
+    {
+      "idx": 56,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.371
+    },
+    {
+      "idx": 57,
+      "m": 6,
+      "pi0": 1,
+      "beta1": 1,
+      "dt_sec": 0.017
+    },
+    {
+      "idx": 58,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.035
+    },
+    {
+      "idx": 59,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.079
+    },
+    {
+      "idx": 60,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.035
+    },
+    {
+      "idx": 61,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.074
+    },
+    {
+      "idx": 62,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.173
+    },
+    {
+      "idx": 63,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.183
+    },
+    {
+      "idx": 64,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.077
+    },
+    {
+      "idx": 65,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.17
+    },
+    {
+      "idx": 66,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.374
+    },
+    {
+      "idx": 67,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.083
+    },
+    {
+      "idx": 68,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.181
+    },
+    {
+      "idx": 69,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.175
+    },
+    {
+      "idx": 70,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.39
+    },
+    {
+      "idx": 71,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.376
+    },
+    {
+      "idx": 72,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.754
+    },
+    {
+      "idx": 73,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.174
+    },
+    {
+      "idx": 74,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.372
+    },
+    {
+      "idx": 75,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.755
+    },
+    {
+      "idx": 76,
+      "m": 12,
+      "pi0": 1,
+      "beta1": 7,
+      "dt_sec": 1.66
+    },
+    {
+      "idx": 77,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.082
+    },
+    {
+      "idx": 78,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.159
+    },
+    {
+      "idx": 79,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.361
+    },
+    {
+      "idx": 80,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.818
+    },
+    {
+      "idx": 81,
+      "m": 7,
+      "pi0": 1,
+      "beta1": 2,
+      "dt_sec": 0.034
+    },
+    {
+      "idx": 82,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.079
+    },
+    {
+      "idx": 83,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.174
+    },
+    {
+      "idx": 84,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.073
+    },
+    {
+      "idx": 85,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.176
+    },
+    {
+      "idx": 86,
+      "m": 8,
+      "pi0": 1,
+      "beta1": 3,
+      "dt_sec": 0.082
+    },
+    {
+      "idx": 87,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.169
+    },
+    {
+      "idx": 88,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.168
+    },
+    {
+      "idx": 89,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.368
+    },
+    {
+      "idx": 90,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.361
+    },
+    {
+      "idx": 91,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.161
+    },
+    {
+      "idx": 92,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.353
+    },
+    {
+      "idx": 93,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.367
+    },
+    {
+      "idx": 94,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.817
+    },
+    {
+      "idx": 95,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.809
+    },
+    {
+      "idx": 96,
+      "m": 12,
+      "pi0": 1,
+      "beta1": 7,
+      "dt_sec": 1.9
+    },
+    {
+      "idx": 97,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.37
+    },
+    {
+      "idx": 98,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.691
+    },
+    {
+      "idx": 99,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.356
+    },
+    {
+      "idx": 100,
+      "m": 9,
+      "pi0": 1,
+      "beta1": 4,
+      "dt_sec": 0.164
+    },
+    {
+      "idx": 101,
+      "m": 10,
+      "pi0": 1,
+      "beta1": 5,
+      "dt_sec": 0.323
+    },
+    {
+      "idx": 102,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.755
+    },
+    {
+      "idx": 103,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.774
+    },
+    {
+      "idx": 104,
+      "m": 12,
+      "pi0": 1,
+      "beta1": 7,
+      "dt_sec": 1.581
+    },
+    {
+      "idx": 105,
+      "m": 11,
+      "pi0": 1,
+      "beta1": 6,
+      "dt_sec": 0.722
+    },
+    {
+      "idx": 106,
+      "m": 12,
+      "pi0": 1,
+      "beta1": 7,
+      "dt_sec": 1.627
+    },
+    {
+      "idx": 107,
+      "m": 13,
+      "pi0": 1,
+      "beta1": 8,
+      "dt_sec": 1.108
+    },
+    {
+      "idx": 108,
+      "m": 12,
+      "pi0": 1,
+      "beta1": 7,
+      "dt_sec": 1.564
+    },
+    {
+      "idx": 109,
+      "m": 13,
+      "pi0": 1,
+      "beta1": 8,
+      "dt_sec": 1.129
+    },
+    {
+      "idx": 110,
+      "m": 14,
+      "pi0": 1,
+      "beta1": 9,
+      "dt_sec": 1.445
+    },
+    {
+      "idx": 111,
+      "m": 15,
+      "pi0": 1,
+      "beta1": 10,
+      "dt_sec": 2.152
+    }
+  ]
+}

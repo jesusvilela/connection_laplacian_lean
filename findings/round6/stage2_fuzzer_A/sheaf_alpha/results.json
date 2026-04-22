@@ -1,0 +1,838 @@
+[
+  {
+    "key": "A2",
+    "name": "Pendant non-wrap add preserves \u03b2",
+    "tested": 331842,
+    "passed": 331842,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=331842)",
+    "counterexamples": []
+  },
+  {
+    "key": "A3",
+    "name": "Pendant wrap add preserves \u03b2",
+    "tested": 331842,
+    "passed": 331842,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=331842)",
+    "counterexamples": []
+  },
+  {
+    "key": "A8",
+    "name": "k-subdivision with parity-matching new wraps preserves \u03b2 (k \u2208 {2,3})",
+    "tested": 1474848,
+    "passed": 1474848,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=1474848)",
+    "counterexamples": []
+  },
+  {
+    "key": "A10",
+    "name": "Add-2-edges order-independent for \u03b2",
+    "tested": 985684,
+    "passed": 985684,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=985684)",
+    "counterexamples": []
+  },
+  {
+    "key": "A12",
+    "name": "Theta-replacement of non-wrap edge preserves \u03b2",
+    "tested": 189241,
+    "passed": 189241,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=189241)",
+    "counterexamples": []
+  },
+  {
+    "key": "A13",
+    "name": "Vertex-switching invariance: \u03b2(G,W) = \u03b2(G, W \u25b3 \u03b4(v))",
+    "tested": 331842,
+    "passed": 331842,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=331842)",
+    "counterexamples": []
+  },
+  {
+    "key": "A5'",
+    "name": "\u03b2(G,W) \u2264 \u03b2(G/e, W') for non-bridge non-wrap e",
+    "tested": 179981,
+    "passed": 172005,
+    "tau": 0.955684,
+    "verdict": "MOSTLY (\u03c4=0.9557)",
+    "counterexamples": [
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          2
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          3
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "e": [
+          0,
+          2
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "e": [
+          1,
+          3
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          3
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          2
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          2
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      },
+      {
+        "claim": "A5'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          3
+        ],
+        "beta_G": 1,
+        "beta_contracted": 0
+      }
+    ]
+  },
+  {
+    "key": "A6'",
+    "name": "\u03b2(G,W) \u2264 \u03b2(G/switched(e), W') for non-bridge wrap e",
+    "tested": 179967,
+    "passed": 171994,
+    "tau": 0.955697,
+    "verdict": "MOSTLY (\u03c4=0.9557)",
+    "counterexamples": [
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "e": [
+          0,
+          2
+        ],
+        "switched_at": 0,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "e": [
+          1,
+          2
+        ],
+        "switched_at": 1,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          3
+        ],
+        "switched_at": 0,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          3
+        ],
+        "switched_at": 1,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          2
+        ],
+        "switched_at": 0,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          0,
+          3
+        ],
+        "switched_at": 0,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          2
+        ],
+        "switched_at": 1,
+        "beta_G": 1,
+        "beta_result": 0
+      },
+      {
+        "claim": "A6'",
+        "n": 4,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "W": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "e": [
+          1,
+          3
+        ],
+        "switched_at": 1,
+        "beta_G": 1,
+        "beta_result": 0
+      }
+    ]
+  },
+  {
+    "key": "L15",
+    "name": "\u03b2(G,W) \u2264 \u03b2(G\u2212e, W) for non-bridge non-wrap e (cross-check)",
+    "tested": 183204,
+    "passed": 183204,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=183204)",
+    "counterexamples": []
+  },
+  {
+    "key": "L15-rev",
+    "name": "\u03b2(G\u2212e, W) \u2264 \u03b2(G,W) + 1 (reverse Lipschitz bound)",
+    "tested": 183204,
+    "passed": 183204,
+    "tau": 1.0,
+    "verdict": "PASS (\u03c4=1.0000, n=183204)",
+    "counterexamples": []
+  }
+]

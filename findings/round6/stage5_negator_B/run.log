@@ -1,0 +1,120 @@
+[envelope] Building small-graph envelopes ...
+[envelope]   n<=4 all: 760
+[envelope]   n=5 sampled wraps: 11337
+[envelope]   n=6 sample: 350 / conn 200
+[envelope]   main 12447 / connected 1500
+
+[C1] trace-power identity tr(L_mob^k) = tr(L_s^k) + tr(L_sig^k) k=1..10
+  C1_k1: tau=1.000000 pass 12447/12447 max_rel=1.0496654051001473e-15
+  C1_k2: tau=1.000000 pass 12447/12447 max_rel=2.298814733341499e-15
+  C1_k3: tau=1.000000 pass 12447/12447 max_rel=3.2794280112004594e-15
+  C1_k4: tau=1.000000 pass 12447/12447 max_rel=4.335514997858231e-15
+  C1_k5: tau=1.000000 pass 12447/12447 max_rel=5.626924291271892e-15
+  C1_k6: tau=1.000000 pass 12447/12447 max_rel=7.028881770142049e-15
+  C1_k7: tau=1.000000 pass 12447/12447 max_rel=7.969498348512491e-15
+  C1_k8: tau=1.000000 pass 12447/12447 max_rel=9.490379496760955e-15
+  C1_k9: tau=1.000000 pass 12447/12447 max_rel=1.0747702652672887e-14
+  C1_k10: tau=1.000000 pass 12447/12447 max_rel=1.2489497509152009e-14
+
+[C2] heat trace tr(exp(-t L_mob)) = tr(exp(-t L_s)) + tr(exp(-t L_sig))
+  C2_t0.1: tau=1.000000 pass 12447/12447 max_rel=3.900631582105098e-16
+  C2_t0.5: tau=1.000000 pass 12447/12447 max_rel=1.1329997454890738e-15
+  C2_t1.0: tau=1.000000 pass 12447/12447 max_rel=3.1565593324016372e-15
+  C2_t2.0: tau=1.000000 pass 12447/12447 max_rel=8.10975104004175e-15
+
+[C3] det(L_mob + aI) = det(L_s + aI) * det(L_sig + aI)
+  C3_a0.5: tau=1.000000 pass 12447/12447 max_rel=4.564003055797653e-15
+  C3_a1.0: tau=1.000000 pass 12447/12447 max_rel=5.367909708653117e-15
+  C3_a2.0: tau=1.000000 pass 12447/12447 max_rel=5.539804324240522e-15
+
+[C4] resolvent trace tr((L_mob + aI)^-1) = tr((L_s+aI)^-1) + tr((L_sig+aI)^-1)
+  C4_a0.5: tau=1.000000 pass 12447/12447 max_rel=4.311888040716806e-15
+  C4_a1.0: tau=1.000000 pass 12447/12447 max_rel=1.9357734788336085e-15
+  C4_a2.0: tau=1.000000 pass 12447/12447 max_rel=8.863490099788062e-16
+
+[C5] |beta(G) - beta(G/e)| <= 1 for non-bridge e
+  C5: tau=1.000000 pass 2916/2916 max_delta=1
+
+[C6] |beta(G) - beta(G-v)| <= deg(v)
+  C6: tau=0.898800 pass 4494/5000 max(diff-deg)=1
+
+[C7] |beta(G) - beta(G-v)| <= 1 + deg(v)
+  C7: tau=1.000000 pass 5000/5000 max(diff-1-deg)=0
+
+[C8] beta(G1 disjoint-union G2) = beta(G1) + beta(G2)
+  C8: tau=1.000000 pass 961/961 max_diff=0
+
+[C9] Parallel-path doubling of edge preserves beta (parity-matched)
+  C9: tau=1.000000 pass 3000/3000 max_delta=0
+
+[C10] tr(L_s * L_sig) = tr(L_s^2) - 4|W|
+  C10: tau=1.000000 pass 12447/12447 max_rel=0.0
+
+[C11] tr(L_mob^2) = tr(L_s^2) + tr(L_sig^2) (concrete k=2 of M6)
+  C11: tau=1.000000 pass 12447/12447 max_rel=0.0
+
+[C12] ||L_mob||_F^2 = ||L_s||_F^2 + ||L_sig||_F^2 (B17 concrete)
+  C12: tau=1.000000 pass 12447/12447 max_rel=0.0
+
+[C13] Flipping wrap on a BRIDGE preserves beta
+  C13: tau=1.000000 pass 2084/2084 max_delta=0
+
+[C14] Flipping wrap on a NON-bridge: |dbeta| <= 1
+  C14: tau=1.000000 pass 2916/2916 max_delta=1
+
+[C15] Mismatched-parity k-subdivision: |dbeta| <= 1 (k=2,3)
+  C15_k2: tau=1.000000 pass 3000/3000 max_delta=1
+  C15_k3: tau=1.000000 pass 3000/3000 max_delta=1
+
+[C16] Triangle-closing (path u-v-w + edge (u,w)): dbeta in {-1, 0}
+  C16_w0: tau=1.000000 pass 248/248 delta range=[-1, 0]
+  C16_w1: tau=1.000000 pass 248/248 delta range=[-1, 0]
+
+[C17] beta(L(G), W_induced) <= |E(G)| (trivial sanity)
+  C17: tau=1.000000 pass 972/972 b_L range=[1, 2]
+
+[C18] Multi-alpha det identity robustness check
+  C18: tau=1.000000 pass 2000/2000 max_rel=5.200362808314771e-15
+
+[summary] elapsed 18.1s
+========================================================================
+id         dir  tau        pass/total     verdict
+------------------------------------------------------------------------
+C1_k1      1    1.000000   12447/12447      PROMOTE
+C1_k2      1    1.000000   12447/12447      PROMOTE
+C1_k3      1    1.000000   12447/12447      PROMOTE
+C1_k4      1    1.000000   12447/12447      PROMOTE
+C1_k5      1    1.000000   12447/12447      PROMOTE
+C1_k6      1    1.000000   12447/12447      PROMOTE
+C1_k7      1    1.000000   12447/12447      PROMOTE
+C1_k8      1    1.000000   12447/12447      PROMOTE
+C1_k9      1    1.000000   12447/12447      PROMOTE
+C1_k10     1    1.000000   12447/12447      PROMOTE
+C2_t0.1    1    1.000000   12447/12447      PROMOTE
+C2_t0.5    1    1.000000   12447/12447      PROMOTE
+C2_t1.0    1    1.000000   12447/12447      PROMOTE
+C2_t2.0    1    1.000000   12447/12447      PROMOTE
+C3_a0.5    1    1.000000   12447/12447      PROMOTE
+C3_a1.0    1    1.000000   12447/12447      PROMOTE
+C3_a2.0    1    1.000000   12447/12447      PROMOTE
+C4_a0.5    1    1.000000   12447/12447      PROMOTE
+C4_a1.0    1    1.000000   12447/12447      PROMOTE
+C4_a2.0    1    1.000000   12447/12447      PROMOTE
+C5         2    1.000000   2916/2916       PROMOTE
+C6         2    0.898800   4494/5000       weak
+C7         2    1.000000   5000/5000       PROMOTE
+C8         4    1.000000   961/961        PROMOTE
+C9         4    1.000000   3000/3000       PROMOTE
+C10        3    1.000000   12447/12447      PROMOTE
+C11        3    1.000000   12447/12447      PROMOTE
+C12        3    1.000000   12447/12447      PROMOTE
+C13        5    1.000000   2084/2084       PROMOTE
+C14        5    1.000000   2916/2916       PROMOTE
+C15_k2     5    1.000000   3000/3000       PROMOTE
+C15_k3     5    1.000000   3000/3000       PROMOTE
+C16_w0     5    1.000000   248/248        PROMOTE
+C16_w1     5    1.000000   248/248        PROMOTE
+C17        4    1.000000   972/972        PROMOTE
+C18        1    1.000000   2000/2000       PROMOTE
+
+[write] results.json written (36 claims)

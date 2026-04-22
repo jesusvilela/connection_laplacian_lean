@@ -1,0 +1,1525 @@
+{
+  "meta": {
+    "tol_spec": 1e-07,
+    "tol_det": 1e-06,
+    "tol_ker": 1e-08,
+    "tol_mult": 1e-10,
+    "lambda_probes": [
+      -1.3,
+      -0.5,
+      0.0,
+      0.3,
+      1.0,
+      1.7,
+      2.5,
+      3.14159,
+      5.0,
+      8.5,
+      13.7
+    ]
+  },
+  "buckets": {
+    "n=2": {
+      "mode": "exhaustive",
+      "graphs": 2,
+      "configs": 3,
+      "max_charpoly_rel": 2.1268385668278044e-16,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 0,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=3": {
+      "mode": "exhaustive",
+      "graphs": 4,
+      "configs": 15,
+      "max_charpoly_rel": 1.7155014438846356e-15,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 0,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=4": {
+      "mode": "exhaustive",
+      "graphs": 11,
+      "configs": 163,
+      "max_charpoly_rel": 3.4106051316484905e-13,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 0,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=5": {
+      "mode": "exhaustive",
+      "graphs": 34,
+      "configs": 3275,
+      "max_charpoly_rel": 1.2589929099249298e-10,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 0,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=6": {
+      "mode": "exhaustive_graphs_wrap_cap_2048",
+      "graphs": 156,
+      "configs": 74211,
+      "max_charpoly_rel": 2.5194822228513658e-08,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 0,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=7": {
+      "mode": "random_sample_200_wrap_cap_512",
+      "graphs": 200,
+      "configs": 73531,
+      "max_charpoly_rel": 9.088499078657714e-06,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 10,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 8251,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 8767,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 11349,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 12788,
+            "wrap_edges": [
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 13701,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 22568,
+            "wrap_edges": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 22613,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 23413,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 24061,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=7,E=[(0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6)]",
+            "wrap_bits": 25514,
+            "wrap_edges": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                4
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          }
+        ],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    },
+    "n=8": {
+      "mode": "random_sample_120_wrap_cap_256",
+      "graphs": 120,
+      "configs": 24971,
+      "max_charpoly_rel": 0.007292658090591439,
+      "fail_counts": {
+        "T1_spec": 0,
+        "T1_trace": 0,
+        "T1_det": 0,
+        "T2_ker": 0,
+        "T2_split": 0,
+        "T3_fiber": 0,
+        "T4_balance_cross": 0,
+        "T5_zero_mult": 0,
+        "T6_mult_per_eig": 0,
+        "T7_signed_ker": 0,
+        "B_cover_charpoly": 10,
+        "C_mult_pointwise": 0,
+        "D_tr_scalar_2e": 0,
+        "D_tr_signed_2e": 0,
+        "D_ker_bound": 0,
+        "D_ker_diff_pi0": 0,
+        "D_scalar_eq_pi0": 0,
+        "D_all": 0
+      },
+      "fail_samples": {
+        "T1_spec": [],
+        "T1_trace": [],
+        "T1_det": [],
+        "T2_ker": [],
+        "T2_split": [],
+        "T3_fiber": [],
+        "T4_balance_cross": [],
+        "T5_zero_mult": [],
+        "T6_mult_per_eig": [],
+        "T7_signed_ker": [],
+        "B_cover_charpoly": [
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 42938,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                0,
+                7
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                5
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 140045,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 144029,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                0,
+                7
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 157534,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                0,
+                7
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 166561,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 217284,
+            "wrap_edges": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 227363,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 241866,
+            "wrap_edges": [
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                3,
+                7
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 263017,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                6
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                4,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          },
+          {
+            "graph": "n=8,E=[(0, 1), (0, 2), (0, 5), (0, 6), (0, 7), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (3, 5), (3, 6), (3, 7), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7)]",
+            "wrap_bits": 318887,
+            "wrap_edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                4,
+                6
+              ]
+            ],
+            "k_mob": 1,
+            "k_scalar": 1,
+            "k_signed": 0,
+            "pi0_G": 1,
+            "bal_components": 0
+          }
+        ],
+        "C_mult_pointwise": [],
+        "D_tr_scalar_2e": [],
+        "D_tr_signed_2e": [],
+        "D_ker_bound": [],
+        "D_ker_diff_pi0": [],
+        "D_scalar_eq_pi0": [],
+        "D_all": []
+      }
+    }
+  },
+  "cycle_single_wrap": {
+    "C_3": {
+      "n": 3,
+      "match": true,
+      "max_abs_diff": 8.881784197001252e-16
+    },
+    "C_4": {
+      "n": 4,
+      "match": true,
+      "max_abs_diff": 1.3322676295501878e-15
+    },
+    "C_5": {
+      "n": 5,
+      "match": true,
+      "max_abs_diff": 2.6645352591003757e-15
+    },
+    "C_6": {
+      "n": 6,
+      "match": true,
+      "max_abs_diff": 1.3322676295501878e-15
+    },
+    "C_7": {
+      "n": 7,
+      "match": true,
+      "max_abs_diff": 1.9984014443252818e-15
+    },
+    "C_8": {
+      "n": 8,
+      "match": true,
+      "max_abs_diff": 1.3322676295501878e-15
+    },
+    "C_9": {
+      "n": 9,
+      "match": true,
+      "max_abs_diff": 1.3322676295501878e-15
+    },
+    "C_10": {
+      "n": 10,
+      "match": true,
+      "max_abs_diff": 2.220446049250313e-15
+    },
+    "C_11": {
+      "n": 11,
+      "match": true,
+      "max_abs_diff": 2.220446049250313e-15
+    },
+    "C_12": {
+      "n": 12,
+      "match": true,
+      "max_abs_diff": 2.6645352591003757e-15
+    },
+    "C_13": {
+      "n": 13,
+      "match": true,
+      "max_abs_diff": 2.220446049250313e-15
+    },
+    "C_14": {
+      "n": 14,
+      "match": true,
+      "max_abs_diff": 3.1086244689504383e-15
+    },
+    "C_15": {
+      "n": 15,
+      "match": true,
+      "max_abs_diff": 3.1086244689504383e-15
+    },
+    "C_16": {
+      "n": 16,
+      "match": true,
+      "max_abs_diff": 1.7763568394002505e-15
+    },
+    "C_17": {
+      "n": 17,
+      "match": true,
+      "max_abs_diff": 2.220446049250313e-15
+    },
+    "C_18": {
+      "n": 18,
+      "match": true,
+      "max_abs_diff": 1.7763568394002505e-15
+    },
+    "C_19": {
+      "n": 19,
+      "match": true,
+      "max_abs_diff": 3.1086244689504383e-15
+    },
+    "C_20": {
+      "n": 20,
+      "match": true,
+      "max_abs_diff": 2.6645352591003757e-15
+    },
+    "C_21": {
+      "n": 21,
+      "match": true,
+      "max_abs_diff": 2.220446049250313e-15
+    },
+    "C_22": {
+      "n": 22,
+      "match": true,
+      "max_abs_diff": 2.6645352591003757e-15
+    },
+    "C_23": {
+      "n": 23,
+      "match": true,
+      "max_abs_diff": 3.1086244689504383e-15
+    },
+    "C_24": {
+      "n": 24,
+      "match": true,
+      "max_abs_diff": 2.6367796834847468e-15
+    }
+  },
+  "cycle_two_wrap": {
+    "C_3": {
+      "n": 3,
+      "pairs_tested": 3,
+      "pairs_match_twocopies": 3,
+      "max_abs_diff_from_twocopies": 1.3322676295501878e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_4": {
+      "n": 4,
+      "pairs_tested": 6,
+      "pairs_match_twocopies": 6,
+      "max_abs_diff_from_twocopies": 1.1102230246251565e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_5": {
+      "n": 5,
+      "pairs_tested": 10,
+      "pairs_match_twocopies": 10,
+      "max_abs_diff_from_twocopies": 3.1086244689504383e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_6": {
+      "n": 6,
+      "pairs_tested": 15,
+      "pairs_match_twocopies": 15,
+      "max_abs_diff_from_twocopies": 2.220446049250313e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_7": {
+      "n": 7,
+      "pairs_tested": 21,
+      "pairs_match_twocopies": 21,
+      "max_abs_diff_from_twocopies": 3.552713678800501e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_8": {
+      "n": 8,
+      "pairs_tested": 28,
+      "pairs_match_twocopies": 28,
+      "max_abs_diff_from_twocopies": 4.440892098500626e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_9": {
+      "n": 9,
+      "pairs_tested": 36,
+      "pairs_match_twocopies": 36,
+      "max_abs_diff_from_twocopies": 4.440892098500626e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_10": {
+      "n": 10,
+      "pairs_tested": 45,
+      "pairs_match_twocopies": 45,
+      "max_abs_diff_from_twocopies": 4.884981308350689e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_11": {
+      "n": 11,
+      "pairs_tested": 55,
+      "pairs_match_twocopies": 55,
+      "max_abs_diff_from_twocopies": 5.329070518200751e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_12": {
+      "n": 12,
+      "pairs_tested": 66,
+      "pairs_match_twocopies": 66,
+      "max_abs_diff_from_twocopies": 5.329070518200751e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_13": {
+      "n": 13,
+      "pairs_tested": 78,
+      "pairs_match_twocopies": 78,
+      "max_abs_diff_from_twocopies": 5.329070518200751e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_14": {
+      "n": 14,
+      "pairs_tested": 91,
+      "pairs_match_twocopies": 91,
+      "max_abs_diff_from_twocopies": 5.329070518200751e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_15": {
+      "n": 15,
+      "pairs_tested": 105,
+      "pairs_match_twocopies": 105,
+      "max_abs_diff_from_twocopies": 8.43769498715119e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_16": {
+      "n": 16,
+      "pairs_tested": 120,
+      "pairs_match_twocopies": 120,
+      "max_abs_diff_from_twocopies": 7.993605777301127e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_17": {
+      "n": 17,
+      "pairs_tested": 136,
+      "pairs_match_twocopies": 136,
+      "max_abs_diff_from_twocopies": 7.549516567451064e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_18": {
+      "n": 18,
+      "pairs_tested": 153,
+      "pairs_match_twocopies": 153,
+      "max_abs_diff_from_twocopies": 7.105427357601002e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_19": {
+      "n": 19,
+      "pairs_tested": 171,
+      "pairs_match_twocopies": 171,
+      "max_abs_diff_from_twocopies": 6.661338147750939e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_20": {
+      "n": 20,
+      "pairs_tested": 190,
+      "pairs_match_twocopies": 190,
+      "max_abs_diff_from_twocopies": 7.105427357601002e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_21": {
+      "n": 21,
+      "pairs_tested": 210,
+      "pairs_match_twocopies": 210,
+      "max_abs_diff_from_twocopies": 5.329070518200751e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_22": {
+      "n": 22,
+      "pairs_tested": 231,
+      "pairs_match_twocopies": 231,
+      "max_abs_diff_from_twocopies": 6.217248937900877e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_23": {
+      "n": 23,
+      "pairs_tested": 253,
+      "pairs_match_twocopies": 253,
+      "max_abs_diff_from_twocopies": 9.769962616701378e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    },
+    "C_24": {
+      "n": 24,
+      "pairs_tested": 276,
+      "pairs_match_twocopies": 276,
+      "max_abs_diff_from_twocopies": 6.702971511174383e-15,
+      "interpretation": "balanced \u2192 cover splits into two copies of C_n"
+    }
+  },
+  "totals": {
+    "graphs": 527,
+    "configs": 176169,
+    "fail_counts": {
+      "T1_spec": 0,
+      "T1_trace": 0,
+      "T1_det": 0,
+      "T2_ker": 0,
+      "T2_split": 0,
+      "T3_fiber": 0,
+      "T4_balance_cross": 0,
+      "T5_zero_mult": 0,
+      "T6_mult_per_eig": 0,
+      "T7_signed_ker": 0,
+      "B_cover_charpoly": 20,
+      "C_mult_pointwise": 0,
+      "D_tr_scalar_2e": 0,
+      "D_tr_signed_2e": 0,
+      "D_ker_bound": 0,
+      "D_ker_diff_pi0": 0,
+      "D_scalar_eq_pi0": 0,
+      "D_all": 0
+    },
+    "max_charpoly_rel_diff_global": 0.007292658090591439,
+    "wall_seconds": 197.95709943771362
+  }
+}
