@@ -1,6 +1,6 @@
 # Connection Laplacian (Lean 4 Formalization)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.TBD.svg)](https://doi.org/10.5281/zenodo.TBD)
+[![DOI: pending](https://img.shields.io/badge/DOI-pending-lightgrey.svg)](#citation)
 [![Code License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
@@ -12,7 +12,7 @@ kernel-dimension, and spectral statements.
 The accompanying paper is available under `paper/` and has been submitted as a
 candidate to the upcoming FLoC Lisbon cycle.
 
-> **DOI placeholder:** `10.5281/zenodo.TBD` will resolve after Zenodo archival
+> **DOI status:** Zenodo DOI minting is pending and will be added after archival
 > is enabled and a release is minted.
 
 ## Project status (2026-04-22)
@@ -111,7 +111,7 @@ repository** panel).
 Until Zenodo DOI minting is finalized, please use:
 
 > Vilela Jato, J. *Connection Laplacian (Lean 4 Formalization)*, 2026.  
-> DOI: 10.5281/zenodo.TBD  
+> DOI: pending (to be assigned by Zenodo)  
 > https://github.com/jesusvilela/connection_laplacian_lean
 
 ## Licensing
