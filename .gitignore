@@ -46,3 +46,14 @@ Thumbs.db
 *.key
 *.pem
 secrets/
+
+# Round 7 research kept local-only pending its own round discipline
+findings/round7/
+
+# Parallel research tracks kept local-only until they clear their own round discipline
+ConnectionLaplacian/U1/
+ConnectionLaplacian/Z3/
+ConnectionLaplacian/Zk/
+
+# Temporary fuzzer output directories
+tmp_*/

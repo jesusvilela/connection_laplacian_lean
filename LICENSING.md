@@ -26,6 +26,7 @@ For either layer:
 
 ## Full license texts
 
-- Apache-2.0 — `LICENSE` (full text included)
-- CC BY 4.0 — `LICENSE-paper` (short form referencing the canonical text at
+- Apache-2.0 — `LICENSE` (full canonical text)
+- CC BY 4.0 — `LICENSE-paper` (full canonical text from
   <https://creativecommons.org/licenses/by/4.0/legalcode.txt>)
+- Copyright notice — `NOTICE` (Apache-2.0 §4(d) attribution)

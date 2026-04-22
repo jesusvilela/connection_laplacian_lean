@@ -850,7 +850,7 @@ direct \texttt{Finset.sum\_eq\_single} reduction.
 What \texttt{CycleSpectrum.lean} formalises is the \emph{per-$k$
 eigenvalue identity}: for each $k\in\operatorname{Fin} n$ it produces
 an explicit nonzero vector $v_k$ with
-$\scalarCycleLaplacian\cdot v_k=(2-2\cos(2\pi k/n))\,v_k$
+$\Lscalar(C_n)\cdot v_k=(2-2\cos(2\pi k/n))\,v_k$
 (\texttt{scalarCycle\_eigenvalue}, $n\ge 3$) and similarly for the
 signed Mobius cycle (\texttt{signedCycle\_eigenvalue}). Assembly of
 these per-$k$ identities into the full multiset equality
@@ -1047,7 +1047,7 @@ $\tr(\Lscalar\Lsigned)=\tr(\Lsigned\Lscalar)$. The Lean names are
 \begin{remark}[Polarisation versus combinatorial form]
 The cross-term identity above is stated in \emph{polarisation form}
 and is pure matrix algebra. An equivalent combinatorial form
-$\tr(\Lscalar\cdot\Lsigned)=\tr(\Lscalar^2)-4\,\#W$, which can be
+$\tr(\Lscalar\cdot\Lsigned)=\tr({\Lscalar}^{2})-4\,\#W$, which can be
 read off the entrywise formula for $\Lscalar\cdot\Lsigned$ by
 summing contributions at diagonal and off-diagonal positions, is
 confirmed numerically by the R6 Stage-6 fuzzer (zero deviation

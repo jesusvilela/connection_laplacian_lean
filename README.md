@@ -11,7 +11,7 @@
 This directory contains the active Lean 4 formalization for the
 connection-Laplacian line of the study. It began as a two-theorem seed and now
 builds as a larger imported spine from `Basic` through
-`L15_BridgeMonotone`.
+`L17_TracesAndLipschitz`.
 
 ## Current state (2026-04-22)
 
@@ -51,6 +51,11 @@ builds as a larger imported spine from `Basic` through
   specialization.
 - `ConnectionLaplacian/L15_BridgeMonotone.lean` — bridge-monotonicity for the
   number of balanced components.
+- `ConnectionLaplacian/L16_SpectrumUnion.lean` — Möbius characteristic
+  polynomial as a product, with spectrum as the union of scalar and signed
+  spectra.
+- `ConnectionLaplacian/L17_TracesAndLipschitz.lean` — trace and Frobenius
+  identities, cross-polarisation between scalar and signed parts.
 
 ## Exact floor
 
@@ -60,6 +65,9 @@ Representative exact results already in the imported build:
 - `isBalanced_iff_closedWalk_wrap_even`
 - `signedLaplacianMobius_posSemidef`
 - `numBalancedComponents_monotone_remove_nonwrap_nonbridge`
+- `mobius_charpoly_roots_eq_union`
+- `frobenius_laplacian_decomposes`
+- `trace_mul_scalar_signed_eq`
 
 These are machine-checkable. They are not merely narrative summaries.
 
@@ -95,16 +103,19 @@ To check a single file:
 lake env lean ConnectionLaplacian/L13_PSD.lean
 ```
 
-## Scope discipline
+## Scope
 
-This directory is not the whole UTAI program.
+This repository is the verified spectral/balance core of the connection-Laplacian
+line — nothing more and nothing less.
 
-- It does not prove the broader hyperbolic or topos manifestos.
-- It does not promote round-6 candidates to theorem status automatically.
-- It does not license falsified claims that already failed in the findings
-  rounds.
-
-Use it as the exact spectral/balance core that Bunny can currently defend.
+- Only the files imported by `ConnectionLaplacian.lean` are part of the
+  verified build. Everything under `findings/` is empirical evidence for
+  future formalisation candidates, not theorems.
+- Empirical round-6 candidates in `findings/round6/stage1_negator_A/`
+  (α/β/γ sheaves) are not promoted to theorem status until they land in
+  Lean as `sorry`-free proofs.
+- Claims that failed earlier rounds are not revived; the adversarial
+  pipeline's output lives in `findings/` as archival evidence.
 
 ## Paper
 
