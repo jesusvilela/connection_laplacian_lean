@@ -5,9 +5,6 @@
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
 
-> **DOI placeholder.** The `TBD` DOI resolves once the repo is enabled on
-> Zenodo and a GitHub release is cut — see [Archival](#archival-zenodo-doi).
-
 This directory contains the active Lean 4 formalization for the
 connection-Laplacian line of the study. It began as a two-theorem seed and now
 builds as a larger imported spine from `Basic` through
