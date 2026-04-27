@@ -67,11 +67,15 @@ The cycle has even wrap parity, so the component is balanced.
 ## Example 5: disconnected mixed graph
 
 ```text
-balanced component        unbalanced component
+balanced component:
+  vertices: a, b, c
+  wrap edges: a-b, a-c
+  plain edges: b-c
 
-      a                         x
-     == ==                     == \
-    b --- c                   y --- z
+unbalanced component:
+  vertices: x, y, z
+  wrap edges: x-y
+  plain edges: x-z, y-z
 ```
 
 The left triangle has two wrap edges, so its cycle has even wrap parity. The

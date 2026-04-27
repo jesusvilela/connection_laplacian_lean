@@ -17,9 +17,9 @@ mathematical question is:
 The answer is expressed in terms of connected components and balanced
 components:
 
-- the flat branch has two zero modes per connected component;
+- the flat branch has two zero modes per connected component.
 - the Möbius branch has one scalar zero mode per component plus one signed zero
-  mode for each balanced component;
+  mode for each balanced component.
 - strict loss of kernel dimension occurs precisely on components whose wrap
   holonomy is non-trivial.
 
