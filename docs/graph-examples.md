@@ -67,14 +67,15 @@ The cycle has even wrap parity, so the component is balanced.
 ## Example 5: disconnected mixed graph
 
 ```text
-a == b -- c        x == y
- \       /          \  /
-  -------            z
+balanced component        unbalanced component
+
+      a                         x
+     == ==                     == \
+    b --- c                   y --- z
 ```
 
-Read the left component as balanced if its closed cycles have even wrap parity,
-and the right triangle as unbalanced if exactly one of its three edges is a wrap
-edge.
+The left triangle has two wrap edges, so its cycle has even wrap parity. The
+right triangle has exactly one wrap edge, so its cycle has odd wrap parity.
 
 - Connected components: `2`
 - Balanced components: `1`
