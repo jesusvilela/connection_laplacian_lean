@@ -87,6 +87,20 @@ Additional build guidance is available in `BUILD.md`.
 - **Research frontier:** `findings/` (empirical candidates pending
   formalization).
 - **Paper materials:** `paper/paper.tex` and `paper/paper.pdf`.
+- **Reader guides:** `docs/` (thesis-style overview, graph examples, and a
+  compact infographic for navigating the formalization).
+
+## Thesis and manual-style guides
+
+The following Markdown guides are intended as lightweight companions to the
+paper and Lean sources:
+
+- `docs/thesis-guide.md` — thesis-style narrative, theorem map, and reading
+  order.
+- `docs/graph-examples.md` — small graph examples illustrating balanced and
+  unbalanced wrap data.
+- `docs/infographic.md` — one-page visual overview of the proof pipeline and
+  kernel-dimension formulas.
 
 ## Paper
 
