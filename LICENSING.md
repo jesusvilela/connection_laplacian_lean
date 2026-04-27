@@ -22,7 +22,7 @@ For either layer:
 
 > Jesús Vilela Jato, *Connection Laplacian — verified spectral/balance stack*
 > (Lean 4 / Mathlib v4.11.0), 2026.
-> DOI: 10.5281/zenodo.TBD — https://github.com/jesusvilela/connection_laplacian_lean
+> DOI: 10.5281/zenodo.19695396 — https://github.com/jesusvilela/connection_laplacian_lean
 
 ## Full license texts
 
