@@ -193,10 +193,15 @@ $n$-cycle, where the Fourier basis diagonalises both
 Laplacians. Section~\ref{sec:formalisation} summarises the
 formal Lean development.
 
-Throughout, every displayed equation and every numbered theorem
-is machine-checked in Lean~4 against Mathlib~v4.11.0. The
-complete proof scripts and an exhaustive numerical verification
-are included in the accompanying Lean project.
+The main structural decomposition, cover-splitting, cohomological
+recognition, kernel-dimension, and auxiliary identities are
+machine-checked in Lean~4 against Mathlib~v4.11.0. For the cycle
+spectra, the Lean development proves the per-mode eigenvalue identities;
+the displayed spectrum formulas are the corresponding mathematical
+assembly (see Remark~\ref{rem:cycle-spectrum-lean} in
+Section~\ref{sec:cycles}). The complete proof scripts and an
+exhaustive numerical verification are included in the accompanying
+Lean project.
 
 %=============================================================
 \section{Preliminaries}\label{sec:prelim}
@@ -860,10 +865,30 @@ dimension count, and is not itself a named Lean theorem.
 \end{remark}
 
 \begin{corollary}
-On $G=C_n$, the Mobius kernel strictly drops iff $n$ is odd (so that
-$\{2-2\cos((2k+1)\pi/n)\}$ is positive for all~$k$), matching
-$\beta(C_n)=0$ when $W=\{\{0,1\}\}$ and~$n$ is odd.
+Let $G=C_n$ with $n\ge 3$ and let $W=\{\{0,1\}\}$ consist of a single wrap
+edge. Then $\Ker\Lsigned(C_n)=0$, equivalently $\beta(C_n)=0$, and hence
+\[
+  \dim\Ker L_{\operatorname{Mob}}(C_n,W) = 1
+  \;<\; 2 = \dim\Ker L_{\operatorname{flat}}(C_n)
+\]
+for every $n\ge 3$.
 \end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:mobius-cycle} the signed eigenvalues are
+$2-2\cos\bigl((2k+1)\pi/n\bigr)$ for $k\in\ZZ/n$. Such an eigenvalue can
+vanish only if $(2k+1)/n$ is an even integer, which is impossible since
+$2k+1$ is odd. Hence the signed kernel is zero. The single wrap edge gives
+odd holonomy around the fundamental cycle, so the unique component is
+unbalanced, confirming $\beta(C_n)=0$. The kernel dimensions then follow from
+Theorem~\ref{thm:connection-ker}.
+\end{proof}
+
+\begin{remark}
+The parity-in-$n$ variant arises for the all-edges-wrap pattern
+$W=E(C_n)$: the total wrap parity around the fundamental cycle is then
+$n\bmod 2$, so $C_n$ is balanced exactly when $n$ is even.
+\end{remark}
 
 %=============================================================
 \section{The Lean Formalisation}\label{sec:formalisation}
