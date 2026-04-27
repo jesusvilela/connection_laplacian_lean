@@ -1,0 +1,73 @@
+name: Create release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v.0.0.3)'
+        required: true
+        default: 'v.0.0.3'
+      name:
+        description: 'Release name'
+        required: true
+        default: 'v.0.0.3 — Post-corrections paper rebuild'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y texlive-latex-base texlive-latex-recommended \
+            texlive-latex-extra texlive-fonts-recommended texlive-science \
+            texlive-fonts-extra
+
+      - name: Build paper PDF
+        run: |
+          mkdir -p /tmp/paperbuild
+          for i in 1 2 3; do
+            pdflatex -interaction=nonstopmode -output-directory=/tmp/paperbuild paper/paper.tex
+          done
+          cp /tmp/paperbuild/paper.pdf paper/paper.pdf
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          name: ${{ github.event.inputs.name }}
+          body: |
+            ## Release: Kernel-Dimension Theory for ℤ/2 Connection Laplacians
+
+            Rebuilt paper PDF after corrections, with the full formalised spine
+            through `L17_TracesAndLipschitz`.
+
+            ### New since v.0.0.2
+
+            - `mobius_charpoly_eq_scalar_times_signed` — charpoly factorisation (M7)
+            - `mobius_charpoly_roots_eq_union` — multiset spectrum union
+            - `shiftedDet_factorises` — shifted determinant factorisation (S1)
+            - `frobenius_laplacian_decomposes` — Frobenius-norm splitting (S4)
+            - `trace_sq_laplacian_decomposes` — quadratic trace splitting (S3)
+            - `trace_mul_scalar_signed_eq` — cross-polarisation trace identity (S2)
+            - `trace_laplacian_mobius` — `tr(L_Möb) = 4|E|` (S5)
+
+            ### Key results (sorry-free, axioms: `propext`, `Classical.choice`, `Quot.sound`)
+
+            - Hadamard–Kronecker decomposition: `laplacian_decomposes`
+            - Cover splitting: `scalarLap_cover_splits`
+            - Kernel dimension: `connectionLaplacian_kernel_dim_general`
+            - Charpoly factorisation: `mobius_charpoly_eq_scalar_times_signed`
+            - Trace/Frobenius bundle: `frobenius_laplacian_decomposes`, `trace_sq_laplacian_decomposes`
+
+            ### Verification
+
+            Fuzzer sweeps across 456,950 configurations at n≤7: zero counterexamples.
+          files: paper/paper.pdf
+          draft: false
+          prerelease: false
