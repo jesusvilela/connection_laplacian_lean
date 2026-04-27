@@ -67,4 +67,3 @@ ConnectionLaplacian.lean
 4. Count signed zero modes by balanced components.
 5. Recombine the branches to obtain the kernel dimension of the original
    connection Laplacian.
-

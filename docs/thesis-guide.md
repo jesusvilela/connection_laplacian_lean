@@ -60,4 +60,3 @@ components:
   Lean theorems.
 - After formalization, add the imported theorem name to the README or paper only
   when it is part of the `ConnectionLaplacian.lean` import spine.
-

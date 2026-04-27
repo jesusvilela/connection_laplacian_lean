@@ -92,4 +92,3 @@ mode, and only balanced components contribute a signed zero mode.
   `ConnectionLaplacian/L8_Recognition.lean`.
 - Treat the diagrams as explanatory documentation only; they are not separate
   Lean fixtures.
-
