@@ -1,6 +1,6 @@
 # Connection Laplacian (Lean 4 Formalization)
 
-[![DOI: pending](https://img.shields.io/badge/DOI-pending-lightgrey.svg)](#citation)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19695396.svg)](https://doi.org/10.5281/zenodo.19695396)
 [![Code License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
@@ -12,8 +12,7 @@ kernel-dimension, and spectral statements.
 The accompanying paper is available under `paper/` and has been submitted as a
 candidate to the upcoming FLoC Lisbon cycle.
 
-> **DOI status:** Zenodo DOI minting is pending and will be added after archival
-> is enabled and a release is minted.
+> **DOI:** <https://doi.org/10.5281/zenodo.19695396>
 
 ## Project status (2026-04-22)
 
@@ -122,10 +121,10 @@ tectonic paper/paper.tex
 Machine-readable metadata is in `CITATION.cff` (used by GitHub’s **Cite this
 repository** panel).
 
-Until Zenodo DOI minting is finalized, please use:
+Please cite this repository as:
 
 > Vilela Jato, J. *Connection Laplacian (Lean 4 Formalization)*, 2026.  
-> DOI: pending (to be assigned by Zenodo)  
+> DOI: 10.5281/zenodo.19695396  
 > https://github.com/jesusvilela/connection_laplacian_lean
 
 ## Licensing
