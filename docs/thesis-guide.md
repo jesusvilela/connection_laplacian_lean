@@ -3,7 +3,7 @@
 This guide expands the paper into a reader-oriented manual for the verified
 Lean development. It does not introduce additional theorems; the authoritative
 formal statements are the declarations imported by
-`/home/runner/work/connection_laplacian_lean/connection_laplacian_lean/ConnectionLaplacian.lean`.
+`ConnectionLaplacian.lean`.
 
 ## Central question
 

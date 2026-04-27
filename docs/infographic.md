@@ -13,7 +13,7 @@ flowchart TD
     C --> E["Signed Laplacian branch"]
     D --> F["one zero mode per component"]
     E --> G["one zero mode per balanced component"]
-    F --> H["dim ker Mobius = #components + #balanced components"]
+    F --> H["dim ker Möbius = #components + #balanced components"]
     G --> H
     A --> I["Orientation double cover"]
     I --> J["fiber size detects balance"]
