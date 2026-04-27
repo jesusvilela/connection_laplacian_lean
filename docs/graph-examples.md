@@ -67,19 +67,22 @@ The cycle has even wrap parity, so the component is balanced.
 ## Example 5: disconnected mixed graph
 
 ```text
-balanced component:
-  vertices: a, b, c
-  wrap edges: a-b, a-c
-  plain edges: b-c
+balanced component (wrap edges: a-b, a-c)
 
-unbalanced component:
-  vertices: x, y, z
-  wrap edges: x-y
-  plain edges: x-z, y-z
+      a
+     == ==
+    b --- c
+
+unbalanced component (wrap edge: x-y)
+
+      x
+     == \
+    y --- z
 ```
 
-The left triangle has two wrap edges, so its cycle has even wrap parity. The
-right triangle has exactly one wrap edge, so its cycle has odd wrap parity.
+The balanced component has two wrap edges, so its cycle has even wrap parity.
+The unbalanced component has exactly one wrap edge, so its cycle has odd wrap
+parity.
 
 - Connected components: `2`
 - Balanced components: `1`
