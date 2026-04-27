@@ -1,6 +1,6 @@
 # Connection Laplacian (Lean 4 Formalization)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19695396.svg)](https://doi.org/10.5281/zenodo.19695396)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19695396-blue.svg)](https://doi.org/10.5281/zenodo.19695396)
 [![Code License: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
