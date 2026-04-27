@@ -1,6 +1,9 @@
 name: Create release
 
 on:
+  push:
+    tags:
+      - 'v.*'
   workflow_dispatch:
     inputs:
       tag:
@@ -39,8 +42,8 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.tag }}
-          name: ${{ github.event.inputs.name }}
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          name: ${{ github.event.inputs.name || github.ref_name }}
           body: |
             ## Release: Kernel-Dimension Theory for ℤ/2 Connection Laplacians
 
