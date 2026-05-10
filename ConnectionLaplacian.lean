@@ -29,3 +29,5 @@ import ConnectionLaplacian.Millennium
 import ConnectionLaplacian.SATKernelSeed
 import ConnectionLaplacian.SATPolyBridge
 import ConnectionLaplacian.IGBundleSeed
+import ConnectionLaplacian.YangMillsSeed
+import ConnectionLaplacian.FlatWallDescent
