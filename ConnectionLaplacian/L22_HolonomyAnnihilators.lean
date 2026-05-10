@@ -191,10 +191,48 @@ lemma kernel_pointwise_twisted (k : Fin n) (f : Z.V → ℂ)
     rw [hf]; simp [Matrix.dotProduct]
   -- By sectoralLaplacian_quadratic_form: ∑|f(u)-ω·f(v)|² = 0
   rw [sectoralLaplacian_quadratic_form] at h_qf_zero
-  -- Each term is a normSq, hence ≥ 0. Sum = 0 implies each term = 0.
-  -- In particular the (u,v) term: normSq(f u - ω^{k·α} · f v) = 0.
-  -- normSq(z) = 0 ↔ z = 0 → f u = ω^{k·α} · f v.
-  sorry  -- extract the (u,v) term from the sum and use normSq_eq_zero
+  -- h_qf_zero : (1/2 : ℂ) * ∑_u ∑_v (if adj then normSq else 0) = 0
+  -- Multiply by 2: the ℝ-valued sum = 0
+  have h_sum_zero : ∑ a : Z.V, ∑ b : Z.V,
+      (if h : Z.graph.Adj a b then
+        Complex.normSq (f a - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(a, b), h⟩).val : ℤ) * f b)
+      else (0 : ℝ)) = 0 := by
+    have h12 : (2 : ℂ) ≠ 0 := by norm_num
+    have h12r : (2 : ℝ) ≠ 0 := by norm_num
+    -- Cancel (1/2 : ℂ) from h_qf_zero, then norm_cast
+    have hS : (∑ a : Z.V, ∑ b : Z.V,
+        (if h : Z.graph.Adj a b then
+          Complex.normSq (f a - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(a, b), h⟩).val : ℤ) * f b)
+        else (0 : ℝ)) : ℂ) = 0 := by
+      have := h_qf_zero
+      field_simp at this; push_cast at this ⊢; linarith
+    exact_mod_cast hS
+  -- Each term ≥ 0
+  have h_nonneg : ∀ a b : Z.V, (0 : ℝ) ≤
+      if h : Z.graph.Adj a b then
+        Complex.normSq (f a - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(a, b), h⟩).val : ℤ) * f b)
+      else (0 : ℝ) := fun a b => by split_ifs; exact Complex.normSq_nonneg _; norm_num
+  -- Each outer sum ≥ 0
+  have h_outer_nn : ∀ a : Z.V, (0 : ℝ) ≤ ∑ b : Z.V,
+      if h : Z.graph.Adj a b then
+        Complex.normSq (f a - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(a, b), h⟩).val : ℤ) * f b)
+      else 0 := fun a => Finset.sum_nonneg (fun b _ => h_nonneg a b)
+  -- By Finset.sum_eq_zero_iff_of_nonneg: each outer = 0
+  have h_each_u : ∀ a : Z.V, ∑ b : Z.V,
+      (if h : Z.graph.Adj a b then
+        Complex.normSq (f a - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(a, b), h⟩).val : ℤ) * f b)
+      else 0) = 0 := fun a =>
+    (Finset.sum_eq_zero_iff_of_nonneg (s := Finset.univ) (fun a' _ => h_outer_nn a')).mp
+      h_sum_zero a (Finset.mem_univ a)
+  -- By Finset.sum_eq_zero_iff_of_nonneg again: the (u,v) term = 0
+  have h_uv_zero : Complex.normSq
+      (f u - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h_adj⟩).val : ℤ) * f v) = 0 :=
+    have := (Finset.sum_eq_zero_iff_of_nonneg (s := Finset.univ) (fun b _ => h_nonneg u b)).mp
+      (h_each_u u) v (Finset.mem_univ v)
+    by simp only [h_adj, dif_pos] at this; exact this
+  -- normSq z = 0 → z = 0 → f u = ω^{kα} * f v
+  have h_diff := Complex.normSq_eq_zero.mp h_uv_zero
+  linarith [sub_eq_zero.mp h_diff]
 
 -- ══════════════════════════════════════════════════════════════════
 -- §W — WALK LAYER: propagation and cycle closure
@@ -328,12 +366,64 @@ theorem mem_annihilator_iff_kernel_pos (C : Z.graph.ConnectedComponent) (k : Fin
       simp only [Matrix.mulVec, Matrix.dotProduct, Pi.zero_apply]
       -- Case split: u ∈ C.supp or not
       by_cases hu : u ∈ C.supp
-      · -- For u ∈ C, the sum is deg(u)·f(u) - ∑_{v adj u} ω^{k·α(u,v)}·f(v)
-        -- Each term ω^{k·α(u,v)}·f(v) = f(u) by annihilator_kills_cycle
-        -- So sum = deg(u)·f(u) - deg(u)·f(u) = 0
-        sorry  -- F1: Finset.sum over sectoralLaplacian terms
-      · -- For u ∉ C: f(u) = 0, and all adj v satisfy v ∉ C (different component) → f(v) = 0
-        sorry  -- F2: u ∉ C implies all adj v ∉ C (component isolation)
+      · -- For u ∈ C: show ∑_v L_k(u,v)*f(v) = 0
+        -- Plan: each ω^{kα(u,v)} * f(v) = f(u) by path-independence, so
+        --   deg(u)*f(u) - deg(u)*f(u) = 0.
+        have hfu_val : f u = (ZnConnGraph.ω n) ^ (-(k.val * (T u).val : ℤ)) := by
+          simp only [f, hu, dite_true]
+        -- For each adj v: ω^{kα(u,v)} * f(v) = f(u)
+        have h_adj_eq : ∀ (v : Z.V), ∀ (hadj : Z.graph.Adj u v),
+            (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), hadj⟩).val : ℤ) * f v = f u := by
+          intro v hadj
+          have hv : v ∈ C.supp := by
+            rw [SimpleGraph.ConnectedComponent.mem_supp_iff] at hu ⊢; rw [← hu]
+            exact SimpleGraph.ConnectedComponent.sound
+              ⟨SimpleGraph.Walk.cons hadj SimpleGraph.Walk.nil⟩
+          have hfv_val : f v = (ZnConnGraph.ω n) ^ (-(k.val * (T v).val : ℤ)) := by
+            simp only [f, hv, dite_true]
+          -- Path independence: k * T v = k * T u + k * α(u,v)  (in ZMod n)
+          have hpind : (k.val : ZMod n) * T v =
+              (k.val : ZMod n) * T u + (k.val : ZMod n) * Z.α ⟨(u, v), hadj⟩ := by
+            have heq := annihilator_path_independent Z C hr_supp hv
+              (exists_walk_in_component Z r v hr_supp hv).some
+              ((exists_walk_in_component Z r u hr_supp hu).some.append
+                (SimpleGraph.Walk.cons hadj SimpleGraph.Walk.nil))
+              (k.val : ZMod n) h_ann
+            simp only [T, hv, hu, dite_true, walkValue_append, walkValue,
+                       List.map_singleton, List.sum_singleton] at heq
+            rw [mul_add]; exact heq
+          -- Lift to ℤ-exponents and close with ω_zpow_mod_n
+          rw [hfv_val, hfu_val, ← zpow_add₀ (ZnConnGraph.ω_ne_zero n)]
+          conv_lhs => rw [ZnConnGraph.ω_zpow_mod_n]
+          conv_rhs => rw [ZnConnGraph.ω_zpow_mod_n]
+          congr 1
+          -- Goal: (k.val * α.val + (-k.val * T v .val)) % n = (-k.val * T u .val) % n
+          -- From hpind: k*T v = k*T u + k*α in ZMod n
+          have hpind_val : (k.val * (T v).val) % n =
+              (k.val * (T u).val + k.val * (Z.α ⟨(u, v), hadj⟩).val) % n := by
+            have := congr_arg ZMod.val hpind
+            simp only [ZMod.val_add, ZMod.val_mul, ZMod.val_natCast] at this
+            omega
+          push_cast; omega
+        -- Now assemble: split ∑_v into diagonal + off-diagonal, then cancel
+        -- ∑_v L_k(u,v)*f(v) = deg(u)*f(u) + ∑_{v adj u}(-ω^{kα})*f(v)
+        --                    = deg(u)*f(u) - ∑_{v adj u} f(u) = 0
+        sorry  -- F1: Finset.sum split + h_adj_eq + deg cancellation (ring)
+      · -- For u ∉ C: f(u) = 0, all adj v ∉ C → f(v) = 0 → each term = 0
+        have hfu : f u = 0 := by simp only [f, if_neg hu]
+        have h_adj_zero : ∀ (v : Z.V), Z.graph.Adj u v → f v = 0 := fun v hadj => by
+          have hv_not : v ∉ C.supp := fun hv => hu (by
+            rw [SimpleGraph.ConnectedComponent.mem_supp_iff] at hv ⊢; rw [← hv]
+            exact SimpleGraph.ConnectedComponent.sound
+              ⟨SimpleGraph.Walk.cons hadj SimpleGraph.Walk.nil⟩)
+          simp only [f, if_neg hv_not]
+        apply Finset.sum_eq_zero
+        intro v _
+        simp only [sectoralLaplacian]
+        split_ifs with hveq hadj
+        · subst hveq; simp [hfu]
+        · simp [h_adj_zero v hadj]
+        · simp
     -- f ≠ 0 since f(r) = 1
     have hf_ne : f ≠ 0 := by
       intro heq; have := congr_fun heq r; simp [hfr] at this
@@ -365,10 +455,23 @@ theorem mem_annihilator_iff_kernel_pos (C : Z.graph.ConnectedComponent) (k : Fin
       simp [SimpleGraph.ConnectedComponent.mem_supp_iff, SimpleGraph.ConnectedComponent.mk_out]
     -- f(r) ≠ 0 or we can find v ∈ C with f(v) ≠ 0 and propagate
     have hfr_ne : f r ≠ 0 := by
-      -- If f r = 0, use hf_pt to propagate: for any v in C, f v = 0.
-      -- Then f = 0 outside C too (f(u) = 0 for u ∉ C by... or by support).
-      -- This contradicts hf_ne_fn.
-      sorry  -- propagation from f(r) = 0 implies f = 0 everywhere in C
+      -- By contradiction: if f r = 0, twisted_walk_propagation gives f v = 0 for ALL v ∈ C.supp
+      -- (since r → v walk exists in C, and ω^m ≠ 0 forces f v = 0)
+      -- Combined with hf_ne_fn (f ≠ 0), some vertex w ∉ C.supp has f w ≠ 0.
+      -- But then for closed walks γ at r, twisted_cycle_holonomy still gives f r = ω^{kh}*f r = 0,
+      -- yielding no information. This gap closes when Z.graph is connected (one component C = whole).
+      -- Here we prove the propagation half; the connectivity assumption is the residual sorry.
+      by_contra h_zero
+      -- Propagation: f v = 0 for all v ∈ C.supp
+      have hfC_zero : ∀ v : Z.V, v ∈ C.supp → f v = 0 := fun v hv => by
+        obtain ⟨p⟩ := exists_walk_in_component Z r v hr_supp hv
+        have hprop := twisted_walk_propagation Z k f hf_pt r v p
+        rw [h_zero] at hprop
+        exact (mul_eq_zero.mp hprop.symm).resolve_left
+          (zpow_ne_zero _ (ZnConnGraph.ω_ne_zero n))
+      -- Gap: if Z.graph has exactly one component, hfC_zero + hf_ne_fn gives ⊥.
+      -- For multi-component graphs this requires restricting f to C first.
+      sorry  -- gap: requires Z.graph connected or per-component kernel formulation
     -- For any closed walk γ at r: ω^{k·walkValue(γ)} · f(r) = f(r)
     -- Hence ω^{k·walkValue(γ)} = 1 → k·walkValue(γ) = 0 in ZMod n (by omega_zpow_eq_one_iff_dvd)
     -- This proves (k.val : ZMod n) ∈ subgroupAnnihilator (holonomySubgroup Z C)
