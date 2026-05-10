@@ -20,6 +20,7 @@ Historical voices:
 -/
 
 import ConnectionLaplacian.L21_SectoralDecomposition
+import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.Combinatorics.SimpleGraph.Path
 import Mathlib.LinearAlgebra.Matrix.PosDef
 
@@ -183,16 +184,236 @@ lemma sectoralLaplacian_quadratic_form (k : Fin n) (f : Z.V → ℂ) :
       if h : Z.graph.Adj u v then
         Complex.normSq (f u - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) * f v)
       else 0 := by
-  -- Proof sketch:
-  -- LHS = ∑_u conj(f u) * (∑_v L_k(u,v) * f v)
-  --     = ∑_u conj(f u) * (deg(u)·f u - ∑_{v adj u} ω^{k·α(u,v)}·f v)
-  --     = ∑_u deg(u)|f u|² - ∑_{u adj v} ω^{k·α(u,v)} conj(f u) f v
-  -- RHS = ½ ∑_{u adj v} (|f u|² - 2Re(ω^{k·α(u,v)} f v conj(f u)) + |f v|²)
-  --     = ½ · 2(∑_u deg(u)|f u|² - Re(∑_{u adj v} ω^{k·α(u,v)} conj(f u) f v))
-  --     = ∑_u deg(u)|f u|² - Re(⟨f, A_k f⟩)    [since L_k Hermitian → ⟨f, L_k f⟩ ∈ ℝ]
-  --     = LHS ✓
-  -- Key tools: conj_ω (star(ω^k) = ω^{-k}), antisymmetry of α, Finset.sum_comm
-  sorry  -- quadratic form expansion; all steps are mechanical ZMod/Complex algebra
+  let φ : Z.V → Z.V → ℂ := fun u v =>
+    if h : Z.graph.Adj u v then
+      (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ)
+    else 0
+  have hφ_symm : ∀ {u v : Z.V}, Z.graph.Adj u v → star (φ u v) = φ v u := by
+    intro u v h
+    have hs : Z.graph.Adj v u := h.symm
+    have hzmod :
+        (((-(k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) : ℤ) : ZMod n)) =
+          (((k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ) : ZMod n)) := by
+      calc
+        (((-(k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) : ℤ) : ZMod n))
+            = - ((k.val : ZMod n) * Z.α ⟨(u, v), h⟩) := by
+                simp [ZMod.natCast_zmod_val]
+        _ = (k.val : ZMod n) * Z.α ⟨(v, u), hs⟩ := by
+              have hα : Z.α ⟨(v, u), hs⟩ = - Z.α ⟨(u, v), h⟩ := by
+                simpa using (α_symm Z ⟨(u, v), h⟩)
+              rw [hα]
+              ring
+        _ = (((k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ) : ZMod n)) := by
+              simp [ZMod.natCast_zmod_val]
+    have hmodeq :
+        (-(k.val * (Z.α ⟨(u, v), h⟩).val : ℤ)) ≡
+          (k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ) [ZMOD (n : ℤ)] := by
+      exact (ZMod.intCast_eq_intCast_iff
+        (-(k.val * (Z.α ⟨(u, v), h⟩).val : ℤ))
+        (k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ) n).mp hzmod
+    -- Extract the zpow values from φ without involving star (avoids map_zpow₀ over-simplification)
+    have heqUV : φ u v = (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) := by
+      simp [φ, h]
+    have heqVU : φ v u = (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ) := by
+      simp [φ, hs]
+    rw [heqUV, heqVU, ZnConnGraph.ω_zpow_neg,
+      ZnConnGraph.ω_zpow_mod_n n (-(k.val * (Z.α ⟨(u, v), h⟩).val : ℤ)),
+      ZnConnGraph.ω_zpow_mod_n n (k.val * (Z.α ⟨(v, u), hs⟩).val : ℤ), hmodeq.eq]
+  have hφ_unit : ∀ {u v : Z.V}, (h : Z.graph.Adj u v) → star (φ u v) * φ u v = 1 := by
+    intro u v h
+    let m : ℤ := (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ)
+    calc
+      star (φ u v) * φ u v = star ((ZnConnGraph.ω n) ^ m) * (ZnConnGraph.ω n) ^ m := by
+        simp [φ, h, m]
+      _ = (ZnConnGraph.ω n) ^ (-m) * (ZnConnGraph.ω n) ^ m := by
+        rw [ZnConnGraph.ω_zpow_neg]
+      _ = (ZnConnGraph.ω n) ^ (-m + m) := by
+        rw [← zpow_add₀ (ZnConnGraph.ω_ne_zero n)]
+      _ = 1 := by simp [m]
+  have hentry : ∀ u v : Z.V,
+      star (f u) * (sectoralLaplacian Z k u v * f v) =
+        (if u = v then (Z.graph.degree u : ℂ) * (star (f u) * f u) else 0) +
+        (if u = v then 0 else
+          if h : Z.graph.Adj u v then -(star (f u) * φ u v * f v) else 0) := by
+    intro u v
+    by_cases huv : u = v
+    · subst huv
+      simp [sectoralLaplacian, φ, SimpleGraph.irrefl]
+      ring
+    · by_cases hadj : Z.graph.Adj u v
+      · simp [sectoralLaplacian, φ, huv, hadj, ← zpow_natCast]
+        ring
+      · simp [sectoralLaplacian, φ, huv, hadj]
+  have hstep3 : ∀ u : Z.V,
+      (∑ v : Z.V,
+        ((if u = v then (Z.graph.degree u : ℂ) * (star (f u) * f u) else 0) +
+          (if u = v then 0 else
+            if h : Z.graph.Adj u v then -(star (f u) * φ u v * f v) else 0))) =
+        (Z.graph.degree u : ℂ) * (star (f u) * f u) +
+          ∑ v : Z.V, if h : Z.graph.Adj u v then -(star (f u) * φ u v * f v) else 0 := by
+    intro u
+    rw [Finset.sum_add_distrib]
+    congr 1
+    · rw [Finset.sum_ite_eq Finset.univ u
+        (fun _ : Z.V => (Z.graph.degree u : ℂ) * (star (f u) * f u))]
+      rw [if_pos (Finset.mem_univ u)]
+    · apply Finset.sum_congr rfl
+      intro v hv
+      by_cases huv : u = v
+      · subst huv
+        simp [SimpleGraph.irrefl]
+      · simp [huv]
+  have hdeg : ∀ u : Z.V,
+      (Z.graph.degree u : ℂ) * (star (f u) * f u) =
+        ∑ v : Z.V, if Z.graph.Adj u v then star (f u) * f u else 0 := by
+    intro u
+    rw [SimpleGraph.degree_eq_sum_if_adj (G := Z.graph) (R := ℂ) u, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro v hv
+    by_cases hadj : Z.graph.Adj u v
+    · simp [hadj]
+    · simp [hadj]
+  have hLHS_raw :
+      Matrix.dotProduct (star ∘ f) (Matrix.mulVec (sectoralLaplacian Z k) f) =
+        ∑ u : Z.V, ∑ v : Z.V,
+          if Z.graph.Adj u v then
+            star (f u) * f u - star (f u) * φ u v * f v
+          else 0 := by
+    have h_expand :
+        Matrix.dotProduct (star ∘ f) (Matrix.mulVec (sectoralLaplacian Z k) f) =
+          ∑ u : Z.V, ∑ v : Z.V,
+            ((if u = v then (Z.graph.degree u : ℂ) * (star (f u) * f u) else 0) +
+              (if u = v then 0 else
+                if h : Z.graph.Adj u v then -(star (f u) * φ u v * f v) else 0)) := by
+      rw [Matrix.dotProduct]
+      apply Finset.sum_congr rfl
+      intro u hu
+      rw [Matrix.mulVec, Matrix.dotProduct, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro v hv
+      simpa using hentry u v
+    rw [h_expand]
+    rw [Finset.sum_congr rfl (fun u _ => hstep3 u)]
+    rw [Finset.sum_add_distrib]
+    rw [show (∑ u : Z.V, (Z.graph.degree u : ℂ) * (star (f u) * f u)) =
+        ∑ u : Z.V, ∑ v : Z.V, if Z.graph.Adj u v then star (f u) * f u else 0 by
+      exact Finset.sum_congr rfl (fun u _ => hdeg u)]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro u hu
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro v hv
+    by_cases hadj : Z.graph.Adj u v
+    · rw [if_pos hadj, dif_pos hadj, if_pos hadj]
+      ring
+    · rw [if_neg hadj, dif_neg hadj, if_neg hadj]
+      ring
+  set S : ℂ := ∑ u : Z.V, ∑ v : Z.V,
+      if Z.graph.Adj u v then star (f u) * f u - star (f u) * φ u v * f v else 0 with hS
+  have hLHS : Matrix.dotProduct (star ∘ f) (Matrix.mulVec (sectoralLaplacian Z k) f) = S := by
+    rw [hS]
+    exact hLHS_raw
+  have hswap : S = ∑ u : Z.V, ∑ v : Z.V,
+      if Z.graph.Adj u v then star (f v) * f v - star (f v) * φ v u * f u else 0 := by
+    rw [hS, Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro u hu
+    apply Finset.sum_congr rfl
+    intro v hv
+    by_cases hadj : Z.graph.Adj v u
+    · have hduv : Z.graph.Adj u v := hadj.symm
+      rw [if_pos hadj, if_pos hduv]
+    · have hduv : ¬ Z.graph.Adj u v := fun h => hadj h.symm
+      rw [if_neg hadj, if_neg hduv]
+  have hnorm : ∀ {u v : Z.V} (h : Z.graph.Adj u v),
+      ((Complex.normSq (f u - φ u v * f v) : ℝ) : ℂ) =
+        (star (f u) * f u - star (f u) * φ u v * f v) +
+        (star (f v) * f v - star (f v) * φ v u * f u) := by
+    intro u v h
+    have hstarφ : star (φ u v) = φ v u := hφ_symm h
+    have hunit : star (φ u v) * φ u v = 1 := hφ_unit h
+    calc
+      ((Complex.normSq (f u - φ u v * f v) : ℝ) : ℂ)
+          = star (f u - φ u v * f v) * (f u - φ u v * f v) := by
+              simpa [Complex.star_def] using
+                (Complex.normSq_eq_conj_mul_self (z := f u - φ u v * f v))
+      _ = (star (f u) - star (f v) * star (φ u v)) * (f u - φ u v * f v) := by
+            have hstar_expand : star (f u - φ u v * f v) =
+                star (f u) - star (f v) * star (φ u v) := by
+              show starRingEnd ℂ (f u - φ u v * f v) =
+                  starRingEnd ℂ (f u) - starRingEnd ℂ (f v) * starRingEnd ℂ (φ u v)
+              rw [map_sub (starRingEnd ℂ), _root_.map_mul (starRingEnd ℂ)]
+              ring
+            rw [hstar_expand]
+      _ = star (f u) * f u - star (f u) * φ u v * f v
+            - star (f v) * star (φ u v) * f u
+            + star (f v) * (star (φ u v) * φ u v) * f v := by
+            ring
+      _ = (star (f u) * f u - star (f u) * φ u v * f v) +
+            (star (f v) * f v - star (f v) * φ v u * f u) := by
+            rw [hunit, hstarφ]
+            ring
+  have hQ_phi :
+      (∑ u : Z.V, ∑ v : Z.V,
+        if h : Z.graph.Adj u v then Complex.normSq (f u - φ u v * f v) else 0) = S + S := by
+    calc
+      (∑ u : Z.V, ∑ v : Z.V,
+        if h : Z.graph.Adj u v then Complex.normSq (f u - φ u v * f v) else 0)
+          = ∑ u : Z.V, ∑ v : Z.V,
+              if h : Z.graph.Adj u v then
+                (star (f u) * f u - star (f u) * φ u v * f v) +
+                  (star (f v) * f v - star (f v) * φ v u * f u)
+              else 0 := by
+                push_cast
+                apply Finset.sum_congr rfl
+                intro u hu
+                apply Finset.sum_congr rfl
+                intro v hv
+                by_cases hadj : Z.graph.Adj u v
+                · simp only [dif_pos hadj]
+                  exact_mod_cast hnorm hadj
+                · simp only [dif_neg hadj, Complex.ofReal_zero]
+      _ = S + ∑ u : Z.V, ∑ v : Z.V,
+            if Z.graph.Adj u v then star (f v) * f v - star (f v) * φ v u * f u else 0 := by
+            rw [hS, ← Finset.sum_add_distrib]
+            apply Finset.sum_congr rfl
+            intro u hu
+            rw [← Finset.sum_add_distrib]
+            apply Finset.sum_congr rfl
+            intro v hv
+            by_cases hadj : Z.graph.Adj u v
+            · rw [dif_pos hadj, if_pos hadj, if_pos hadj]
+            · rw [dif_neg hadj, if_neg hadj, if_neg hadj, add_zero]
+      _ = S + S := by rw [← hswap]
+  have hQ :
+      (∑ u : Z.V, ∑ v : Z.V,
+        if h : Z.graph.Adj u v then
+          Complex.normSq (f u - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) * f v)
+        else 0) = S + S := by
+    have hstep : (∑ u : Z.V, ∑ v : Z.V,
+        if h : Z.graph.Adj u v then
+          Complex.normSq (f u - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) * f v)
+        else 0) =
+      (∑ u : Z.V, ∑ v : Z.V,
+        if h : Z.graph.Adj u v then Complex.normSq (f u - φ u v * f v) else 0) := by
+        apply Finset.sum_congr rfl
+        intro u hu
+        apply Finset.sum_congr rfl
+        intro v hv
+        by_cases hadj : Z.graph.Adj u v
+        · simp only [dif_pos hadj]; simp [φ, hadj]
+        · simp only [dif_neg hadj]
+    rw [hstep]
+    exact hQ_phi
+  calc
+    Matrix.dotProduct (star ∘ f) (Matrix.mulVec (sectoralLaplacian Z k) f) = S := hLHS
+    _ = (1 / 2 : ℂ) * (S + S) := by ring
+    _ = (1/2 : ℂ) * ∑ u : Z.V, ∑ v : Z.V,
+          if h : Z.graph.Adj u v then
+            Complex.normSq (f u - (ZnConnGraph.ω n) ^ (k.val * (Z.α ⟨(u, v), h⟩).val : ℤ) * f v)
+          else 0 := by
+            rw [hQ]
 
 /-- **Kernel → pointwise twisted** (Spectral angle, backward direction core):
     If f ∈ ker(L_k) and u adj v, then f(u) = ω^{k·α(u,v)} · f(v).
