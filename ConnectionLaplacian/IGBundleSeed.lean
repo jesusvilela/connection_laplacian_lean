@@ -58,6 +58,76 @@ noncomputable def resonatorMatrix (p q : Nat) : Matrix (Fin p) (Fin q) ℂ :=
       ((Real.sqrt ((p * q : Nat) : ℝ)) : ℂ)
 
 /--
+Hyperbolic companion mode for the prime-sector resonator.
+
+This is a scaffold-level `sinh` kernel: the exact normalization is secondary here,
+and can be refined once the cross-channel arithmetic theorem is reformulated in
+terms of the extended resonator rather than the parabolic DFT surrogate.
+-/
+noncomputable def hyperbolicMode (p q : Nat) (i : Fin p) (j : Fin q) : ℂ :=
+  Complex.sinh (2 * Real.pi * Complex.I * ((((i.1 * j.1 : Nat) : ℂ)) / (((p * q : Nat) : ℂ))))
+
+/--
+Parabolic ⊕ hyperbolic extension of `resonatorMatrix`.
+
+The extra hyperbolic rows/columns expose the cross-channel in which the σ307
+rank deficit is expected to live. This enlarges the index set from `Fin p`/`Fin q`
+to `Fin p ⊕ Fin p` / `Fin q ⊕ Fin q`.
+-/
+noncomputable def extendedResonator (p q : Nat) : Matrix (Fin p ⊕ Fin p) (Fin q ⊕ Fin q) ℂ :=
+  Matrix.fromBlocks
+    (resonatorMatrix p q)
+    (hyperbolicMode p q)
+    (hyperbolicMode p q)
+    (hyperbolicMode p q)
+
+/--
+Concrete extended resonator witness at `(p, q) = (7, 7)`.
+
+Because the hyperbolic `0`-column vanishes identically, the extended 14×14
+matrix has a nontrivial kernel and therefore a rank deficit of at least `1`.
+This is weaker than the target σ307 deficit `3`, but it gives a compiling Lean
+milestone for the reformulated statement.
+-/
+lemma extended_resonator_z7_rank_deficit :
+    14 - Matrix.rank (extendedResonator 7 7) ≥ 1 := by
+  let A : Matrix (Fin 7 ⊕ Fin 7) (Fin 7 ⊕ Fin 7) ℂ := extendedResonator 7 7
+  let v : (Fin 7 ⊕ Fin 7) → ℂ := Pi.single (Sum.inr 0) 1
+  have hzcol : ∀ i, A i (Sum.inr 0) = 0 := by
+    intro i
+    cases i <;> simp [A, extendedResonator, hyperbolicMode]
+  have hv_mem_ker : v ∈ LinearMap.ker A.mulVecLin := by
+    rw [LinearMap.mem_ker]
+    change A.mulVec v = 0
+    ext i
+    rw [Matrix.mulVec_single]
+    simp [v, hzcol i]
+  have hv_ne_zero : v ≠ 0 := by
+    intro hv
+    have h := congrFun hv (Sum.inr 0)
+    simp [v] at h
+  have hker_nontrivial : Nontrivial (LinearMap.ker A.mulVecLin) := by
+    refine ⟨⟨⟨v, hv_mem_ker⟩, 0, ?_⟩⟩
+    intro h
+    apply hv_ne_zero
+    exact congrArg Subtype.val h
+  have hker_pos : 0 < FiniteDimensional.finrank ℂ (LinearMap.ker A.mulVecLin) :=
+    FiniteDimensional.finrank_pos_iff.mpr hker_nontrivial
+  have hsum :
+      A.rank + FiniteDimensional.finrank ℂ (LinearMap.ker A.mulVecLin) = 14 := by
+    simpa [A, Matrix.rank] using LinearMap.finrank_range_add_finrank_ker A.mulVecLin
+  have hstep : A.rank + 1 ≤ 14 := by
+    calc
+      A.rank + 1 ≤ A.rank + FiniteDimensional.finrank ℂ (LinearMap.ker A.mulVecLin) := by
+        exact Nat.add_le_add_left (Nat.succ_le_of_lt hker_pos) A.rank
+      _ = 14 := hsum
+  have hrank_le : A.rank ≤ 14 := by
+    simpa [A] using Matrix.rank_le_card_width A
+  have hdeficit : 1 ≤ 14 - A.rank := by
+    exact (Nat.le_sub_iff_add_le hrank_le).2 (by simpa [Nat.add_comm] using hstep)
+  simpa using hdeficit
+
+/--
 Canonical σ307 witness from `arc35_v8` (R17 RESOLUTION):
 
   M_{Z7,H7} = 3  ← CANONICAL (cross parabolic-7 × hyperbolic-7)
@@ -77,37 +147,31 @@ lemma sigma307_Z7H7_canonical : True := trivial
 /--
 Placeholder for the prime-sector IGBundle rank-deficit theorem.
 
-The present statement still mentions `resonatorMatrix`, i.e. the DFT surrogate,
-so the theorem is not provable from the current definitions: that matrix has full
-rank in the generic coprime-prime situation and therefore does *not* realize the
-arc35_v8 deficit. To remove this `sorry`, one must first replace
-`resonatorMatrix` by the genuine prime-sector connection observable.
+The present statement still mentions `resonatorMatrix`, i.e. the parabolic DFT
+surrogate, so the theorem is not provable from the current definitions: that
+matrix has full rank in the generic coprime-prime situation and therefore does
+*not* realize the arc35_v8 deficit. The file now contains the missing
+`hyperbolicMode`, the block `extendedResonator`, and the concrete compiling
+milestone `extended_resonator_z7_rank_deficit`; the remaining step is to
+restate this theorem in terms of the extended observable.
 -/
 theorem igbundle_rank_deficit (p q : Nat) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hcop : Nat.Coprime p q) : Nat.min p q - Matrix.rank (resonatorMatrix p q) ≥ 1 := by
   /-
-  Required next steps (R17 — σ307 CHARACTERIZED):
+  Honest status note:
 
-  The target deficit has been RESOLVED:
-    σ307 canonical = M_{Z7,H7} = 3  (cross parabolic-7 × hyperbolic-7)
-    σ307 parabolic = M_{5,7}   = 2  (parabolic-only, arc35_v8 cycle-30)
+  `igbundle_rank_deficit` still targets the parabolic-only DFT surrogate
+  `resonatorMatrix`, whose coprime-prime deficit is genuinely `0`. The new
+  definitions above make the intended reformulation precise:
 
-  This sorry persists because resonatorMatrix uses DFT (parabolic-only) and
-  genuinely has deficit 0 in the (p,q) = (5,7) case. To prove deficit ≥ 1
-  one must instead:
+  * `hyperbolicMode p q` adds the missing `sinh`-based channel,
+  * `extendedResonator p q` packages the parabolic ⊕ hyperbolic blocks,
+  * `extended_resonator_z7_rank_deficit` proves a first concrete kernel witness
+    for the `(7,7)` extended matrix.
 
-  1. Define `hyperbolicMode (p : Nat) : Matrix (Fin p) (Fin p) ℂ` using
-     sinh/cosh kernel:
-       H_mode(i,j) = sinh(2π·i·j/(p·q)) / sqrt(p·q·sinh(1))
-  2. Form the extended matrix:
-       extendedResonator p q = resonatorMatrix p q ⊕ (H7 block)
-  3. Prove: rank (extendedResonator 7 7) = 7 - 3 = 4  (deficit = 3)
-  4. Lift to general coprime case using arithmetic structure of 35 = 5×7.
-
-  Arithmetic fact (arc35_v8, verified): the deficit 3 = M_{Z7,H7} is an
-  invariant of the NUMBER 35 = 5×7, not of cusp geometry. The five-prime
-  split parabolic-5 ≠ hyperbolic-5 contributes deficit 2; the seven-prime
-  split parabolic-7 ≠ hyperbolic-7 contributes deficit 3 (dominant).
+  To close this final `sorry`, the theorem statement itself must be rewritten to
+  reference `extendedResonator` (or an equivalent cross-channel observable), and
+  then strengthened from the current ≥ 1 witness to the target σ307 deficit.
   -/
   sorry
 
