@@ -639,10 +639,73 @@ theorem sectoral_kernel_dim_binary (Comp : Z.graph.ConnectedComponent) (k : Fin 
   classical
   by_cases h_ann : (k.val : ZMod n) ∈ subgroupAnnihilator (holonomySubgroup Z Comp)
   · simp [componentSectoralKernelDim, h_ann]
-    -- ker ≠ ⊥ by forward direction; finrank ≥ 1
-    -- Uniqueness: twisted harmonic extension is unique up to scalar;
-    -- restricted to C, the space has dim exactly 1.
-    sorry
+    have h_ker_ne :
+        LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k)) ≠ ⊥ :=
+      (mem_annihilator_iff_kernel_pos Z Comp k hconn).mp h_ann
+    have h_ge_one :
+        1 ≤ FiniteDimensional.finrank ℂ
+          (LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k))) := by
+      rw [Nat.one_le_iff_ne_zero]
+      intro hfin0
+      apply h_ker_ne
+      rw [Submodule.eq_bot_iff]
+      intro x hx
+      rw [FiniteDimensional.finrank_eq_zero_iff] at hfin0
+      obtain ⟨a, ha_ne, hax⟩ := hfin0 ⟨x, hx⟩
+      have hx0 : (⟨x, hx⟩ : LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k))) = 0 := by
+        exact (smul_eq_zero.mp hax).resolve_left ha_ne
+      simpa using congrArg Subtype.val hx0
+    set r : Z.V := Quot.out Comp with hr_def
+    have hr_supp : r ∈ Comp.supp := by
+      rw [SimpleGraph.ConnectedComponent.mem_supp_iff, hr_def]
+      exact Quot.out_eq Comp
+    have hr_eq : Z.graph.connectedComponentMk r = Comp := by
+      rw [hr_def]
+      exact Quot.out_eq Comp
+    have hall : ∀ v : Z.V, v ∈ Comp.supp := fun v => by
+      rw [SimpleGraph.ConnectedComponent.mem_supp_iff]
+      exact (SimpleGraph.ConnectedComponent.sound (hconn r v)).symm.trans hr_eq
+    let evr : LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k)) →ₗ[ℂ] ℂ :=
+      { toFun := fun f => (f : Z.V → ℂ) r
+        map_add' := by
+          intro f g
+          rfl
+        map_smul' := by
+          intro c f
+          rfl }
+    have h_evr_inj : Function.Injective evr := by
+      intro f g hfg
+      apply Subtype.ext
+      funext v
+      have hf_ker_fn : Matrix.mulVec (sectoralLaplacian Z k) (f : Z.V → ℂ) = 0 := by
+        have hf0 := LinearMap.mem_ker.mp f.2
+        rw [Matrix.toLin'_apply] at hf0
+        exact hf0
+      have hg_ker_fn : Matrix.mulVec (sectoralLaplacian Z k) (g : Z.V → ℂ) = 0 := by
+        have hg0 := LinearMap.mem_ker.mp g.2
+        rw [Matrix.toLin'_apply] at hg0
+        exact hg0
+      have hf_pt := kernel_pointwise_twisted Z k (f : Z.V → ℂ) hf_ker_fn
+      have hg_pt := kernel_pointwise_twisted Z k (g : Z.V → ℂ) hg_ker_fn
+      obtain ⟨p⟩ := exists_walk_in_component Z r v hr_supp (hall v)
+      have hprop_f := twisted_walk_propagation Z k (f : Z.V → ℂ) hf_pt r v p
+      have hprop_g := twisted_walk_propagation Z k (g : Z.V → ℂ) hg_pt r v p
+      have hω_ne : (ZnConnGraph.ω n) ^ (k.val * (walkValue Z p).val : ℤ) ≠ 0 := by
+        exact zpow_ne_zero _ (ZnConnGraph.ω_ne_zero n)
+      apply mul_left_cancel₀ hω_ne
+      calc
+        (ZnConnGraph.ω n) ^ (k.val * (walkValue Z p).val : ℤ) * (f : Z.V → ℂ) v =
+            (f : Z.V → ℂ) r := by
+              exact hprop_f.symm
+        _ = (g : Z.V → ℂ) r := hfg
+        _ = (ZnConnGraph.ω n) ^ (k.val * (walkValue Z p).val : ℤ) * (g : Z.V → ℂ) v := by
+              exact hprop_g
+    have h_le_one :
+        FiniteDimensional.finrank ℂ
+          (LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k))) ≤ 1 := by
+      have hdim := LinearMap.finrank_le_finrank_of_injective (f := evr) h_evr_inj
+      simpa using hdim
+    exact Nat.le_antisymm h_le_one h_ge_one
   · have h_ker_bot : LinearMap.ker (Matrix.toLin' (sectoralLaplacian Z k)) = ⊥ := by
       by_contra h
       exact h_ann ((mem_annihilator_iff_kernel_pos Z Comp k hconn).mpr h)
