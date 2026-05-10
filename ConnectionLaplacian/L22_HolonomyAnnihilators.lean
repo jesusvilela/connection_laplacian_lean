@@ -120,22 +120,38 @@ lemma annihilator_kills_cycle {r u v : Z.V} (C : Z.graph.ConnectedComponent)
   exact cycle_walkValue_mem_holonomy Z C hr hu hv p q h_adj
 
 /-- **Path independence**: if k annihilates H_C, then k·walkValue is
-    independent of the choice of walk from r to v. -/
+    independent of the choice of walk from r to v.
+
+    Proof: conjugate the cycle p ++ q.reverse (based at r) with a walk
+    w : Quot.out C → r to produce a cycle γ based at Quot.out C.
+    γ ∈ holonomySubgroup by definition.  walkValue Z γ = T(p) − T(q).
+    Annihilator kills γ, so k·(T(p)−T(q)) = 0 → k·T(p) = k·T(q). -/
 lemma annihilator_path_independent {r v : Z.V} (C : Z.graph.ConnectedComponent)
     (hr : r ∈ C.supp) (hv : v ∈ C.supp)
     (p q : Z.graph.Walk r v) (k : ZMod n)
     (h_ann : k ∈ subgroupAnnihilator (holonomySubgroup Z C)) :
     k * walkValue Z p = k * walkValue Z q := by
-  have h_diff : k * (walkValue Z p + 0 - walkValue Z q) = 0 := by
-    -- walkValue of p ++ nil.reverse = walkValue p + 0 - walkValue q,
-    -- and the "edge" is the trivial nil path — treated as a degenerate adj step.
-    -- Full proof: p ++ q.reverse is a cycle at r, so its holonomy ∈ H_C.
-    apply h_ann
-    simp only [holonomySubgroup, AddSubgroup.mem_mk, Set.mem_setOf_eq]
-    refine ⟨p.append q.reverse, ?_⟩
-    simp [walkValue_append, walkValue_reverse]
-  linarith [h_diff]  -- In ZMod n: k*(p+0-q)=0 → k*p-k*q=0 → k*p=k*q
-  -- FIXME: replace linarith with: linear_combination h_diff (works in ring)
+  -- Get a walk from Quot.out C to r (inlined connectivity argument)
+  set root := Quot.out C
+  have hroot_supp : root ∈ C.supp := by
+    simp [SimpleGraph.ConnectedComponent.mem_supp_iff, SimpleGraph.ConnectedComponent.mk_out]
+  obtain ⟨w⟩ : Z.graph.Reachable root r := by
+    rw [SimpleGraph.ConnectedComponent.mem_supp_iff] at hr hroot_supp
+    rw [← hroot_supp] at hr
+    exact SimpleGraph.ConnectedComponent.eq_iff_reachable.mp hr
+  -- Conjugated cycle γ = w ++ (p ++ q.reverse) ++ w.reverse at Quot.out C
+  let γ : Z.graph.Walk root root :=
+    w.append ((p.append q.reverse).append w.reverse)
+  -- γ ∈ holonomySubgroup Z C by definition (closed walk at Quot.out C)
+  have hγ_mem : walkValue Z γ ∈ holonomySubgroup Z C :=
+    ⟨γ, rfl⟩
+  -- walkValue Z γ = walkValue Z p − walkValue Z q
+  have hγ_val : walkValue Z γ = walkValue Z p - walkValue Z q := by
+    simp [γ, walkValue_append, walkValue_reverse]; ring
+  -- Annihilator kills γ → k * (T(p) − T(q)) = 0 → k·T(p) = k·T(q)
+  have h_diff := h_ann (walkValue Z γ) hγ_mem
+  rw [hγ_val] at h_diff
+  linear_combination h_diff
 
 -- ══════════════════════════════════════════════════════════════════
 -- §S — SPECTRAL LAYER: quadratic form for backward direction
@@ -207,10 +223,21 @@ lemma twisted_walk_propagation (k : Fin n) (f : Z.V → ℂ)
       rw [h_step, ih]
       -- Combine: ω^{k·α} · (ω^{k·T} · f v) = ω^{k·(α+T)} · f v
       rw [hwalk]
+      -- W1: ω^{k*α.val} * ω^{k*T.val} = ω^{k*(α+T).val}  (mod n via ω^n=1)
       ring_nf
-      -- The ZMod arithmetic: k.val * (α + T).val = k.val * α.val + k.val * T.val (mod n)
-      -- This requires ZMod.val_add and ω^{a+b} = ω^a · ω^b
-      sorry  -- ZMod.val_add modular arithmetic for ω exponents
+      rw [← zpow_add₀ (ZnConnGraph.ω_ne_zero n)]
+      conv_lhs => rw [ZnConnGraph.ω_zpow_mod_n]
+      conv_rhs => rw [ZnConnGraph.ω_zpow_mod_n]
+      congr 1
+      push_cast
+      rw [ZMod.val_add]
+      push_cast
+      -- Goal: (k*α.val + k*T.val) % n = (k * ((α.val + T.val) % n)) % n
+      -- Both equal k*(α.val + T.val) % n:
+      rw [Int.mul_emod (↑k.val) ((↑(Z.α ⟨(u, w), h_adj⟩).val + ↑(walkValue Z rest).val) % ↑n)]
+      rw [Int.emod_emod_of_dvd _ (dvd_refl (↑n : ℤ))]
+      rw [← Int.mul_emod]
+      congr 1; ring
 
 /-- **Cycle holonomy**: if f satisfies the pointwise twisted condition and
     γ is a closed walk at r, then f(r) = ω^{k·walkValue(γ)} · f(r). -/
@@ -282,11 +309,19 @@ theorem mem_annihilator_iff_kernel_pos (C : Z.graph.ConnectedComponent) (k : Fin
       else 0
     -- f(r) = 1 ≠ 0
     have hfr : f r = 1 := by
-      simp only [f, hr_supp, dite_true, T, hr_supp, dite_true]
-      -- walkValue of Reachable.refl.some is the nil walk, value = 0
-      -- ω^(-(k.val * 0)) = ω^0 = 1
-      norm_cast
-      sorry  -- walk from r to r is refl; walkValue = 0; ω^0 = 1
+      simp only [f, hr_supp, dite_true]
+      -- T r = walkValue of (some walk r → r) ∈ holonomySubgroup Z C
+      -- h_ann kills it: k * T r = 0 → k.val * (T r).val ≡ 0 (mod n) → ω^{-k*(T r)} = 1
+      have hTr_mem : T r ∈ holonomySubgroup Z C :=
+        ⟨(exists_walk_in_component Z r r hr_supp hr_supp).some, rfl⟩
+      have hkTr : (k.val : ZMod n) * T r = 0 := h_ann (T r) hTr_mem
+      have hdvd : n ∣ k.val * (T r).val := by
+        rw [← ZMod.natCast_zmod_eq_zero_iff_dvd]
+        show ((k.val * (T r).val : ℕ) : ZMod n) = 0
+        push_cast [ZMod.natCast_val]; exact hkTr
+      have hω_one : (ZnConnGraph.ω n) ^ (↑k.val * ↑(T r).val : ℤ) = 1 := by
+        rw [omega_zpow_eq_one_iff_dvd]; exact_mod_cast hdvd
+      rw [zpow_neg, hω_one, inv_one]
     -- f is in the kernel of L_k
     have hf_ker : Matrix.mulVec (sectoralLaplacian Z k) f = 0 := by
       funext u
@@ -358,7 +393,12 @@ theorem mem_annihilator_iff_kernel_pos (C : Z.graph.ConnectedComponent) (k : Fin
     -- Proof: n ∣ k.val * (walkValue Z γ).val in ℤ  (hω_eq_one)
     -- → (k.val * (walkValue Z γ).val : ZMod n) = 0  (ZMod.natCast_zmod_eq_zero_iff_dvd)
     -- → (k.val : ZMod n) * (walkValue Z γ : ZMod n) = 0  (push_cast)
-    sorry  -- ZMod: n ∣ k*h in ℤ → (k : ZMod n) * h = 0; use ZMod.natCast_zmod_eq_zero_iff_dvd
+    -- ZMod: n ∣ k*h in ℤ → (k : ZMod n) * h = 0 via natCast_zmod_eq_zero_iff_dvd
+    have key : ((k.val * (walkValue Z γ).val : ℕ) : ZMod n) = 0 := by
+      rw [ZMod.natCast_zmod_eq_zero_iff_dvd]; exact_mod_cast hω_eq_one
+    have : (k.val : ZMod n) * walkValue Z γ = 0 := by
+      have := key; push_cast [ZMod.natCast_val] at this; exact this
+    exact this
 
 /-- Dimension of the sectoral kernel (componentwise). -/
 noncomputable def componentSectoralKernelDim (_Comp : Z.graph.ConnectedComponent) (k : Fin n) : Nat :=
