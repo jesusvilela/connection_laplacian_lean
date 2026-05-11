@@ -15,6 +15,7 @@ import ConnectionLaplacian.L16_SpectrumUnion
 import ConnectionLaplacian.L17_TracesAndLipschitz
 import ConnectionLaplacian.L18_A5n
 import ConnectionLaplacian.L20_ZModConnection
+import ConnectionLaplacian.L26_ResonanceStratum
 import ConnectionLaplacian.BerryHolonomy
 import ConnectionLaplacian.HyperTuringComplete
 import ConnectionLaplacian.OrbifoldFixed
@@ -31,3 +32,4 @@ import ConnectionLaplacian.SATPolyBridge
 import ConnectionLaplacian.IGBundleSeed
 import ConnectionLaplacian.YangMillsSeed
 import ConnectionLaplacian.FlatWallDescent
+import ConnectionLaplacian.ErgocticErdodeticPartition
