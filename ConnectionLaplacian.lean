@@ -34,3 +34,6 @@ import ConnectionLaplacian.IGBundleSeed
 import ConnectionLaplacian.YangMillsSeed
 import ConnectionLaplacian.FlatWallDescent
 import ConnectionLaplacian.ErgocticErdodeticPartition
+import ConnectionLaplacian.LossAsKernel
+import ConnectionLaplacian.L34_TelosMutualRecognition
+import ConnectionLaplacian.L35_GoldilocksSpectralGap
