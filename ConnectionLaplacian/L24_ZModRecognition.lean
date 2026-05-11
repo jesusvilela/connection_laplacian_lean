@@ -19,6 +19,12 @@ open Matrix BigOperators Complex FiniteDimensional
 
 variable {n : Nat} [NeZero n] (Z : ZnConnGraph n)
 
+/-- The annihilator of the holonomy subgroup of a connected component C,
+    as a Finset of indices Fin n. These are the sector indices k where 
+    (k : ZMod n) ∈ subgroupAnnihilator (holonomySubgroup Z C). -/
+noncomputable def annihilator (C : Z.graph.ConnectedComponent) : Finset (Fin n) :=
+  Finset.univ.filter fun k => (k.val : ZMod n) ∈ subgroupAnnihilator (holonomySubgroup Z C)
+
 private lemma finrank_ker_toLin'_blockDiagonal
     {K : Type*} [Field K]
     {o m : Type*} [Fintype o] [DecidableEq o] [Fintype m] [DecidableEq m]
@@ -187,8 +193,8 @@ private lemma subgroupAnnihilator_card_eq_div (H : AddSubgroup (ZMod n)) :
     _ = n := by exact hcard.symm
     _ = Nat.card H * (n / Nat.card H) := by rw [Nat.mul_div_cancel' hdvd]
 
-private lemma annihilator_card_eq_div (C : Z.graph.ConnectedComponent) :
-    (ZnConnGraph.annihilator Z C).card =
+lemma annihilator_card_eq_div (C : Z.graph.ConnectedComponent) :
+    (annihilator Z C).card =
     n / Nat.card (holonomySubgroup Z C) := by
   classical
   let H := holonomySubgroup Z C
@@ -209,9 +215,9 @@ private lemma annihilator_card_eq_div (C : Z.graph.ConnectedComponent) :
         apply Subtype.ext
         simp [ZMod.natCast_zmod_val] }
   calc
-    (ZnConnGraph.annihilator Z C).card
+    (annihilator Z C).card
         = Nat.card { k : Fin n // (k.val : ZMod n) ∈ subgroupAnnihilator H } := by
-            rw [ZnConnGraph.annihilator]
+            rw [annihilator]
             rw [← Finset.card_subtype (p := fun k : Fin n => (k : ZMod n) ∈ subgroupAnnihilator H) Finset.univ]
             simp [Nat.card_eq_fintype_card, H]
     _ = Nat.card { k : ZMod n // k ∈ subgroupAnnihilator H } := Nat.card_congr e
@@ -686,7 +692,7 @@ theorem connectionLaplacian_kernel_dim_general :
       (Finset.filter (fun k : Fin n =>
           (k.val : ZMod n) ∈ subgroupAnnihilator (holonomySubgroup Z C)) Finset.univ).card := by
     rw [Finset.card_filter]
-  rw [hsum_filter, ← annihilator_card_eq_div Z C, ZnConnGraph.annihilator]
+  rw [hsum_filter, ← annihilator_card_eq_div Z C, annihilator]
 
 /-- COROLLARY: For a connected graph, the cover kernel dimension is exactly n/|H|.
     This is the core witness for the P vs NP spectral reduction. -/
