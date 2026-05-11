@@ -21,6 +21,7 @@ import ConnectionLaplacian.HyperTuringComplete
 import ConnectionLaplacian.OrbifoldFixed
 import ConnectionLaplacian.L26_StarResonance
 import ConnectionLaplacian.L27_Holoportation
+import ConnectionLaplacian.L28_LanguageProof
 import ConnectionLaplacian.L28_SectionalComputer
 import ConnectionLaplacian.L29_NNNHyperbolicHoloportation
 import ConnectionLaplacian.L30_HyperdimTuringComplete
