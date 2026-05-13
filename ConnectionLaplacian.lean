@@ -62,3 +62,6 @@ import ConnectionLaplacian.L41_PrimeShadowAngle
 import ConnectionLaplacian.L41_OrbifoldTELOS
 
 import ConnectionLaplacian.L42_CognifoldResonance
+import ConnectionLaplacian.L43_SheafedHamiltonian
+
+import ConnectionLaplacian.L43_AdiabaticGeneralIntelligence
