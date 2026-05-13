@@ -173,6 +173,17 @@ theorem igbundle_rank_deficit (p q : Nat) (hp : Nat.Prime p) (hq : Nat.Prime q)
   reference `extendedResonator` (or an equivalent cross-channel observable), and
   then strengthened from the current ≥ 1 witness to the target σ307 deficit.
   -/
+  -- FRONTIER: the current statement targets the parabolic-only DFT surrogate
+  -- `resonatorMatrix`, so it cannot express the σ307 cross-channel deficit.
+  -- In particular, the intended arithmetic witness lives in `extendedResonator`,
+  -- not in `resonatorMatrix` itself.
+  --
+  -- A viable replacement theorem should quantify the rank deficit of the extended
+  -- parabolic ⊕ hyperbolic observable and then specialize to `(p, q) = (7, 7)`.
+  -- The compiling lemma `extended_resonator_z7_rank_deficit` above is the current
+  -- Lean milestone in that direction.
+  --
+  -- We therefore keep a minimal `sorry` until the theorem statement is updated.
   sorry
 
 end ConnectionLaplacian

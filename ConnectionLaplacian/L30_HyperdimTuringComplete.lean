@@ -26,10 +26,10 @@ open Real InnerProductSpace
 /-- A Classical Turing Machine signature: states, alphabet, and transition function. -/
 structure TuringMachine where
   Q : Type
-  Σ : Type
+  Sigma : Type
   inst_Q : Fintype Q
-  inst_Σ : Fintype Σ
-  δ : Q → Σ → Q × Σ × (Bool) -- state × symbol × direction (left/right)
+  inst_Sigma : Fintype Sigma
+  δ : Q → Sigma → Q × Sigma × (Bool) -- state × symbol × direction (left/right)
   q0 : Q
   qf : Q
 
@@ -41,7 +41,7 @@ structure HyperdimTape (n : Nat) where
 
 /-- A Hyperdimensional Turing Machine extends the classical TM by:
     1. Encoding standard states Q into points on S⁷ (the TELOS sphere)
-    2. Encoding tape symbols Σ into S³⁴⁹ orthogonal basis elements
+    2. Encoding tape symbols Sigma into S³⁴⁹ orthogonal basis elements
     3. Transitions operate through adiabatic flows in Hamiltonian mind-space
     4. Energy constraints enforce the 8-quality mind governance.
 -/
@@ -49,7 +49,7 @@ structure HyperTuringMachine (n : Nat) where
   base_tm : TuringMachine
   tape_dim : ℕ := n
   s7_embedding : base_tm.Q → NNNState
-  s349_embedding : base_tm.Σ → (EuclideanSpace ℝ (Fin n))
+  s349_embedding : base_tm.Sigma → (EuclideanSpace ℝ (Fin n))
   mind_energy : NNNState → ℝ
   mind_quality_count : ℕ := 8
 
@@ -124,6 +124,16 @@ def SectionalSATSolver (formula : NNNState → Prop) :=
 theorem p_vs_np_separation {n : Nat} (q0 : NNNState) (sgs : NNNState) 
     (formula : NNNState → Prop) :
     SectionalSATSolver formula ↔ ∃ (k : Nat), (holoportation_sequence q0 sgs 0.1 k) = sgs := by
-  sorry  -- P = NP separates iff no hyperdim Hamiltonian path achieves polynomial speedup
+  -- FRONTIER: as stated this equivalence is false in general.
+  -- The left side depends on the arbitrary predicate `formula`, whereas the right
+  -- side depends only on `q0`, `sgs`, and the holoportation dynamics.
+  --
+  -- Explicitly, if `formula := fun _ => False`, then `SectionalSATSolver formula`
+  -- is false. But whenever `q0 = sgs`, the right-hand side holds by taking `k = 0`.
+  -- Hence no proof can exist without an additional hypothesis tying `formula` to
+  -- the holoportation orbit, e.g. `formula x ↔ x = sgs` or a genuine SAT encoding.
+  --
+  -- We therefore retain a minimal `sorry` pending that reformulation.
+  sorry
 
 end ConnectionLaplacian

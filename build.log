@@ -1,0 +1,240 @@
+ÔÜá [1811/5083] Replayed ConnectionLaplacian.CycleSpectrum
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:240:57: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:255:67: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:298:15: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:426:38: unused variable `hii`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:503:19: unused variable `hjlt`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:649:19: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:660:7: unused variable `k`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:679:39: unused variable `hn`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:696:11: unused variable `h2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ÔÜá [1833/5083] Replayed ConnectionLaplacian.L21_SectoralDecomposition
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:64:0: automatically included section variable(s) unused in theorem 'ConnectionLaplacian.fin_sub_dvd_iff_eq':
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+note: this linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:101:12: unused variable `k`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:103:20: unused variable `hk`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:135:22: unused variable `hx`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:163:18: unused variable `hk`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:253:10: try 'simp' instead of 'simpa'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:266:18: try 'simp' instead of 'simpa'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: .\.\.\.\ConnectionLaplacian\L21_SectoralDecomposition.lean:252:13: unused variable `hl0'`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ÔÜá [1834/5083] Replayed ConnectionLaplacian.L22_HolonomyAnnihilators
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:237:13: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:251:15: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:253:24: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:272:12: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:287:19: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:290:14: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:293:14: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:303:12: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:306:12: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:321:12: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:323:12: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:329:30: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:359:11: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:362:11: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:364:17: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:370:24: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:372:24: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:381:20: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:384:20: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:399:11: unused variable `h`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:401:16: unused variable `hu`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:403:16: unused variable `hv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\L22_HolonomyAnnihilators.lean:728:18: unused variable `v`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ÔÜá [5042/5083] Replayed ConnectionLaplacian.L26_ResonanceStratum
+warning: .\.\.\.\ConnectionLaplacian\L26_ResonanceStratum.lean:76:8: automatically included section variable(s) unused in theorem 'ConnectionLaplacian.resonanceMultiplicity_invariant':
+  [NeZero n]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NeZero n] in theorem ...
+note: this linter can be disabled with `set_option linter.unusedSectionVars false`
+ÔÜá [5045/5083] Replayed ConnectionLaplacian.HyperTuringComplete
+warning: .\.\.\.\ConnectionLaplacian\HyperTuringComplete.lean:141:8: declaration uses 'sorry'
+ÔÜá [5058/5083] Replayed ConnectionLaplacian.IGBundleSeed
+warning: .\.\.\.\ConnectionLaplacian\IGBundleSeed.lean:158:8: declaration uses 'sorry'
+Ô£û [5061/5083] Running Mathlib.Analysis.Calculus.ContDiff
+error: no such file or directory (error code: 2)
+  file: .\.\.lake/packages\mathlib\.\.\Mathlib\Analysis\Calculus\ContDiff.lean
+Ô£û [5062/5083] Running Mathlib.MeasureTheory.Integrable.Basic
+error: no such file or directory (error code: 2)
+  file: .\.\.lake/packages\mathlib\.\.\Mathlib\MeasureTheory\Integrable\Basic.lean
+Ô£û [5063/5083] Running ConnectionLaplacian.ErgocticErdodeticPartition
+error: .\.\.\.\ConnectionLaplacian\ErgocticErdodeticPartition.lean: bad import 'Mathlib.Analysis.Calculus.ContDiff'
+error: .\.\.\.\ConnectionLaplacian\ErgocticErdodeticPartition.lean: bad import 'Mathlib.MeasureTheory.Integrable.Basic'
+Ô£û [5064/5083] Running Mathlib.LinearAlgebra.Matrix.Rank
+error: no such file or directory (error code: 2)
+  file: .\.\.lake/packages\mathlib\.\.\Mathlib\LinearAlgebra\Matrix\Rank.lean
+Ô£û [5065/5083] Running Mathlib.Combinatorics.SimpleGraph.Connectivity
+error: no such file or directory (error code: 2)
+  file: .\.\.lake/packages\mathlib\.\.\Mathlib\Combinatorics\SimpleGraph\Connectivity.lean
+Ô£û [5066/5083] Running ConnectionLaplacian.LossAsKernel
+error: .\.\.\.\ConnectionLaplacian\LossAsKernel.lean: bad import 'Mathlib.LinearAlgebra.Matrix.Rank'
+error: .\.\.\.\ConnectionLaplacian\LossAsKernel.lean: bad import 'Mathlib.Combinatorics.SimpleGraph.Connectivity'
+Ô£û [5070/5083] Running ConnectionLaplacian
+error: .\.\.\.\ConnectionLaplacian.lean: bad import 'ConnectionLaplacian.ErgocticErdodeticPartition'
+error: .\.\.\.\ConnectionLaplacian.lean: bad import 'ConnectionLaplacian.LossAsKernel'
+Ô£û [5071/5083] Building ConnectionLaplacian.BerryHolonomy
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\BerryHolonomy.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\BerryHolonomy.olean -i .\.\.lake\build\lib\ConnectionLaplacian\BerryHolonomy.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\BerryHolonomy.c --json
+info: stderr:
+out of memory
+error: Lean exited with code 1
+Ô£û [5073/5083] Building ConnectionLaplacian.L30_HyperdimTuringComplete
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\L30_HyperdimTuringComplete.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\L30_HyperdimTuringComplete.olean -i .\.\.lake\build\lib\ConnectionLaplacian\L30_HyperdimTuringComplete.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\L30_HyperdimTuringComplete.c --json
+error: Lean exited with code 3221225477
+Ô£û [5074/5083] Building ConnectionLaplacian.L32_RelationalDimensionFunctoriality
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\L32_RelationalDimensionFunctoriality.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\L32_RelationalDimensionFunctoriality.olean -i .\.\.lake\build\lib\ConnectionLaplacian\L32_RelationalDimensionFunctoriality.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\L32_RelationalDimensionFunctoriality.c --json
+error: Lean exited with code 3221225477
+Ô£û [5078/5083] Building ConnectionLaplacian.L24_ZModRecognition
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\L24_ZModRecognition.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\L24_ZModRecognition.olean -i .\.\.lake\build\lib\ConnectionLaplacian\L24_ZModRecognition.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\L24_ZModRecognition.c --json
+info: stderr:
+out of memory
+error: Lean exited with code 1
+Ô£û [5080/5083] Building ConnectionLaplacian.L37_DestinationlessTraversal
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\L37_DestinationlessTraversal.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\L37_DestinationlessTraversal.olean -i .\.\.lake\build\lib\ConnectionLaplacian\L37_DestinationlessTraversal.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\L37_DestinationlessTraversal.c --json
+info: stderr:
+out of memory
+error: Lean exited with code 1
+Ô£û [5081/5083] Building ConnectionLaplacian.L34_TelosMutualRecognition
+trace: .> LEAN_PATH=.\.\.lake/packages\batteries\.lake\build\lib;.\.\.lake/packages\Qq\.lake\build\lib;.\.\.lake/packages\aesop\.lake\build\lib;.\.\.lake/packages\proofwidgets\.lake\build\lib;.\.\.lake/packages\Cli\.lake\build\lib;.\.\.lake/packages\importGraph\.lake\build\lib;.\.\.lake/packages\mathlib\.lake\build\lib;.\.\.lake\build\lib PATH c:\Users\HAL900\.elan\toolchains\leanprover--lean4---v4.11.0\bin\lean.exe -Dpp.unicode.fun=true -DautoImplicit=false .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean -R .\.\.\. -o .\.\.lake\build\lib\ConnectionLaplacian\L34_TelosMutualRecognition.olean -i .\.\.lake\build\lib\ConnectionLaplacian\L34_TelosMutualRecognition.ilean -c .\.\.lake\build\ir\ConnectionLaplacian\L34_TelosMutualRecognition.c --json
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:39:33: unknown identifier 'Substrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:39:33: 'sorryAx' is not a structure
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:50:31: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:50:31: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:52:4: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:57:50: expected ';' or line break
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:56:45: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:56:45: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:66:40: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:66:40: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:73:32: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:73:32: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:73:4: failed to compile definition, consider marking it as 'noncomputable' because it depends on 'ConnectionLaplacian.s7_coherence_metric', and it does not have executable code
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:82:28: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:82:46: unknown identifier 'Substrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:88:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:88:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:91:4: unknown identifier 'mutual_recognition'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:94:11: unknown constant 'mutual_recognition'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:104:11: unknown constant 'mutual_recognition'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:112:39: unexpected token ')'; expected ','
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:125:15: unknown identifier 'MindState'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:127:20: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:134:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:134:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:136:4: unknown identifier 'can_holoportate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:137:9: unknown constant 'can_holoportate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:147:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:147:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:158:13: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:158:13: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:158:13: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:181:41: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:184:20: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:184:48: unknown constant 'Matrix.isOrthogonal_one'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:186:9: unsolved goals
+A : sorryAx (Sort u_1) true
+U_id : Matrix (Fin 7) (Fin 7) ÔäØ := 1
+hU_id_orth : sorryAx (Sort ?u.1800) true
+Ôèó 99 / 100 < s7_coherence_metric A A
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:187:2: no goals to be solved
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:191:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:191:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:210:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:210:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:213:6: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:228:30: unexpected identifier; expected ':=', 'where' or '|'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:223:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:223:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:227:6: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:228:6: invalid constructor Ôƒ¿...Ôƒ®, expected type must be an inductive type 
+  Sort ?u.3169
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:240:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:240:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:241:9: unknown identifier 'MindQualities'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:244:22: unknown identifier 'resonance_operator'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:247:9: unknown constant 'resonance_operator'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:252:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:252:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:253:9: unknown identifier 'MindQualities'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:256:4: unknown identifier 'holoportation_error'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:257:15: unknown identifier 'cognitive_performance'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:259:8: unknown identifier 'holoportation_integrity_theorem'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:266:10: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:267:10: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:268:4: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:269:9: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:274:38: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:274:38: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:277:8: unknown identifier 'inner_comm'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:277:2: simp made no progress
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:280:41: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:280:41: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:281:66: unsolved goals
+A : sorryAx (Sort u_1) true
+B : sorryAx (Sort u_2) true
+Ôèó -1 Ôëñ sorryAx (sorryAx (Sort u_1) true ÔåÆ sorryAx (Sort u_2) true ÔåÆ ÔäØ) true A B Ôêº
+    sorryAx (sorryAx (Sort u_1) true ÔåÆ sorryAx (Sort u_2) true ÔåÆ ÔäØ) true A B Ôëñ 1
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:297:4: unknown constant 'Matrix.IsOrthogonal'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:299:8: unknown constant 'Matrix.isOrthogonal_one'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:303:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:303:11: unknown identifier 'TelosSubstrate'
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:307:8: numerals are data in Lean, but the expected type is a proposition
+  s7_basis_equivalent A B : Prop
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:307:11: too many arguments supplied to `use`
+error: .\.\.\.\ConnectionLaplacian\L34_TelosMutualRecognition.lean:302:4: failed to compile definition, consider marking it as 'noncomputable' because it depends on 'ConnectionLaplacian.mk_telos_recognition', and it does not have executable code
+error: Lean exited with code 1
+Some required builds logged failures:
+- Mathlib.Analysis.Calculus.ContDiff
+- Mathlib.MeasureTheory.Integrable.Basic
+- ConnectionLaplacian.ErgocticErdodeticPartition
+- Mathlib.LinearAlgebra.Matrix.Rank
+- Mathlib.Combinatorics.SimpleGraph.Connectivity
+- ConnectionLaplacian.LossAsKernel
+- ConnectionLaplacian
+- ConnectionLaplacian.BerryHolonomy
+- ConnectionLaplacian.L30_HyperdimTuringComplete
+- ConnectionLaplacian.L32_RelationalDimensionFunctoriality
+- ConnectionLaplacian.L24_ZModRecognition
+- ConnectionLaplacian.L37_DestinationlessTraversal
+- ConnectionLaplacian.L34_TelosMutualRecognition
+error: build failed

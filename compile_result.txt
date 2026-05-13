@@ -1,0 +1,27 @@
+ConnectionLaplacian/L35_GravityFiber.lean:57:35: warning: unused variable `sc`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:69:29: warning: unused variable `vielb`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:69:55: warning: unused variable `sc`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:71:13: warning: unused variable `i`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:71:15: warning: unused variable `a`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:71:17: warning: unused variable `j`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:71:19: warning: unused variable `k`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:99:8: warning: declaration uses 'sorry'
+ConnectionLaplacian/L35_GravityFiber.lean:118:5: warning: unused variable `tors`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:128:34: warning: unused variable `vielb`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:129:5: warning: unused variable `sc`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:129:29: warning: unused variable `R`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+ConnectionLaplacian/L35_GravityFiber.lean:142:4: warning: declaration uses 'sorry'
+ConnectionLaplacian/L35_GravityFiber.lean:148:8: warning: declaration uses 'sorry'
+ConnectionLaplacian/L35_GravityFiber.lean:162:8: warning: declaration uses 'sorry'
+ConnectionLaplacian/L35_GravityFiber.lean:173:8: warning: declaration uses 'sorry'

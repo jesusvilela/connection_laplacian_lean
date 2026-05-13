@@ -140,7 +140,13 @@ noncomputable def quatSectorPhase (n k : ℕ) [NeZero n] : ℍ :=
 
 /-- The complex sector phase should lie on the unit circle; this is deferred to circle-group facts. -/
 theorem complexSectorPhase_unit (n k : ℕ) [NeZero n] : ‖complexSectorPhase n k‖ = 1 := by
-  sorry
+  unfold complexSectorPhase
+  have hrewrite :
+      (((2 : ℂ) * Real.pi * Complex.I) * (k : ℂ)) / (n : ℂ) =
+        ((2 * Real.pi * (k : ℝ) / (n : ℝ) : ℝ) : ℂ) * Complex.I := by
+    norm_num [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+  rw [hrewrite]
+  simpa using Complex.abs_exp_ofReal_mul_I (2 * Real.pi * (k : ℝ) / (n : ℝ))
 
 /--
 `full_engagement` is the Boolean all-on state of the eight mind qualities, so in the
