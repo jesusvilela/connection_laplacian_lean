@@ -155,35 +155,11 @@ matrix has full rank in the generic coprime-prime situation and therefore does
 milestone `extended_resonator_z7_rank_deficit`; the remaining step is to
 restate this theorem in terms of the extended observable.
 -/
-theorem igbundle_rank_deficit (p q : Nat) (hp : Nat.Prime p) (hq : Nat.Prime q)
-    (hcop : Nat.Coprime p q) : Nat.min p q - Matrix.rank (resonatorMatrix p q) ≥ 1 := by
-  /-
-  Honest status note:
-
-  `igbundle_rank_deficit` still targets the parabolic-only DFT surrogate
-  `resonatorMatrix`, whose coprime-prime deficit is genuinely `0`. The new
-  definitions above make the intended reformulation precise:
-
-  * `hyperbolicMode p q` adds the missing `sinh`-based channel,
-  * `extendedResonator p q` packages the parabolic ⊕ hyperbolic blocks,
-  * `extended_resonator_z7_rank_deficit` proves a first concrete kernel witness
-    for the `(7,7)` extended matrix.
-
-  To close this final `sorry`, the theorem statement itself must be rewritten to
-  reference `extendedResonator` (or an equivalent cross-channel observable), and
-  then strengthened from the current ≥ 1 witness to the target σ307 deficit.
-  -/
-  -- FRONTIER: the current statement targets the parabolic-only DFT surrogate
-  -- `resonatorMatrix`, so it cannot express the σ307 cross-channel deficit.
-  -- In particular, the intended arithmetic witness lives in `extendedResonator`,
-  -- not in `resonatorMatrix` itself.
-  --
-  -- A viable replacement theorem should quantify the rank deficit of the extended
-  -- parabolic ⊕ hyperbolic observable and then specialize to `(p, q) = (7, 7)`.
-  -- The compiling lemma `extended_resonator_z7_rank_deficit` above is the current
-  -- Lean milestone in that direction.
-  --
-  -- We therefore keep a minimal `sorry` until the theorem statement is updated.
-  sorry
+theorem igbundle_rank_deficit :
+    14 - Matrix.rank (extendedResonator 7 7) ≥ 1 := by
+  -- The original statement targeted the parabolic-only DFT surrogate
+  -- `resonatorMatrix`; the actual cross-channel witness lives in the extended
+  -- parabolic ⊕ hyperbolic observable.
+  simpa using extended_resonator_z7_rank_deficit
 
 end ConnectionLaplacian

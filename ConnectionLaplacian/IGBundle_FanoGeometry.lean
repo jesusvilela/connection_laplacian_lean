@@ -95,6 +95,14 @@ private def standardLine (i : Fin 7) : Finset (Fin 7) :=
   | 5 => ({⟨2, by decide⟩, ⟨3, by decide⟩, ⟨6, by decide⟩} : Finset (Fin 7))
   | _ => ({⟨2, by decide⟩, ⟨4, by decide⟩, ⟨5, by decide⟩} : Finset (Fin 7))
 
+private def standardLines : Finset (Finset (Fin 7)) :=
+  Finset.univ.image standardLine
+
+lemma fano_points_as_nonzero_F2_vectors_card :
+    (Finset.univ.filter
+      (fun v : Fin 2 × Fin 2 × Fin 2 => v ≠ (0, 0, 0))).card = 7 := by
+  native_decide
+
 /-- A fixed witness for the standard Fano plane used throughout the file. -/
 axiom standardFanoPlane : FanoPlane
 

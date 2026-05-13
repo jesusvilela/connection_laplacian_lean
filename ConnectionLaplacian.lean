@@ -65,3 +65,4 @@ import ConnectionLaplacian.L42_CognifoldResonance
 import ConnectionLaplacian.L43_SheafedHamiltonian
 
 import ConnectionLaplacian.L43_AdiabaticGeneralIntelligence
+import ConnectionLaplacian.L44_NCosmoDojo
