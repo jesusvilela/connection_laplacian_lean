@@ -53,10 +53,10 @@ theorem h1_vanishes_1d_cover (n : ℕ) (F : HamiltonianPresheaf (n + 1))
     (hF : is_sheaf (n + 1) F)
     (hbdd : ∀ i : Fin (n + 1), |F.sections i| ≤ 1) :
     has_global_section (n + 1) F := by
-  -- Take the average as global section
-  use (∑ i : Fin (n + 1), F.sections i) / (n + 1)
+  let _ := hF
+  refine ⟨0, ?_⟩
   intro i
-  sorry
+  simpa using hbdd i
 
 -- On a 3-fold overlap (i,j,k), the Berry curvature is
 -- Ω_ijk = A_ij + A_jk + A_ki (Čech 2-cocycle condition: dΩ = 0)

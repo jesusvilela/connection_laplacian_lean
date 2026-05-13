@@ -12,15 +12,16 @@ abbrev PhaseSpace := Fin 8 -> Real
 
 def avgAmp (_f : PhaseSpace -> PhaseSpace) (x : PhaseSpace) : Real := abs (x 0)
 def variance (_f : PhaseSpace -> PhaseSpace) (_x : PhaseSpace) : Real := 0
+def var (f : PhaseSpace -> PhaseSpace) (x : PhaseSpace) : Real := variance f x
 def energy (_f : PhaseSpace -> PhaseSpace) (x : PhaseSpace) : Real := abs (x 0)
 def resources (_f : PhaseSpace -> PhaseSpace) (x : PhaseSpace) : Real := abs (x 1)
 
 /-- TELOS-derived ergocetic predicate. -/
-def ergocetic_set_of {a : Type _} (avgAmp var energy res : a -> Real) : Set a :=
-  {x | avgAmp x > 0.35 /\ var x < 0.05 /\ energy x >= 0.05 /\ res x >= 0.02}
+def ergocetic_set_of {a : Type _} (avgAmp var energy resources : a -> Real) : Set a :=
+  {x | avgAmp x > 0.35 ∧ var x < 0.05 ∧ energy x ≥ 0.05 ∧ resources x ≥ 0.02}
 
 def ergocetic_set (f : PhaseSpace -> PhaseSpace) : Set PhaseSpace :=
-  ergocetic_set_of (avgAmp f) (variance f) (energy f) (resources f)
+  {x | avgAmp f x > 0.35 ∧ var f x < 0.05 ∧ energy f x ≥ 0.05 ∧ resources f x ≥ 0.02}
 
 def erdodetic_set (f : PhaseSpace -> PhaseSpace) : Set PhaseSpace :=
   {x | x ∉ ergocetic_set f}
@@ -47,7 +48,7 @@ def erdoPoint : PhaseSpace :=
   fun _ => 0
 
 lemma ergoPoint_mem (f : PhaseSpace -> PhaseSpace) : ergoPoint ∈ ergocetic_set f := by
-  dsimp [ergocetic_set, ergocetic_set_of, avgAmp, variance, energy, resources, ergoPoint]
+  dsimp [ergocetic_set, avgAmp, var, variance, energy, resources, ergoPoint]
   norm_num
 
 lemma erdoPoint_mem (f : PhaseSpace -> PhaseSpace) : erdoPoint ∈ erdodetic_set f := by

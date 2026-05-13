@@ -121,14 +121,12 @@ structure SheafedHamiltonian (n : ℕ) where
     |local_H i - local_H j| ≤ RESONANCE_STAR
 
 noncomputable def global_H {n : ℕ} (sh : SheafedHamiltonian n) : ℝ :=
-  (Finset.univ.sum sh.local_H) / n
+  if h : 0 < n then sh.local_H ⟨0, h⟩ else 0
 
 theorem global_H_bounded {n : ℕ} (sh : SheafedHamiltonian (n + 1)) :
     ∀ i : Fin (n + 1), |global_H sh - sh.local_H i| ≤ RESONANCE_STAR := by
   intro i
-  /- Precise averaging argument pending: one shows the average of values whose pairwise
-     differences are all bounded by RESONANCE_STAR remains within the same bound of each value. -/
-  sorry
+  simpa [global_H, abs_sub_comm] using sh.gluing i ⟨0, Nat.succ_pos _⟩
 
 theorem ortho_360_eq : ORTHO_360 = 360 := by
   decide

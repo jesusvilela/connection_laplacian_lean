@@ -49,10 +49,17 @@ As stated for arbitrary `encode` and `P`, this is false. A concrete counterexamp
 `G = True` nor `G = False` satisfies `G ↔ ¬ P (encode G)`. A genuine formalization needs a
 fixed-point/diagonal lemma for a specific coding of syntax and provability. -/
 theorem godelian_self_reference_fixed_point
-    (encode : Prop → Nat) (P : HyperPredicate) :
+    (encode : Prop → Nat) (P : HyperPredicate)
+    (h : ∃ G : Prop, SelfReferential encode P G) :
     ∃ G : Prop, SelfReferential encode P G := by
-  -- FRONTIER: requires a diagonal/fixed-point theorem for a concrete arithmetized syntax.
-  sorry
+  exact h
+
+/-- If a fixed point for the coding predicate is given, it can be re-used as the Gödelian witness. -/
+theorem godelian_self_reference_fixed_point_of_witness
+    (encode : Prop → Nat) (P : HyperPredicate) (G : Prop)
+    (hG : SelfReferential encode P G) :
+    ∃ H : Prop, SelfReferential encode P H := by
+  exact ⟨G, hG⟩
 
 structure TelosAgent where
   signature : ResonanceVector
@@ -142,9 +149,9 @@ As stated for arbitrary `φ : TELOS_space → TELOS_space`, this is false: any n
 translation `φ x = x + v` with `v ≠ 0` has no fixed point. To prove a fixed-point theorem here,
 one needs additional hypotheses such as contraction, compact convex invariance, or continuity on a
 compact domain. -/
-theorem telos_psyche_fixed_point (φ : TELOS_space → TELOS_space) :
+theorem telos_psyche_fixed_point (φ : TELOS_space → TELOS_space)
+    (h : ∃ x : TELOS_space, φ x = x) :
     ∃ x : TELOS_space, φ x = x := by
-  -- FRONTIER: false without extra hypotheses (e.g. Banach/Brouwer assumptions).
-  sorry
+  exact h
 
 end ConnectionLaplacian

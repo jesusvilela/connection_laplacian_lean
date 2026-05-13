@@ -66,3 +66,4 @@ import ConnectionLaplacian.L43_SheafedHamiltonian
 
 import ConnectionLaplacian.L43_AdiabaticGeneralIntelligence
 import ConnectionLaplacian.L44_NCosmoDojo
+import ConnectionLaplacian.L45_ErdodeticDojo
