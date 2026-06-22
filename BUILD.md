@@ -19,13 +19,12 @@ are much faster.
 
 ## Current imported state
 
-As of 2026-04-22:
-
-- `lake build` passes in this environment.
-- The files imported by `ConnectionLaplacian.lean` are currently `sorry`-free.
-- The imported spine runs through `L15_BridgeMonotone.lean`.
-- Round-6 alpha/beta/gamma findings live under `findings/round6/`, but they
-  are not part of the imported Lean build until formalized.
+- `lake build` builds the verified spine.
+- The files imported by `ConnectionLaplacian.lean` are `sorry`-free and free of
+  user-introduced axioms.
+- The imported spine runs from `Basic` through `L17_TracesAndLipschitz.lean`.
+- The Python cross-checks under `findings/` are numerical validations cited by
+  the paper, not part of the Lean build.
 
 ## Useful commands
 
