@@ -14,13 +14,17 @@ candidate to the upcoming FLoC Lisbon cycle.
 
 > **DOI:** <https://doi.org/10.5281/zenodo.19695396>
 
-## Project status (2026-04-22)
+## Project status
 
-- The imported Lean development currently runs from `Basic` through
-  `L17_TracesAndLipschitz`.
-- Files imported by `ConnectionLaplacian.lean` are maintained as `sorry`-free.
-- Round-6 exploratory outputs in `findings/` are explicitly empirical and are
-  not part of the verified theorem set until formalized in Lean.
+- This repository is scoped **solely** to the ℤ/2 connection-Laplacian
+  kernel-dimension theory: the verified Lean spine, the paper, and the
+  numerical cross-checks that accompany the paper.
+- The master file `ConnectionLaplacian.lean` imports exactly the verified
+  spine, from `Basic` through `L17_TracesAndLipschitz`; every imported file is
+  maintained as `sorry`-free and free of user-introduced axioms.
+- The `findings/` directory holds only the Python numerical cross-checks
+  cited by the paper. They are empirical validations of the formal theorems,
+  not theorems themselves.
 
 ## Verified development (import spine)
 
@@ -52,16 +56,19 @@ Representative machine-checked theorems include:
 - `frobenius_laplacian_decomposes`
 - `trace_mul_scalar_signed_eq`
 
-## Empirical findings (not yet theorems)
+## Numerical cross-checks (not theorems)
 
-Exploratory artifacts are stored under:
+The paper's formal theorems are independently exercised by the Python fuzzers
+and negators retained under `findings/`:
 
-- `findings/round6/stage1_negator_A/sheaf_alpha/`
-- `findings/round6/stage1_negator_A/sheaf_beta/`
-- `findings/round6/stage1_negator_A/sheaf_gamma/`
+- `findings/round2/fuzzer/` — exhaustive sweep at orders `n ≤ 5`.
+- `findings/round3/negator/`, `findings/round4/negator_fuzzy/` — adversarial
+  negation searches against the kernel-dimension and fibre-cardinality claims.
+- `findings/round6/stage2_fuzzer_A/`, `findings/round6/stage6_fuzzer_B/` —
+  extended cross-checks.
 
-These files track conjectural or pipeline-generated claims and should be treated
-as research evidence rather than verified Lean results.
+These scripts are empirical evidence for the formal statements, not verified
+Lean results.
 
 ## Build and verification
 
@@ -83,8 +90,8 @@ Additional build guidance is available in `BUILD.md`.
 ## Repository scope
 
 - **Verified content:** files imported by `ConnectionLaplacian.lean`.
-- **Research frontier:** `findings/` (empirical candidates pending
-  formalization).
+- **Numerical cross-checks:** `findings/` (Python fuzzers/negators cited by the
+  paper).
 - **Paper materials:** `paper/paper.tex` and `paper/paper.pdf`.
 - **Reader guides:** `docs/` (thesis-style overview, graph examples, and a
   compact infographic for navigating the formalization).
