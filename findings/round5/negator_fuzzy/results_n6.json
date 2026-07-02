@@ -1,0 +1,62 @@
+[
+  {
+    "idx": "R9_n6",
+    "name": "R9_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  },
+  {
+    "idx": "R10_n6",
+    "name": "R10_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  },
+  {
+    "idx": "R11_n6",
+    "name": "R11_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  },
+  {
+    "idx": "R14_n6",
+    "name": "R14_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  },
+  {
+    "idx": "R17_n6",
+    "name": "R17_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  },
+  {
+    "idx": "R21_n6",
+    "name": "R21_n6",
+    "hypothesis": "",
+    "tested": 400,
+    "passed": 400,
+    "tau": 1.0,
+    "verdict": "TRUE (fuzz-verified tau=1.0000, n=400)",
+    "counterexample": null
+  }
+]

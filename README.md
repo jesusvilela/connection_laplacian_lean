@@ -64,6 +64,10 @@ and negators retained under `findings/`:
 - `findings/round2/fuzzer/` — exhaustive sweep at orders `n ≤ 5`.
 - `findings/round3/negator/`, `findings/round4/negator_fuzzy/` — adversarial
   negation searches against the kernel-dimension and fibre-cardinality claims.
+- `findings/round5/` — bridge-monotonicity sanity check for
+  `numBalancedComponents_monotone_remove_nonwrap_nonbridge`, an extended
+  fuzzy-negator scoreboard, and the paper/Lean adversarial passes cited by
+  the paper's reproducibility section.
 - `findings/round6/stage2_fuzzer_A/`, `findings/round6/stage6_fuzzer_B/` —
   extended cross-checks.
 
