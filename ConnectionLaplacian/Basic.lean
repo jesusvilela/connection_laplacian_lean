@@ -10,9 +10,6 @@ the signed adjacency.
 
 We work over ℝ throughout. Mathlib's Matrix infrastructure provides what
 we need for the block structure and eigenvalue statements.
-
-Honest note: this file was written to compile against Mathlib v4.11.0,
-but not verified by running Lean. Some lemma names may need adjusting.
 -/
 
 import Mathlib.LinearAlgebra.Matrix.Spectrum
