@@ -1,3 +1,5 @@
+import ConnectionLaplacian
+
 /-!
 Trust-boundary audit for the public theorem spine.
 
@@ -6,8 +8,6 @@ This file is compiled separately in CI.  Its output is checked by
 allowed.  A project-local axiom entering any representative end theorem makes
 the workflow fail.
 -/
-
-import ConnectionLaplacian
 
 #print axioms ConnectionLaplacian.ConnGraph.cover_charpoly_eq_scalar_times_mobius
 #print axioms ConnectionLaplacian.ConnGraph.isBalanced_iff_closedWalk_wrap_even
