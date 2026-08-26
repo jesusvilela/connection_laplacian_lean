@@ -491,7 +491,7 @@ The historical `signedLaplacian_kernel_dim`, `connectionLaplacian_kernel_dim`,
 and `mobius_kernel_strict_iff` lived here with `= numComponents − numOddWrapComponents`
 on their RHS. That RHS is FALSE on arbitrary wrap (counterexample: K₄ with
 wrap = {a–b, a–c} — one odd-count component, but the component is already
-unbalanced by the non-wrap edge (b,c) forming a 3-cycle with sign flip). The
+unbalanced on the triangle a–b–d–a, whose edge signs are (−,+,+). The
 correct statement uses `numBalancedComponents` and lives in
 `ConnectionLaplacian.L8_Recognition` as `…_general`. See
 `memory/signed_kernel_dim_false.md` for the counterexample derivation.

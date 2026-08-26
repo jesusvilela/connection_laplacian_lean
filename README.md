@@ -91,6 +91,12 @@ lake env lean ConnectionLaplacian/L13_PSD.lean
 
 Additional build guidance is available in `BUILD.md`.
 
+CI also compiles `ConnectionLaplacian/AxiomAudit.lean` and checks its
+`#print axioms` output against the explicit Lean/Mathlib allowlist
+`propext`, `Quot.sound`, and `Classical.choice`. A comment-aware source audit
+separately rejects `sorry`, `admit`, `native_decide`, and project-local
+`axiom` declarations throughout the verified spine.
+
 ## Repository scope
 
 - **Verified content:** files imported by `ConnectionLaplacian.lean`.

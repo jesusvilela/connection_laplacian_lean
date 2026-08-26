@@ -32,5 +32,13 @@ jobs:
       - name: Get Mathlib cache
         run: lake exe cache get || true
 
+      - name: Audit source trust boundary
+        run: python3 scripts/audit_trust.py
+
       - name: Build
         run: lake build
+
+      - name: Audit theorem axioms
+        run: |
+          lake env lean ConnectionLaplacian/AxiomAudit.lean 2>&1 | tee axiom-audit.log
+          python3 scripts/audit_trust.py --axiom-output axiom-audit.log
