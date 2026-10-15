@@ -150,11 +150,13 @@ sources):
    bridges is sufficient, not necessary (K₄ with a wrapped triangle holds);
    both failure forms exhibited. All six examples verified numerically via
    findings/round8.*
-8. **`CycleSpectrum.lean` has two vacuous public "spectrum" theorems**
+8. **`CycleSpectrum.lean` had two vacuous public "spectrum" theorems**
    (`flat_cycle_spectrum`, `mobius_cycle_spectrum`) whose statements mention
    no Laplacian and hold trivially; the real content is the public per-k
    `scalarCycle_eigenvalue` / `signedCycle_eigenvalue` (both `3 ≤ n`), and
-   the paper says exactly that. Delete or rename the vacuous pair.
+   the paper says exactly that. **Resolved:** the vacuous pair was removed in
+   commit `0b67037`. An additional eigenvalue-separation declaration was
+   subsequently strengthened to require an actual eigenpair (see audit PR).
 9. **The manuscript lacked a code URL/DOI**; Section 8's dependency graph
    predates L9–L17; swarm shorthand (C1/C2/τ/R5) was undefined — *resolved
    2026-10-16 by the errata (DOI + URL added, spine list updated, shorthand
@@ -166,6 +168,14 @@ sources):
    Lean `3 ≤ n` eigenvalue theorems.
 
 ## Methodological lineage note
+
+The author reports originating the initial conjectures and designing the
+adversarial research apparatus, then directing LLMs to develop proofs,
+formalizations, numerical counterexample searches, and subsequent candidate
+claims. This is a claim about intellectual provenance, distinct from
+machine verification of the resulting statements.
+
+
 
 The verification pipeline recorded here was not produced by treating a
 language model as an authority. The originating research architecture
