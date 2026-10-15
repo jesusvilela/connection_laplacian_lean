@@ -91,8 +91,9 @@ factorisation have been added as Lean code to
 - `cover_charpoly_root_count_eq_sum`: pointwise *algebraic*
   multiplicity of every real root is additive across those factors.
 
-These are **not** the open cycle Fourier assembly. They require
-`lake build` and the updated `AxiomAudit.lean` before merging.
+These are **not** the open cycle Fourier assembly. GitHub Actions run
+`38795012986` built the branch successfully and passed the axiom/trust-boundary
+checks. The full cycle-spectrum multiset proof is still outstanding.
 
 ## Negative controls and numerical triangulation
 
@@ -106,6 +107,9 @@ The independent, numerical
 - a **negative control**: periodic Fourier vectors must not pass
   the one-wrap signed case.
 
+The script was rerun independently in a Python/NumPy environment: 124
+scalar/signed cases passed, including 62 rejected negative controls;
+small last-digit variation in floating-point residuals is expected.
 This establishes no Lean theorem. The protocol deliberately checks the
 boundary sign and repeated frequencies that a superficial check can miss.
 
@@ -113,7 +117,7 @@ boundary sign and repeated frequencies that a superficial check can miss.
 
 | Priority | Work | Acceptance criterion | State |
 |---|---|---|---|
-| P0 | Cover spectral roots and pointwise multiplicity | Lean build + three-axiom audit for both new theorems | Code proposed; **uncompiled** |
+| P0 | Cover spectral roots and pointwise multiplicity | Lean build + three-axiom audit for both new theorems | **COMPLETE for these two declarations** (GitHub Actions run `38795012986`, success) |
 | P1 | Scalar cycle full multiset | Actual `L_sc` charpoly/root-multiset equality for every `n≥3` | OPEN |
 | P2 | One-wrap signed cycle full multiset | Actual `L_sg` charpoly/root-multiset equality, including repeated roots | OPEN |
 | P3 | Strong even-wrap cycle detection | In `L14_CycleEw`, explicit Eulerian fundamental walk and independent reverse direction; remove reliance on caller-supplied `hrev` | OPEN |
