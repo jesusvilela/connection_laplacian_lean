@@ -664,14 +664,21 @@ n >= 3) and `mobius_more_eigenvalues`; assembling the per-k identities
 into the full multiset equality remains a documented TODO (see the
 paper's Remark on CycleSpectrum). -/
 
-/-- **Corollary**: The Möbius cycle has strictly more distinct eigenvalues
-than the flat cycle of the same length. -/
+/-- **Spectral separation corollary.** For `n ≥ 4`, an actual eigenvalue
+of the signed cycle Laplacian is absent from the scalar-cycle spectrum.
+Since the full Möbius connection spectrum contains both branches while the
+flat connection spectrum contains only the scalar branch (with multiplicity),
+the full Möbius connection has strictly more *distinct* spectral values.
+The eigenvalue witness is tied to the matrix by an eigen-equation. -/
 theorem mobius_more_eigenvalues (n : ℕ) (hn : 4 ≤ n) :
     ∃ (lam_mob : ℝ),
-      (∃ v, v ≠ 0 ∧ True) ∧
+      (∃ v : Fin n → ℝ, v ≠ 0 ∧
+        (signedCycleLaplacian n (by omega)).mulVec v = lam_mob • v) ∧
       (∀ (k : Fin n), lam_mob ≠ 2 * (1 - cos (2 * π * k.val / n))) := by
-  refine ⟨2 * (1 - cos (π / n)), ?_, ?_⟩
-  · exact ⟨(1 : ℕ), one_ne_zero, trivial⟩
+  obtain ⟨v, hv_nonzero, hv_eigen⟩ :=
+    signedCycle_eigenvalue n (by omega) (⟨0, by omega⟩ : Fin n)
+  refine ⟨2 * (1 - cos (π / n)), ⟨v, hv_nonzero, ?_⟩, ?_⟩
+  · simpa using hv_eigen
   · intro k hEq
     have hcos : cos (π / n) = cos (2 * π * (k.val : ℝ) / n) := by
       have h2 : (1 : ℝ) - cos (π / n) = 1 - cos (2 * π * (k.val : ℝ) / n) := by
