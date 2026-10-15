@@ -111,9 +111,9 @@ Resolved on 2026-10-15 (round 8, see `findings/round8/report.md`):
 
 Still open (paper↔formal boundary, from the round-8 transcription audit):
 
-1. **T4 bridge-monotonicity is not stated in the paper body** — it is proved
-   in Lean but the paper only ties it to a different (addition-law) example.
-   The Lean theorem is thus ahead of the paper.
+1. **T4 bridge-monotonicity is not stated in the paper body** — *resolved
+   2026-10-16: the errata published on main add Theorem `thm:bridge-monotone`
+   with a proof sketch crediting the Lean proof.*
 2. **T3 public Lean statement is weaker than the paper's** — paper asserts
    PSD *plus* the explicit quadratic-form identity; the identity lives in
    private Lean lemmas. Promoting `sLM_quadForm_nonneg` would close it.
@@ -121,11 +121,10 @@ Still open (paper↔formal boundary, from the round-8 transcription audit):
    real symmetry; a convention note, not an error.
 4. **T1's "Equivalently Spec ⊎ Spec" clause and Cor 5.7** have no separately
    named cover theorem in Lean (appendix lists them as unnamed).
-5. **The paper's eq. (1) Kronecker formula is internally inconsistent**
-   (vertex-major `D⊗I₂` vs fibre-major `Φ(e)⊗1_e`, paper line 154): the
-   display is unsummable as literally written. The independent implementer
-   had to resolve it from the block display; the formalization agrees with
-   the resolution. A one-line erratum in the paper would remove the trap.
+5. **The paper's eq. (1) Kronecker formula was internally inconsistent**
+   (vertex-major `D⊗I₂` vs fibre-major `Φ(e)⊗1_e`) — *resolved 2026-10-16:
+   the errata reorder the second factor to `1_e ⊗ Φ(e)` with an ordering
+   note.*
 6. Battery anchor instances are n≤5 (conventions are instance-independent,
    but Lean-side anchoring at scale is compile-cost-bound); sweep all-wrap
    coverage stops at e≤12 with dense sampling above (K8's 2^28 wrap subsets
@@ -136,18 +135,19 @@ Additional items from the 2026-10-15 external-review adjudication
 current text, the independent implementation's numerics, and the Lean
 sources):
 
-7. **Remark 6.5 contains two confirmed errors** — the H¹ threshold
-   inequality is off by one (should be |E| > |V| − #π₀ + 1), and (★) also
-   fails when a *bridge* lies in W (verified numerically on P₄: odd #W,
-   ker = β = 1), so the "fails only when dim H¹ > 1" scope is wrong.
+7. **Remark 6.5 contained two confirmed errors** (H¹ threshold off by one;
+   bridge-in-W breaks (★), verified numerically on P₄) — *resolved
+   2026-10-16: errata correct the threshold via the Euler relation, add the
+   bridge failure mode, and state the precise scope of (★).*
 8. **`CycleSpectrum.lean` has two vacuous public "spectrum" theorems**
    (`flat_cycle_spectrum`, `mobius_cycle_spectrum`) whose statements mention
    no Laplacian and hold trivially; the real content is the public per-k
    `scalarCycle_eigenvalue` / `signedCycle_eigenvalue` (both `3 ≤ n`), and
    the paper says exactly that. Delete or rename the vacuous pair.
-9. **The manuscript lacks a code URL/DOI** (repo README has Zenodo
-   10.5281/zenodo.19695396); Section 8's dependency graph predates
-   L9–L17; swarm shorthand (C1/C2/τ/R5) is undefined in the text.
+9. **The manuscript lacked a code URL/DOI**; Section 8's dependency graph
+   predates L9–L17; swarm shorthand (C1/C2/τ/R5) was undefined — *resolved
+   2026-10-16 by the errata (DOI + URL added, spine list updated, shorthand
+   defined at first use).*
 10. The reviews' headline accusation — that the cycle corollary claims
    "kernel drops iff n odd" — is **stale**: the current text states the
    correct universal version, confirmed by numerics (ker L^sg(C_n, {01}) = 0

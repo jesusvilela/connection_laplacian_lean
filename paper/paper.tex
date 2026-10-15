@@ -102,7 +102,7 @@ axioms (\texttt{propext}, \texttt{Classical.choice},
   \item The kernel dimension of the signed Laplacian equals the number
     of balanced components; the full $\ZZ/2$-connection Laplacian has
     kernel dimension $\# \comp(G) + \#\{\text{balanced components}\}$
-    (Mobius) and $2\,\#\comp(G)$ (flat).
+    (Möbius) and $2\,\#\comp(G)$ (flat).
   \item On the $n$-cycle the Fourier basis diagonalises both modes
     explicitly.
 \end{enumerate}
@@ -152,8 +152,10 @@ $V\times V$ block matrix with $2\times 2$ blocks
     \end{cases}
 \end{equation}
 Equivalently, $L_{\operatorname{Mob}} = D\otimes \II_2 -
-\sum_{e\in E} \Phi(e)\otimes \mathbf{1}_e$, where $\mathbf{1}_e$ is
-the $V\times V$ edge-indicator of~$e$.
+\sum_{e\in E} \mathbf{1}_e\otimes \Phi(e)$, where $\mathbf{1}_e$ is
+the $V\times V$ edge-indicator of~$e$ (both Kronecker factors ordered
+vertex-major, matching the $V\times \operatorname{Fin}\,2$ index set of
+Equation~(1)).
 The \emph{flat} Laplacian $L_{\operatorname{flat}}$ is obtained by
 the same recipe with $\Phi\equiv \II_2$, i.e. by ignoring the wrap
 structure; it agrees with two copies of the ordinary graph Laplacian.
@@ -168,7 +170,7 @@ This is the finite-dimensional, discrete analogue of the spectrum of
 the Laplacian on a flat $\ZZ/2$ line bundle over a graph: the
 kernel detects global sections of the bundle, and the flat bundle
 always has two independent sections per component.
-The Mobius bundle admits a non-vanishing section over a component
+The Möbius bundle admits a non-vanishing section over a component
 exactly when the \emph{wrap} holonomy of the bundle around every
 cycle in that component is trivial; this is the condition of
 \emph{balance} in the language of Harary, Cartwright and Zaslavsky
@@ -249,7 +251,7 @@ Laplacian $\Lscalar \in \RR^{V\times V}$ is
 \]
 i.e.\ Mathlib's
 \texttt{SimpleGraph.lapMatrix}.
-The \emph{signed Mobius} Laplacian $\Lsigned \in \RR^{V\times V}$
+The \emph{signed Möbius} Laplacian $\Lsigned \in \RR^{V\times V}$
 encodes the wrap sign on the off-diagonal:
 \[
   \Lsigned[u,v] \defeq
@@ -268,7 +270,7 @@ direct sum-of-squares expression
   + \sum_{\{u,v\}\in W} (x_u + x_v)^2,
 \]
 which Lemma~\ref{lem:signed-psd} (\S\ref{sec:bounds}) turns into the
-Lean fact \texttt{signedLaplacianMobius\_posSemidef}
+Lean fact \texttt{signedLaplacianMöbius\_posSemidef}
 (\texttt{L13\_PSD.lean}). Equivalently --- but through a heavier route
 not used by the Lean proof --- PSD follows from the cover splitting
 (Theorem~\ref{thm:cover-splits}): the orientation double cover's
@@ -339,7 +341,7 @@ $u,v\in V$ and $i,j\in\operatorname{Fin}2$,
 Reindexing via $\varphi$ and using
 $P^{-1}=\tfrac{1}{2}P$ turns the left-hand side into
 $\varphi_*\bigl(P\,L_\epsilon\,P^{-1}\bigr)$, giving the claim.
-The flat case is the special case $W=\emptyset$ of the Mobius
+The flat case is the special case $W=\emptyset$ of the Möbius
 case, or equivalently the fact that $\widehat R\,\II_2\,\widehat R=
 2\II_2$ collapses both diagonal blocks to the scalar Laplacian.
 \end{proof}
@@ -797,8 +799,17 @@ from Theorem~\ref{thm:signed-kernel} (the two wrap edges
 together form a non-trivial cohomology class on~$K_4$).
 Equation~$(\star)$ is correct on $G=C_n$ because
 $H^1(C_n;\ZZ/2)\cong\ZZ/2$ is one-dimensional and total
-wrap-count mod~$2$ detects the class; it fails as soon as
-$\dim H^1(G;\ZZ/2)>1$, i.e.\ as soon as $|E|>|V|-\#\comp(G)$.
+wrap-count mod~$2$ detects the class. It fails for either of two
+reasons. First, it fails once $\dim H^1(G;\ZZ/2)>1$, i.e.\ once
+$|E|>|V|-\#\comp(G)+1$ (by the Euler relation
+$\dim H^1(G;\ZZ/2)=|E|-|V|+\#\comp(G)$). Second, it fails even when
+$\dim H^1(G;\ZZ/2)\le 1$ --- in particular on trees, where
+$\dim H^1=0$ --- whenever a \emph{bridge} of $G$ lies in $W$: on a tree
+with a single wrapped edge, $|W|=1$ is odd so $(\star)$ predicts
+$\dim\Ker\Lsigned=0$, but every tree component is balanced
+(Theorem~\ref{thm:tree-balanced}) and $\dim\Ker\Lsigned=\#\comp(G)$.
+Precisely, $(\star)$ holds on a component iff that component is
+unicyclic-or-tree \emph{and} no bridge of it lies in $W$.
 \end{remark}
 
 %=============================================================
@@ -817,7 +828,7 @@ so those two indices contribute only a single real eigenvector
 each).
 
 \begin{theorem}[Flat cycle spectrum]\label{thm:flat-cycle}
-The scalar Laplacian $\Lscalar(C_n)$ has spectrum
+Let $n\ge 3$. The scalar Laplacian $\Lscalar(C_n)$ has spectrum
 \[
   \operatorname{Spec}\Lscalar(C_n)
   = \bigl\{\, 2 - 2\cos(2\pi k/n) \,:\, k\in\ZZ/n\,\bigr\},
@@ -826,8 +837,8 @@ with $\mathbf{e}_k$ an eigenvector for the eigenvalue
 $2-2\cos(2\pi k/n)$.
 \end{theorem}
 
-\begin{theorem}[Mobius cycle spectrum]\label{thm:mobius-cycle}
-Let $W=\{\{0,1\}\}$ (one wrap edge). Then $\Lsigned(C_n)$ has
+\begin{theorem}[Möbius cycle spectrum]\label{thm:mobius-cycle}
+Let $n\ge 3$ and $W=\{\{0,1\}\}$ (one wrap edge). Then $\Lsigned(C_n)$ has
 spectrum
 \[
   \operatorname{Spec}\Lsigned(C_n)
@@ -836,15 +847,17 @@ spectrum
 \end{theorem}
 
 \begin{proof}[Sketch]
-In both cases the Laplacian is a linear combination of the
-identity and the shift operator $S:v\mapsto v(\cdot+1)$, so
-both commute with the $\ZZ/n$-action and are diagonalised by
-the Fourier basis. For $\Lscalar$ the shift weight is $+1$, giving
-eigenvalues $2 - (e^{2\pi i k/n}+e^{-2\pi ik/n})$. For $\Lsigned$
-with a single wrap edge, a gauge transformation
-$v\mapsto \alpha^j v$ with $\alpha=e^{i\pi/n}$ converts the
-problem into an identical one with shift weight $-1$, giving
-eigenvalues $2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$.
+The scalar Laplacian is the circulant $2\II - (S+S^{-1})$ for the
+shift $S:v\mapsto v(\cdot+1)$, so it commutes with the $\ZZ/n$-action
+and is diagonalised by the Fourier basis with shift weight $+1$,
+giving eigenvalues $2 - (e^{2\pi i k/n}+e^{-2\pi ik/n})$. The signed
+Laplacian with a single wrap edge is \emph{not} circulant before
+gauging; it commutes with the twisted shift $S_{\mathrm{sg}}$
+satisfying $S_{\mathrm{sg}}^n=-\II$. The entrywise gauge
+transformation $v_j \mapsto \alpha^j v_j$ with $\alpha=e^{i\pi/n}$
+(relabelled so the branch cut lies on the wrap edge $\{0,1\}$)
+converts it into the circulant $2\II-(\alpha S+\alpha^{-1}S^{-1})$,
+giving eigenvalues $2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$.
 The full Lean proof in \texttt{CycleSpectrum.lean} carries out the
 Fourier algebra without appealing to gauge equivalence, producing
 each eigenvector explicitly and verifying the eigen-equation by a
@@ -857,7 +870,7 @@ eigenvalue identity}: for each $k\in\operatorname{Fin} n$ it produces
 an explicit nonzero vector $v_k$ with
 $\Lscalar(C_n)\cdot v_k=(2-2\cos(2\pi k/n))\,v_k$
 (\texttt{scalarCycle\_eigenvalue}, $n\ge 3$) and similarly for the
-signed Mobius cycle (\texttt{signedCycle\_eigenvalue}). Assembly of
+signed Möbius cycle (\texttt{signedCycle\_eigenvalue}). Assembly of
 these per-$k$ identities into the full multiset equality
 $\operatorname{Spec}\Lscalar(C_n)=\{2-2\cos(2\pi k/n)\}$ of
 Theorems~\ref{thm:flat-cycle}--\ref{thm:mobius-cycle} follows by a
@@ -899,12 +912,12 @@ Mathlib~v4.11.0. The dependency graph is linear:
 \[
   \text{\texttt{Basic}} \to
   \text{\texttt{KernelDimension}} \to
-  \text{\texttt{L5\_Cover}} \to
-  \text{\texttt{L6\_Cohomology}} \to
-  \text{\texttt{L8\_Recognition}},
+  \text{\texttt{L5\_Cover}} \to \cdots \to
+  \text{\texttt{L17\_TracesAndLipschitz}},
 \]
 with a lateral \texttt{CycleSpectrum} file depending on
-\texttt{Basic} and \texttt{KernelDimension}.
+\texttt{Basic} and \texttt{KernelDimension} (the full file list is
+tabulated in Appendix~\ref{app:formal-index}).
 
 \subsection*{Axiomatic footprint}
 
@@ -1375,8 +1388,12 @@ edge unbalances the graph iff the wrap edge lies on a cycle.
 
 \begin{example}[Adding a non-wrap edge between components can
 \emph{decrease} $\beta$]\label{ex:cross-merge}
-The fuzzy-logic sweep (\S\ref{sec:formalisation}, claim
-\texttt{C2}, $\tau=0.0000$) refutes the naive monotonicity
+The fuzzy-logic sweep (discovery shorthand: claims are labelled
+\texttt{C1}, \texttt{C2}, \dots in the order the swarm proposed them,
+and $\tau\in[0,1]$ is the empirical satisfaction rate of a claim over
+its tested configurations, so $\tau=0$ refutes and $\tau=1$ confirms;
+\S\ref{sec:formalisation}, claim \texttt{C2}, $\tau=0.0000$) refutes
+the naive monotonicity
 ``adding a non-wrap edge can only preserve or increase
 $\beta$''. On three isolated vertices ($W=\emptyset$, so
 $\beta=3$), adding the non-wrap edge $\{v_0,v_1\}$ merges two
@@ -1388,7 +1405,28 @@ least one} endpoint lies in a balanced component and $0$ when both
 endpoints lie in unbalanced components. (In the mixed
 balanced-plus-unbalanced case, the merged component is unbalanced,
 so the pre-existing balanced component is lost and $\beta$ drops
-by~$1$.)
+by~$1$.).
+
+\begin{theorem}[Bridge-deletion monotonicity]\label{thm:bridge-monotone}
+Deleting a non-bridge edge cannot decrease $\beta$: for any edge
+$e\in E(G)$ that is not a bridge of the underlying graph,
+\[
+  \beta(G) \;\le\; \beta(G - e).
+\]
+\end{theorem}
+
+\begin{proof}[Proof (formalised)]
+The Lean proof (\texttt{L15\_BridgeMonotone.lean},
+\texttt{numBalancedComponents\_monotone\_remove\_nonwrap\_nonbridge})
+constructs an injection from the balanced components of $G$ into the
+balanced components of $G-e$: deleting a non-bridge edge leaves every
+component connected, and each balanced component of $G$ yields a
+balanced component of $G-e$ because its balancing closed walks
+survive the deletion. A non-wrap hypothesis is accepted by the Lean
+statement for continuity with the discovery sweep that produced it,
+but the proof does not use it: the law is bridge-sensitive, not
+wrap-sensitive.
+\end{proof}
 \end{example}
 
 \begin{example}[Non-wrap edge contraction is not kernel-stable]
@@ -1452,7 +1490,7 @@ Thm.~\ref{thm:strict} &
 Prop.~\ref{prop:traces} (sc) &
   \texttt{trace\_scalarLaplacian} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:traces} (sg) &
-  \texttt{trace\_signedLaplacianMobius} & \texttt{L9\_Bounds.lean} \\
+  \texttt{trace\_signedLaplacianMöbius} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (mono) &
   \texttt{signed\_kernel\_le\_scalar\_kernel} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
@@ -1460,7 +1498,7 @@ Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
 Prop.~\ref{prop:kernel-ineq} (drop~$\le\#\comp$) &
   \texttt{kernel\_drop\_le\_numComponents} & \texttt{L9\_Bounds.lean} \\
 Lem.~\ref{lem:signed-psd} &
-  \texttt{signedLaplacianMobius\_posSemidef} & \texttt{L13\_PSD.lean} \\
+  \texttt{signedLaplacianMöbius\_posSemidef} & \texttt{L13\_PSD.lean} \\
 Thm.~\ref{thm:cover-charpoly} &
   \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
 Cor.~\ref{cor:mult-pointwise} &
@@ -1498,7 +1536,12 @@ Prop.~\ref{prop:traces2} (polarisation) &
 \end{center}
 \noindent\footnotesize (File paths: \texttt{KernelDim.lean} abbreviates \texttt{KernelDimension.lean}.)\normalsize
 
-\paragraph{Reproducibility.} From the project root,
+\paragraph{Reproducibility.} The complete Lean and Python sources
+live at
+\url{https://github.com/jesusvilela/connection\_laplacian\_lean}
+(DOI
+\href{https://doi.org/10.5281/zenodo.19695396}{10.5281/zenodo.19695396}).
+From the project root,
 \begin{quote}
 \verb|elan run lake build|
 \end{quote}
