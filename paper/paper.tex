@@ -114,7 +114,8 @@ correct an incorrect statement that appeared in our pre-registered
 plan: the identity
 $\dim\Ker L^{\operatorname{sg}}(G) = \#\comp(G) -
   \#\{\text{components of odd total wrap}\}$
-holds only on $\ZZ/2$-cycles, and must in general be replaced by the
+holds for every wrap assignment on a cycle, but fails for some wrap assignments
+on general graphs; the universally valid replacement is the
 cohomological formula $\dim\Ker L^{\operatorname{sg}}(G) =
 \#\{\text{balanced components}\}$, which is the content of
 Theorem~\ref{thm:signed-kernel}. The Lean sources and a numerical
@@ -810,7 +811,7 @@ A useful \emph{sufficient} condition --- which is \emph{not} necessary ---
 is: $\dim H^1(C;\ZZ/2)\le 1$ (i.e., by the Euler relation
 $\dim H^1(C)=|E(C)|-|V(C)|+1$ on a connected component, $C$ is at most
 unicyclic) \emph{and} $C$ carries an even number of wrapped bridges.
-Non-necessality: on $K_4$ with a single wrapped triangle, $(\star)$
+This condition is not necessary: on $K_4$ with a single wrapped triangle, $(\star)$
 holds although $\dim H^1(K_4;\ZZ/2)=3$; with $W=\emptyset$ it holds
 trivially on every graph. Failure takes exactly two forms: an
 \emph{unbalanced} component with even total wrap ($K_4$ with a wrapped
@@ -868,7 +869,7 @@ transformation $v_j \mapsto \alpha^j v_j$ with $\alpha=e^{i\pi/n}$
 (relabelled so the branch cut lies on the wrap edge $\{0,1\}$)
 converts it into the circulant $2\II-(\alpha S+\alpha^{-1}S^{-1})$,
 giving eigenvalues $2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$.
-The full Lean proof in \texttt{CycleSpectrum.lean} carries out the
+The Lean per-frequency proofs in \texttt{CycleSpectrum.lean} carry out the
 Fourier algebra without appealing to gauge equivalence, producing
 each eigenvector explicitly and verifying the eigen-equation by a
 direct \texttt{Finset.sum\_eq\_single} reduction.
@@ -917,8 +918,11 @@ $n\bmod 2$, so $C_n$ is balanced exactly when $n$ is even.
 \section{The Lean Formalisation}\label{sec:formalisation}
 %=============================================================
 
-The entire development is formalised in Lean~4 against
-Mathlib~v4.11.0. The dependency graph is linear:
+The central kernel-dimension and decomposition development is formalised
+in Lean~4 against Mathlib~v4.11.0. The cycle-spectrum statements are
+formalised per eigenvalue; completeness of the cycle spectral multiset
+is established in the paper, not separately in Lean.
+The dependency graph is linear:
 \[
   \text{\texttt{Basic}} \to
   \text{\texttt{KernelDimension}} \to
@@ -1500,7 +1504,7 @@ Thm.~\ref{thm:strict} &
 Prop.~\ref{prop:traces} (sc) &
   \texttt{trace\_scalarLaplacian} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:traces} (sg) &
-  \texttt{trace\_signedLaplacianMöbius} & \texttt{L9\_Bounds.lean} \\
+  \texttt{trace\_signedLaplacianMobius} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (mono) &
   \texttt{signed\_kernel\_le\_scalar\_kernel} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
@@ -1508,7 +1512,7 @@ Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
 Prop.~\ref{prop:kernel-ineq} (drop~$\le\#\comp$) &
   \texttt{kernel\_drop\_le\_numComponents} & \texttt{L9\_Bounds.lean} \\
 Lem.~\ref{lem:signed-psd} &
-  \texttt{signedLaplacianMöbius\_posSemidef} & \texttt{L13\_PSD.lean} \\
+  \texttt{signedLaplacianMobius\_posSemidef} & \texttt{L13\_PSD.lean} \\
 Thm.~\ref{thm:cover-charpoly} &
   \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
 Cor.~\ref{cor:mult-pointwise} &
