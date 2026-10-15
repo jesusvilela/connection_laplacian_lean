@@ -76,11 +76,14 @@ CI only):
    nanoda external kernel (16,163 declarations, zero typechecker errors).
 3. **Empirical falsification pressure** — `findings/round2–6`: exhaustive
    n≤5 (and n≤6 for spectra) enumeration over *all* graphs × *all* wraps,
-   adversarial negators, n=7 randomized gap-checks; and round 8: n=8
+   adversarial negators, n=7 randomized gap-checks; round 8: n=8
    bounded-exhaustive sweep (**7,246,819 configurations, zero failures**)
    computed entirely by an independent paper-only implementation, plus a
    Lean-verified convention-anchoring battery tying the formalization's
-   matrices to that implementation on 74 concrete instances.
+   matrices to that implementation on 74 concrete instances; and round 9:
+   3,314,688 structured-adversarial configurations at n = 9–10 (every cut,
+   seeded spanning trees and maximal matchings — the wrap families where
+   the historical K₄ counterexample lived), zero failures.
 
 None of the three layers alone establishes that the published mathematics is
 perfect. Together they make accidental error much harder.

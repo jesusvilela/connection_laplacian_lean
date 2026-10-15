@@ -1,0 +1,16 @@
+{
+ "date": "2026-10-16",
+ "mode": "structured-adversarial (cuts / spanning trees / maximal matchings / extremes)",
+ "inputs": [
+  "graphs/g9_e8-9.g6",
+  "graphs/g9_e10.g6",
+  "graphs/g9_e11.g6",
+  "graphs/g10_e9.g6",
+  "graphs/g10_e10.g6",
+  "graphs/g10_e11.g6"
+ ],
+ "total_configs": 3314688,
+ "total_failures": 0,
+ "elapsed_seconds": 2856.9,
+ "failure_examples": []
+}
