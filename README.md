@@ -31,8 +31,13 @@ candidate to the upcoming FLoC Lisbon cycle.
 |---|---|---|
 | Verified spine | everything imported by `ConnectionLaplacian.lean` | machine-checked Lean proofs, CI-enforced trust boundary |
 | Hardening harness | `Hardening/` | comparator challenge/solution modules, convention-anchor battery, run logs, evidence map, review adjudication |
-| Numerical cross-checks | `findings/` (rounds 2–8) | Python; empirical evidence for the formal statements, not theorems |
+| Numerical cross-checks | `findings/` (rounds 2–6 and 8; round 7 is kept local-only) | Python; empirical evidence for the formal statements, not theorems |
 | Paper + guides | `paper/`, `docs/` | manuscript (LaTeX + PDF) and reader companions |
+
+The repository is scoped solely to the ℤ/2 connection-Laplacian
+kernel-dimension theory: the verified spine, the paper, its numerical
+cross-checks, and the hardening harness around them. Nothing else is
+maintained here.
 
 ## Verified development (import spine)
 
@@ -87,7 +92,7 @@ own; two deliberately broken controls (a one-token statement tamper, a
 smuggled axiom) are rejected as expected. See
 [`Hardening/REPORT.md`](Hardening/REPORT.md).
 
-**3. Empirical falsification pressure.** The `findings/` rounds attack the
+**3. Empirical falsification pressure.** The `findings/` rounds (2–6 and 8) attack the
 theorems numerically — exhaustive enumeration of all graphs × all wrap sets at
 n ≤ 5–6 (rounds 2–3), adversarial negators (rounds 3–5), randomized gap
 checks at n = 7 (round 6), and round 8, which adds an implementation written

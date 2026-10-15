@@ -10,12 +10,17 @@ Lean `v4.11.0`, and `lake` will pull the matching toolchain automatically.
 From inside this directory:
 
 ```bash
-lake update
+lake exe cache get   # fetch prebuilt Mathlib oleans (recommended)
 lake build
 ```
 
-The first build is the slow one because Mathlib is large. Incremental rebuilds
-are much faster.
+Do **not** run `lake update`: it re-resolves Mathlib away from the version
+pinned in `lake-manifest.json` (v4.11.0) and the spine will no longer build
+against the pinned toolchain. The first build is the slow one because Mathlib
+is large; incremental rebuilds are much faster.
+
+The local hardening harness (`Hardening/`) is outside the default target;
+see `Hardening/REPORT.md` for its build targets and comparator toolchain.
 
 ## Current imported state
 
