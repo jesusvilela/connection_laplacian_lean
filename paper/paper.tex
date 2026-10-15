@@ -797,19 +797,29 @@ $\dim\Ker\Lsigned = 1$. However a brute-force eigenvalue computation
 shows $\dim \Ker\Lsigned = 0$, which is indeed~$\beta(K_4)=0$
 from Theorem~\ref{thm:signed-kernel} (the two wrap edges
 together form a non-trivial cohomology class on~$K_4$).
-Equation~$(\star)$ is correct on $G=C_n$ because
-$H^1(C_n;\ZZ/2)\cong\ZZ/2$ is one-dimensional and total
-wrap-count mod~$2$ detects the class. It fails for either of two
-reasons. First, it fails once $\dim H^1(G;\ZZ/2)>1$, i.e.\ once
-$|E|>|V|-\#\comp(G)+1$ (by the Euler relation
-$\dim H^1(G;\ZZ/2)=|E|-|V|+\#\comp(G)$). Second, it fails even when
-$\dim H^1(G;\ZZ/2)\le 1$ --- in particular on trees, where
-$\dim H^1=0$ --- whenever a \emph{bridge} of $G$ lies in $W$: on a tree
-with a single wrapped edge, $|W|=1$ is odd so $(\star)$ predicts
-$\dim\Ker\Lsigned=0$, but every tree component is balanced
-(Theorem~\ref{thm:tree-balanced}) and $\dim\Ker\Lsigned=\#\comp(G)$.
-Precisely, $(\star)$ holds on a component iff that component is
-unicyclic-or-tree \emph{and} no bridge of it lies in $W$.
+Equation~$(\star)$ is correct on $G=C_n$: there
+$\dim H^1(C_n;\ZZ/2)=1$, no edge is a bridge, and total wrap-count
+mod~$2$ detects the class. Beyond $C_n$, however, the correctness of
+$(\star)$ depends on $W$, not on the component alone. Precisely,
+$(\star)$ is correct on a component $C$ iff
+\[
+  \text{$C$ is balanced (Definition~\ref{def:balanced})}\;\Longleftrightarrow\;
+  |W\cap E(C)| \text{ is even.}
+\]
+A useful \emph{sufficient} condition --- which is \emph{not} necessary ---
+is: $\dim H^1(C;\ZZ/2)\le 1$ (i.e., by the Euler relation
+$\dim H^1(C)=|E(C)|-|V(C)|+1$ on a connected component, $C$ is at most
+unicyclic) \emph{and} $C$ carries an even number of wrapped bridges.
+Non-necessality: on $K_4$ with a single wrapped triangle, $(\star)$
+holds although $\dim H^1(K_4;\ZZ/2)=3$; with $W=\emptyset$ it holds
+trivially on every graph. Failure takes exactly two forms: an
+\emph{unbalanced} component with even total wrap ($K_4$ with a wrapped
+matching; two triangles sharing a vertex with one wrap in each), and a
+\emph{balanced} component with odd total wrap (a tree component with an
+odd number of wrapped bridges, e.g.\ $P_3$ with one wrapped edge ---
+where $\dim H^1=0$, so a small cohomology alone guarantees nothing).
+All six example computations above are reproduced by the independent
+implementation in \texttt{findings/round8}.
 \end{remark}
 
 %=============================================================

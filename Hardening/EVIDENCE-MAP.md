@@ -142,8 +142,14 @@ sources):
 
 7. **Remark 6.5 contained two confirmed errors** (H¹ threshold off by one;
    bridge-in-W breaks (★), verified numerically on P₄) — *resolved
-   2026-10-16: errata correct the threshold via the Euler relation, add the
-   bridge failure mode, and state the precise scope of (★).*
+   2026-10-16, then corrected again the same day after author review: the
+   first erratum's "precise scope" (at-most-unicyclic + no wrapped bridges)
+   overclaimed necessity — K₄ with W=∅ (dim H¹=3) and P₃ with both edges
+   wrapped both satisfy (★). Final text: (★) is correct on a component iff
+   balanced ⟺ even wrap count; dim H¹ ≤ 1 with an even number of wrapped
+   bridges is sufficient, not necessary (K₄ with a wrapped triangle holds);
+   both failure forms exhibited. All six examples verified numerically via
+   findings/round8.*
 8. **`CycleSpectrum.lean` has two vacuous public "spectrum" theorems**
    (`flat_cycle_spectrum`, `mobius_cycle_spectrum`) whose statements mention
    no Laplacian and hold trivially; the real content is the public per-k

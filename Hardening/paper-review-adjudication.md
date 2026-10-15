@@ -121,3 +121,18 @@ inequality (+1) and bridge scope; n ≥ 3 on Thms 7.1/7.2; gauge-sketch
 sentence; Section 8 module list; Appendix index rows; define swarm shorthand;
 add DOI/URL; unify Möbius spelling. For the Lean repo: delete/rename the two
 vacuous theorems.
+
+## Postscript (2026-10-16, second revision)
+
+The corrected scope suggested above ("unicyclic-or-tree with no bridge in
+W", echoing the external review) was itself wrong in the same way the
+original was: it stated sufficiency as necessity. Author review produced
+two counterexamples — K₄ with W = ∅ (dim H¹ = 3, (★) holds) and P₃ with
+both edges wrapped (wrapped bridges, (★) holds) — and a third surfaced
+during verification (K₄ with a single wrapped triangle: dim H¹ = 3, (★)
+holds). The final Remark 6.5 states the exact per-component equivalence
+(balanced ⟺ even wrap count), demotes the structural conditions to
+sufficient, and exhibits both failure forms; all six example computations
+are checked by the independent implementation. This pass — an author
+adjudicating the erratum with the same machinery that produced it — is the
+pipeline applied to itself one level up.

@@ -108,7 +108,14 @@ identical in structure to the scalar sum-to-product.
 - Eigenvectors are typed `Fin n → ℝ`, not `Fin n → ℂ`. The cosine basis is
   real-valued, so no complex exponentials are pulled in.
 
-## `flat_cycle_spectrum`
+## `flat_cycle_spectrum` *(theorem removed 2026-10-16)*
+
+> The declaration documented below was later identified as vacuous (its
+> statement mentioned no Laplacian and held for trivial reasons) and
+> removed from the spine; see `Hardening/paper-review-adjudication.md`.
+> The note is retained as a historical record of how it was "closed" —
+> which is itself the cautionary tale: a proof of a statement that says
+> nothing is easy to write.
 
 Closed via fiber-disjoint support vectors `v₁, v₂ : Fin n × Fin 2 → ℝ` and
 `Fintype.linearIndependent_iff` + `Fin.sum_univ_two`. Evaluating the
