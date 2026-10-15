@@ -126,6 +126,33 @@ theorem cover_charpoly_eq_scalar_times_mobius :
   rw [Matrix.charpoly_fromBlocks_zero₁₂] at hcp
   exact hcp
 
+/-- **Cover spectral multiset, with multiplicity.** This corollary packages
+the characteristic-polynomial factorization as an equality of multisets
+of polynomial roots, retaining their algebraic multiplicities. It is
+independent of the still-open *cycle-specific Fourier assembly* problem. -/
+theorem cover_charpoly_roots_eq_union :
+    (G.orientationDoubleCover.scalarLaplacian).charpoly.roots =
+      G.scalarLaplacian.charpoly.roots +
+        G.signedLaplacianMobius.charpoly.roots := by
+  rw [G.cover_charpoly_eq_scalar_times_mobius]
+  exact Polynomial.roots_mul (by
+    have h1 : G.scalarLaplacian.charpoly ≠ 0 :=
+      Matrix.charpoly_monic _ |>.ne_zero
+    have h2 : G.signedLaplacianMobius.charpoly ≠ 0 :=
+      Matrix.charpoly_monic _ |>.ne_zero
+    exact mul_ne_zero h1 h2)
+
+/-- **Pointwise cover spectral multiplicities.** At each real root, the
+cover characteristic polynomial's algebraic root multiplicity is the
+sum of the multiplicities in the scalar and signed base branches. -/
+theorem cover_charpoly_root_count_eq_sum (lam : ℝ) :
+    (G.orientationDoubleCover.scalarLaplacian).charpoly.roots.count lam =
+      G.scalarLaplacian.charpoly.roots.count lam +
+        G.signedLaplacianMobius.charpoly.roots.count lam := by
+  classical
+  rw [G.cover_charpoly_roots_eq_union]
+  exact Multiset.count_add lam _ _
+
 end ConnGraph
 
 end ConnectionLaplacian
