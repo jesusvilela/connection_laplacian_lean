@@ -7,8 +7,8 @@ authors:
     email: "jesusvilela@outlook.com"
     affiliation: "Independent"
 type: software
-version: "0.1.0"
-date-released: "2026-04-22"
+version: "v.0.0.4"
+date-released: "2026-10-15"
 repository-code: "https://github.com/jesusvilela/connection_laplacian_lean"
 license: Apache-2.0
 doi: "10.5281/zenodo.19695396"

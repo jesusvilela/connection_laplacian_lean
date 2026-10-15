@@ -158,7 +158,8 @@ Build with a LaTeX engine supporting `amsart`, e.g. `tectonic paper/paper.tex`.
 Machine-readable metadata is in `CITATION.cff` (used by GitHub's **Cite this
 repository** panel).
 
-> Vilela Jato, J. *Connection Laplacian (Lean 4 Formalization)*, 2026.  
+> Vilela Jato, J. *Connection Laplacian — verified spectral/balance stack
+> (Lean 4 / Mathlib v4.11.0)*, v.0.0.4, 2026.  
 > DOI: 10.5281/zenodo.19695396  
 > https://github.com/jesusvilela/connection_laplacian_lean
 
