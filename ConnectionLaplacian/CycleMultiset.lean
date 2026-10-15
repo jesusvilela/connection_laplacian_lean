@@ -311,4 +311,61 @@ private theorem αζ_injective (n : ℕ) (hn : 3 ≤ n) :
   apply ζ_injective n hn
   exact mul_left_cancel₀ (Complex.exp_ne_zero _) hij
 
+
+/-! ### Fourier roots and full characteristic-polynomial products -/
+
+private theorem ζ_power_is_periodic (n : ℕ) (hn : 3 ≤ n)
+    (k : Fin n) : ((ζ n) ^ k.val) ^ n = 1 := by
+  rw [← pow_mul, Nat.mul_comm k.val n, pow_mul,
+      (ζ_primitive n hn).pow_eq_one, one_pow]
+
+private theorem α_power_is_antiperiodic (n : ℕ) (hn : 3 ≤ n) :
+    (α n) ^ n = -1 := by
+  have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
+  unfold α
+  rw [← Complex.exp_nat_mul]
+  have harg : (n : ℂ) * (Real.pi * Complex.I / (n : ℂ)) =
+      Real.pi * Complex.I := by
+    field_simp
+    ring
+  rw [harg, Complex.exp_pi_mul_I]
+
+private theorem αζ_power_is_antiperiodic (n : ℕ) (hn : 3 ≤ n)
+    (k : Fin n) : (α n * (ζ n) ^ k.val) ^ n = -1 := by
+  rw [mul_pow, α_power_is_antiperiodic n hn,
+      ζ_power_is_periodic n hn k, mul_one]
+
+/-- **Full scalar-cycle characteristic polynomial over ℂ**, including
+algebraic multiplicities of equal eigenvalues. No counting-of-cosines
+assumption is used: the Fourier root parameters form an injective
+Vandermonde eigenbasis. -/
+theorem scalarCycle_charpoly_complex (n : ℕ) (hn : 3 ≤ n) :
+    ((scalarCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ)).charpoly =
+      ∏ k : Fin n, (Polynomial.X -
+        Polynomial.C (2 - (ζ n) ^ k.val - ((ζ n) ^ k.val)⁻¹)) := by
+  exact charpoly_of_vandermonde_eigenbasis
+    ((scalarCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ))
+    (fun k : Fin n => (ζ n) ^ k.val)
+    (fun k : Fin n => 2 - (ζ n) ^ k.val - ((ζ n) ^ k.val)⁻¹)
+    (ζ_injective n hn)
+    (fun k => scalarCycle_eigenvector_complex n hn
+      ((ζ n) ^ k.val) (ζ_power_is_periodic n hn k))
+
+/-- **Full one-wrap Möbius signed-cycle characteristic polynomial over ℂ**,
+including repeated eigenvalues. The anti-periodic Fourier parameters form
+an invertible Vandermonde matrix. -/
+theorem signedCycle_charpoly_complex (n : ℕ) (hn : 3 ≤ n) :
+    ((signedCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ)).charpoly =
+      ∏ k : Fin n, (Polynomial.X -
+        Polynomial.C (2 - α n * (ζ n) ^ k.val -
+          (α n * (ζ n) ^ k.val)⁻¹)) := by
+  exact charpoly_of_vandermonde_eigenbasis
+    ((signedCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ))
+    (fun k : Fin n => α n * (ζ n) ^ k.val)
+    (fun k : Fin n =>
+      2 - α n * (ζ n) ^ k.val - (α n * (ζ n) ^ k.val)⁻¹)
+    (αζ_injective n hn)
+    (fun k => signedCycle_eigenvector_complex n hn
+      (α n * (ζ n) ^ k.val) (αζ_power_is_antiperiodic n hn k))
+
 end ConnectionLaplacian.Cycle
