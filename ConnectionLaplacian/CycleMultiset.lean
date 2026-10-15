@@ -1,4 +1,4 @@
-/-!
+/-
 # Full cycle spectra, including algebraic multiplicities
 
 This file is developed on an isolated proof branch and is not part of the
