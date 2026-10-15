@@ -9,8 +9,8 @@ documents how it was produced and why we believe it.*
 ## The claim
 
 The interesting invention in this project was never "a language model wrote
-some Lean." That lineage is old. The invention was an **epistemic
-architecture**: treat the entire AI research process — conjecture proposal,
+some Lean." That lineage is old. The methodological contribution was an **epistemic
+architecture**: treat the AI-assisted development process — subsequent conjecture proposals,
 proof search, translation from informal mathematics, even the transcription
 of statements — as an untrusted prover, surround it with heterogeneous,
 executable critics, progressively lower every surviving claim onto a small
@@ -23,11 +23,19 @@ that the methodology is auditable the same way the mathematics is.
 
 The pipeline did not start as a verification project. It started as an
 experimental research ecology — the NP Bunny / UTAI / Uber-UTAI sessions —
-in which a language model played several roles in parallel: proposition
-generator, critic, adversary, structural explorer, numerical checker, and
-formalizer. Two early observations shaped everything that followed.
+in which the human researcher originated the initial mathematical
+conjectures and designed the research and adversarial apparatus. The models
+were tasked with developing the conjectures, proposing subsequent
+intermediate statements, exploring proofs, formalising results, and
+implementing computational critics. The human researcher retained responsibility
+for choosing research questions, evaluating failures, and adjudicating
+mathematical claims. This division of labour is the author's account; the
+repository's source history and experimental artifacts document outputs and
+checks, not a complete transcript of every contribution.
 
-First, the generator was *productive but unreliable in structured ways*. It
+Two early observations shaped everything that followed.
+
+First, the AI-assisted development was *productive but unreliable in structured ways*. It
 proposed true theorems, plausible-but-false theorems, and statements whose
 meaning drifted under translation — and it could not reliably tell which
 was which. Neither could any single critic. What worked was **heterogeneous
@@ -96,8 +104,7 @@ accepting in parallel. Two deliberately broken controls — a one-token
 statement tamper and a smuggled axiom — are rejected, which is what makes
 the positive run mean something.
 
-The remaining honest ledger, after all of it: the challenge statements are
-still one author's reading; the numerical checks share an eigen-solver with
+The remaining honest ledger, after all of it: the independently transcribed challenge statements and the paper's intended statements remain subject to shared interpretive assumptions; the numerical checks share an eigen-solver with
 themselves; exhaustive strength stops where compute does. The evidence map
 publishes that ledger next to the results, because a trust boundary you
 can't see is a trust boundary you can't check.
@@ -146,7 +153,7 @@ Every claim above resolves to a file in this repository:
   seeded spanning trees and maximal matchings per graph — the wrap families
   where the historical counterexample lived).
 - The review adjudication: `Hardening/paper-review-adjudication.md`;
-  published corrections in the v.0.0.4 manuscript.
+  published corrections through the v.0.0.5 manuscript.
 
 That is the invention we would defend: not any theorem, but the pile of
 receipts.

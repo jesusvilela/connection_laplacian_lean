@@ -5,9 +5,9 @@ prior fuzzers).
 
 Coverage (all graphs unlabeled, vertices Fin 8):
   - band A: ALL connected graphs with 7..12 edges, ALL 2^e wrap subsets
-            (23+89+236+486+814+1169 = 2817 graphs, ~7.34M configurations)
+            (23+89+236+486+814+1169 = 2817 graphs, 7,099,520 configurations)
   - band B: ALL graphs (connected or not) with 0..7 edges, ALL 2^e wraps
-            (215 graphs, ~28k configurations)
+            (215 graphs, 19,299 configurations)
   - band C: 2000 seeded random graphs G(8, 1/2) x 64 seeded random wraps
             (128k configurations, covers densities e>12 up to K8)
 
@@ -139,8 +139,8 @@ def main():
         "date": "2026-10-15",
         "implementation": "independent (paper-only, findings/round8/independent_impl.py)",
         "bands": {
-            "A_all_connected_e7to12_all_wraps": "2817 graphs / 7,343,616 configs",
-            "B_all_graphs_e0to7_all_wraps": "215 graphs / ~28k configs",
+            "A_all_connected_e7to12_all_wraps": "2817 graphs / 7,099,520 configs",
+            "B_all_graphs_e0to7_all_wraps": "215 graphs / 19,299 configs",
             "C_random_dense": "2000 graphs x 64 wraps",
         },
         "total_configs": total,
