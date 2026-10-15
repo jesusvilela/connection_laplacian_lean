@@ -142,6 +142,17 @@ theorem cover_charpoly_roots_eq_union :
       Matrix.charpoly_monic _ |>.ne_zero
     exact mul_ne_zero h1 h2)
 
+/-- **Pointwise cover spectral multiplicities.** At each real root, the
+cover characteristic polynomial's algebraic root multiplicity is the
+sum of the multiplicities in the scalar and signed base branches. -/
+theorem cover_charpoly_root_count_eq_sum (lam : ℝ) :
+    (G.orientationDoubleCover.scalarLaplacian).charpoly.roots.count lam =
+      G.scalarLaplacian.charpoly.roots.count lam +
+        G.signedLaplacianMobius.charpoly.roots.count lam := by
+  classical
+  rw [G.cover_charpoly_roots_eq_union]
+  exact Multiset.count_add lam _ _
+
 end ConnGraph
 
 end ConnectionLaplacian
