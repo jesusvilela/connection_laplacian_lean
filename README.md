@@ -5,30 +5,39 @@
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
 
-This repository contains a Lean 4 / Mathlib formalization of core results on
-the ℤ/2 connection Laplacian on finite simple graphs, including structural,
-kernel-dimension, and spectral statements.
+Take a finite simple graph, mark some of its edges as *wrap* edges, and build
+the ℤ/2 connection Laplacian. This repository formalizes the resulting theory
+end to end in Lean 4 / Mathlib — the block decomposition into scalar and
+signed Laplacians, the orientation double cover, and the headline facts that
+the kernel dimension of the signed Laplacian counts the *balanced* components
+and the full connection Laplacian satisfies exact kernel and spectral
+identities.
 
-The accompanying paper is available under `paper/` and has been submitted as a
+Everything on the verified spine is machine-checked from the three standard
+Lean axioms (`propext`, `Classical.choice`, `Quot.sound`) and nothing else.
+Around the spine sits an explicit verification apparatus — a comparator pass
+under a real sandbox, an independent reimplementation of the paper's
+definitions, and exhaustive numerical sweeps — documented theorem by theorem
+in [`Hardening/EVIDENCE-MAP.md`](Hardening/EVIDENCE-MAP.md).
+
+The accompanying paper lives under `paper/` and has been submitted as a
 candidate to the upcoming FLoC Lisbon cycle.
 
 > **DOI:** <https://doi.org/10.5281/zenodo.19695396>
 
-## Project status
+## What is where
 
-- This repository is scoped **solely** to the ℤ/2 connection-Laplacian
-  kernel-dimension theory: the verified Lean spine, the paper, and the
-  numerical cross-checks that accompany the paper.
-- The master file `ConnectionLaplacian.lean` imports exactly the verified
-  spine, from `Basic` through `L17_TracesAndLipschitz`; every imported file is
-  maintained as `sorry`-free and free of user-introduced axioms.
-- The `findings/` directory holds only the Python numerical cross-checks
-  cited by the paper. They are empirical validations of the formal theorems,
-  not theorems themselves.
+| Layer | Contents | Epistemic status |
+|---|---|---|
+| Verified spine | everything imported by `ConnectionLaplacian.lean` | machine-checked Lean proofs, CI-enforced trust boundary |
+| Hardening harness | `Hardening/` | comparator challenge/solution modules, convention-anchor battery, run logs, evidence map, review adjudication |
+| Numerical cross-checks | `findings/` (rounds 2–8) | Python; empirical evidence for the formal statements, not theorems |
+| Paper + guides | `paper/`, `docs/` | manuscript (LaTeX + PDF) and reader companions |
 
 ## Verified development (import spine)
 
-The formalized library currently imports:
+`ConnectionLaplacian.lean` imports exactly the spine below; every file is
+maintained `sorry`-free and free of user-introduced axioms.
 
 - `ConnectionLaplacian/Basic.lean`
 - `ConnectionLaplacian/KernelDimension.lean`
@@ -46,40 +55,61 @@ The formalized library currently imports:
 - `ConnectionLaplacian/L16_SpectrumUnion.lean`
 - `ConnectionLaplacian/L17_TracesAndLipschitz.lean`
 
-Representative machine-checked theorems include:
+Representative end theorems (plain-language gloss in parentheses):
 
-- `cover_charpoly_eq_scalar_times_mobius`
-- `isBalanced_iff_closedWalk_wrap_even`
-- `signedLaplacianMobius_posSemidef`
-- `numBalancedComponents_monotone_remove_nonwrap_nonbridge`
-- `mobius_charpoly_roots_eq_union`
-- `frobenius_laplacian_decomposes`
-- `trace_mul_scalar_signed_eq`
+- `cover_charpoly_eq_scalar_times_mobius` *(the cover's characteristic
+  polynomial factors as scalar × signed)*
+- `isBalanced_iff_closedWalk_wrap_even` *(balanced ⟺ every closed walk
+  crosses an even number of wrap edges)*
+- `signedLaplacianMobius_posSemidef` *(the signed Laplacian is PSD)*
+- `numBalancedComponents_monotone_remove_nonwrap_nonbridge` *(deleting a
+  non-bridge edge cannot destroy balanced components)*
+- `mobius_charpoly_roots_eq_union` *(the Möbius spectrum is the scalar ⊎
+  signed multisets)*
+- `frobenius_laplacian_decomposes` *(‖L‖²_F splits as scalar + signed parts)*
+- `trace_mul_scalar_signed_eq` *(the polarisation identity for the mixed
+  trace)*
 
-## Numerical cross-checks (not theorems)
+## Three layers of confidence
 
-The paper's formal theorems are independently exercised by the Python fuzzers
-and negators retained under `findings/`:
+**1. The kernel.** Lean's kernel accepts the spine; CI forbids `sorry`,
+`admit`, `native_decide`, and project-local axioms via a comment-aware source
+audit, and `AxiomAudit.lean` checks the seven end theorems against the
+explicit allowlist above.
 
-- `findings/round2/fuzzer/` — exhaustive sweep at orders `n ≤ 5`.
-- `findings/round3/negator/`, `findings/round4/negator_fuzzy/` — adversarial
-  negation searches against the kernel-dimension and fibre-cardinality claims.
-- `findings/round5/` — bridge-monotonicity sanity check for
-  `numBalancedComponents_monotone_remove_nonwrap_nonbridge`, an extended
-  fuzzy-negator scoreboard, and the paper/Lean adversarial passes cited by
-  the paper's reproducibility section.
-- `findings/round6/stage2_fuzzer_A/`, `findings/round6/stage6_fuzzer_B/` —
-  extended cross-checks.
+**2. Independent re-checking.** The seven end theorems were re-verified with
+`leanprover/comparator` (unmodified): statement equality against an
+independently transcribed challenge, a transitive axiom audit, and a full
+kernel replay of the exported proof terms — 1.32M export lines, 10,324
+theorems. The authoritative run executed under a real landlock sandbox
+(landrun on WSL2) with the nanoda external kernel accepting alongside Lean's
+own; two deliberately broken controls (a one-token statement tamper, a
+smuggled axiom) are rejected as expected. See
+[`Hardening/REPORT.md`](Hardening/REPORT.md).
 
-These scripts are empirical evidence for the formal statements, not verified
-Lean results.
+**3. Empirical falsification pressure.** The `findings/` rounds attack the
+theorems numerically — exhaustive enumeration of all graphs × all wrap sets at
+n ≤ 5–6 (rounds 2–3), adversarial negators (rounds 3–5), randomized gap
+checks at n = 7 (round 6), and round 8, which adds an implementation written
+from the paper alone (no Lean sources consulted), a Lean-verified convention
+battery (148 equalities tying the formalization's matrices to that
+implementation on 74 concrete graphs), and a bounded-exhaustive n = 8 sweep —
+7,246,819 configurations, zero failures. These scripts are empirical
+evidence, not verified Lean results.
+
+The theorem-by-theorem chain — claim → Lean theorem → axiom audit → numerical
+check → comparator result → remaining gap — is tabulated in
+[`Hardening/EVIDENCE-MAP.md`](Hardening/EVIDENCE-MAP.md), together with the
+current errata ledger for the paper.
 
 ## Build and verification
 
-Prerequisite: `elan` on your `PATH` (toolchain pinned by `lean-toolchain`).
+Prerequisite: `elan` on your `PATH` (the toolchain is pinned by
+`lean-toolchain`; don't run `lake update`, it would re-resolve Mathlib away
+from the pinned v4.11.0).
 
 ```bash
-lake update
+lake exe cache get   # fetch prebuilt Mathlib oleans (optional but recommended)
 lake build
 ```
 
@@ -89,56 +119,39 @@ Check one file:
 lake env lean ConnectionLaplacian/L13_PSD.lean
 ```
 
-Additional build guidance is available in `BUILD.md`.
+The local hardening harness is outside the default target; build it
+explicitly if you want it (see `Hardening/REPORT.md` for the comparator
+toolchain):
 
-CI also compiles `ConnectionLaplacian/AxiomAudit.lean` and checks its
-`#print axioms` output against the explicit Lean/Mathlib allowlist
-`propext`, `Quot.sound`, and `Classical.choice`. A comment-aware source audit
-separately rejects `sorry`, `admit`, `native_decide`, and project-local
-`axiom` declarations throughout the verified spine.
+```bash
+lake build Hardening.Challenge Hardening.Solution Hardening.ConventionAnchor \
+  Hardening.BatteryA Hardening.BatteryB Hardening.BatteryC Hardening.BatteryD
+```
 
-## Repository scope
+Additional build guidance: `BUILD.md`.
 
-- **Verified content:** files imported by `ConnectionLaplacian.lean`.
-- **Numerical cross-checks:** `findings/` (Python fuzzers/negators cited by the
-  paper).
-- **Paper materials:** `paper/paper.tex` and `paper/paper.pdf`.
-- **Reader guides:** `docs/` (thesis-style overview, graph examples, and a
-  compact infographic for navigating the formalization).
+## Guides
 
-## Thesis and manual-style guides
-
-The following Markdown guides are intended as lightweight companions to the
-paper and Lean sources:
-
-- `docs/thesis-guide.md` — thesis-style narrative, theorem map, and reading
-  order.
-- `docs/graph-examples.md` — small graph examples illustrating balanced and
-  unbalanced wrap data.
-- `docs/infographic.md` — one-page visual overview of the proof pipeline and
+- `docs/thesis-guide.md` — thesis-style narrative, theorem map, reading order.
+- `docs/graph-examples.md` — small graphs showing balanced vs. unbalanced
+  wrap data.
+- `docs/infographic.md` — one-page overview of the proof pipeline and
   kernel-dimension formulas.
 
 ## Paper
 
-- Source: `paper/paper.tex`
-- PDF: `paper/paper.pdf`
+- Source: `paper/paper.tex` · PDF: `paper/paper.pdf`
 - Title: *Kernel Dimension of the ℤ/2 Connection Laplacian on a Finite Simple
   Graph (A Formalisation in Lean 4 / Mathlib v4.11.0)*
 - Author: Jesús Vilela Jato (Independent)
 - Bibliography is embedded in `paper.tex` (no separate `.bib` file).
 
-Build with a LaTeX engine supporting `amsart` (example):
-
-```bash
-tectonic paper/paper.tex
-```
+Build with a LaTeX engine supporting `amsart`, e.g. `tectonic paper/paper.tex`.
 
 ## Citation
 
-Machine-readable metadata is in `CITATION.cff` (used by GitHub’s **Cite this
+Machine-readable metadata is in `CITATION.cff` (used by GitHub's **Cite this
 repository** panel).
-
-Please cite this repository as:
 
 > Vilela Jato, J. *Connection Laplacian (Lean 4 Formalization)*, 2026.  
 > DOI: 10.5281/zenodo.19695396  
