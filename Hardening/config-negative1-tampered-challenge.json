@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Hardening.Negative.BadChallenge",
+  "solution_module": "Hardening.Solution",
+  "theorem_names": [
+    "Hardening.cover_charpoly_eq_scalar_times_mobius",
+    "Hardening.isBalanced_iff_closedWalk_wrap_even",
+    "Hardening.signedLaplacianMobius_posSemidef",
+    "Hardening.numBalancedComponents_monotone_remove_nonwrap_nonbridge",
+    "Hardening.mobius_charpoly_roots_eq_union",
+    "Hardening.frobenius_laplacian_decomposes",
+    "Hardening.trace_mul_scalar_signed_eq"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

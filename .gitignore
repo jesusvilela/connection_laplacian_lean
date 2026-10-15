@@ -57,3 +57,7 @@ ConnectionLaplacian/Zk/
 
 # Temporary fuzzer output directories
 tmp_*/
+
+# Comparator hardening harness: the 70 MB lean4export dump is regenerable
+# via the command in Hardening/REPORT.md; keep it out of the repo.
+Hardening/*.ndjson

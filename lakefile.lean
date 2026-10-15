@@ -13,3 +13,8 @@ require mathlib from git
 @[default_target]
 lean_lib ConnectionLaplacian where
   -- expose all files under ConnectionLaplacian/
+
+/-- Local comparator hardening harness (challenge/solution modules);
+not part of the verified spine. -/
+lean_lib Hardening where
+  globs := #[.submodules `Hardening]

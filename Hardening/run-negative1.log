@@ -1,0 +1,53 @@
+Building Hardening.Negative.BadChallenge
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lake build Hardening.Negative.BadChallenge
+⚠ [1811/1834] Replayed ConnectionLaplacian.CycleSpectrum
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:240:57: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:255:67: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:298:15: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:426:38: unused variable `hii`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:503:19: unused variable `hjlt`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:649:19: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:660:7: unused variable `k`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:679:39: unused variable `hn`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:696:11: unused variable `h2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1834/1834] Replayed Hardening.Negative.BadChallenge
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:20:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:25:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:33:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:37:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:44:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:50:8: declaration uses 'sorry'
+warning: .\.\.\.\Hardening\Negative\BadChallenge.lean:57:8: declaration uses 'sorry'
+Build completed successfully.
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec C:\Users\HAL900\.zcode\workspace\default\lean4export\.lake\build\bin\lean4export.exe Hardening.Negative.BadChallenge -- Quot Quot.mk Quot.lift Quot.ind Hardening.cover_charpoly_eq_scalar_times_mobius Hardening.isBalanced_iff_closedWalk_wrap_even Hardening.signedLaplacianMobius_posSemidef Hardening.numBalancedComponents_monotone_remove_nonwrap_nonbridge Hardening.mobius_charpoly_roots_eq_union Hardening.frobenius_laplacian_decomposes Hardening.trace_mul_scalar_signed_eq propext Quot.sound Classical.choice Nat.add Nat.sub Nat.mul Nat.pow Nat.gcd Nat.div Nat.mod Nat.beq Nat.ble Nat.land Nat.lor Nat.xor Nat.shiftLeft Nat.shiftRight String.ofList Char.ofNat List eagerReduce Nat String String.mk Char optParam autoParam semiOutParam outParam
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, Hardening.cover_charpoly_eq_scalar_times_mobius, Hardening.isBalanced_iff_closedWalk_wrap_even, Hardening.signedLaplacianMobius_posSemidef, Hardening.numBalancedComponents_monotone_remove_nonwrap_nonbridge, Hardening.mobius_charpoly_roots_eq_union, Hardening.frobenius_laplacian_decomposes, Hardening.trace_mul_scalar_signed_eq, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Hardening.Negative.BadChallenge
+Building Hardening.Solution
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lake build Hardening.Solution
+⚠ [1822/1834] Replayed ConnectionLaplacian.CycleSpectrum
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:240:57: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:255:67: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:298:15: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:426:38: unused variable `hii`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:503:19: unused variable `hjlt`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+info: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:649:19: Try this: ring_nf
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:660:7: unused variable `k`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:679:39: unused variable `hn`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: .\.\.\.\ConnectionLaplacian\CycleSpectrum.lean:696:11: unused variable `h2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Build completed successfully.
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec C:\Users\HAL900\.zcode\workspace\default\lean4export\.lake\build\bin\lean4export.exe Hardening.Solution -- Quot Quot.mk Quot.lift Quot.ind Hardening.cover_charpoly_eq_scalar_times_mobius Hardening.isBalanced_iff_closedWalk_wrap_even Hardening.signedLaplacianMobius_posSemidef Hardening.numBalancedComponents_monotone_remove_nonwrap_nonbridge Hardening.mobius_charpoly_roots_eq_union Hardening.frobenius_laplacian_decomposes Hardening.trace_mul_scalar_signed_eq propext Quot.sound Classical.choice Nat.add Nat.sub Nat.mul Nat.pow Nat.gcd Nat.div Nat.mod Nat.beq Nat.ble Nat.land Nat.lor Nat.xor Nat.shiftLeft Nat.shiftRight String.ofList Char.ofNat List eagerReduce Nat String String.mk Char optParam autoParam semiOutParam outParam
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, Hardening.cover_charpoly_eq_scalar_times_mobius, Hardening.isBalanced_iff_closedWalk_wrap_even, Hardening.signedLaplacianMobius_posSemidef, Hardening.numBalancedComponents_monotone_remove_nonwrap_nonbridge, Hardening.mobius_charpoly_roots_eq_union, Hardening.frobenius_laplacian_decomposes, Hardening.trace_mul_scalar_signed_eq, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Hardening.Solution
+uncaught exception: Challenge and solution theorem statement do not match: 'Hardening.trace_mul_scalar_signed_eq'

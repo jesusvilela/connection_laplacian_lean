@@ -1,0 +1,20 @@
+========================================================================
+selftest.py -- internal sanity checks for independent_impl.py
+sources of truth: paper/paper.tex theorems + hand computations
+========================================================================
+[1] Hand-written matrices (triangle, P3)
+[2] Hand-derived spectra
+[3] Hand-derived kernel dimensions (via Cor 9.4 parity + Thms 6.x)
+[4] The paper's own examples and remarks
+[5] Cycle spectra [Thm 7.1 flat-cycle; Thm 7.2 mobius-cycle]
+[6] Structural battery on named configurations
+  ...battery done for 23 named configs (25 checks each)
+[7] Exhaustive wrap subsets on cycles C3, C4, C5 [Cor 9.4]
+  ...56 cycle configurations, all structural checks
+[8] Exhaustive wrap subsets on trees P3, P4, K1,3 [Thm 9.1]
+  ...20 tree configurations, all structural checks
+[9] Seeded random sweep, n in 2..6 (Thms 6.2, 6.3, 8.6, 5.3)
+  ...250 random configurations, all structural checks
+========================================================================
+TOTAL individual checks: 8887
+ALL CHECKS PASSED
