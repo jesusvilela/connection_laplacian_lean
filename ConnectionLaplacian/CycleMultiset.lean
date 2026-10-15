@@ -121,7 +121,7 @@ theorem scalar_mulVec_row_complex
     (scalarCycleLaplacian n (by omega)) i
     (succFin n (by omega) i) (predFin n (by omega) i)
     2 (-1) (-1) hrow w
-  convert h using 1 <;> ring
+  simpa [sub_eq_add_neg, mul_comm] using h
 
 /-- Complexified signed cycle Laplacian, interior row. -/
 theorem signed_mulVec_middle_complex
@@ -139,7 +139,7 @@ theorem signed_mulVec_middle_complex
     (signedCycleLaplacian n (by omega)) i
     ⟨i.val + 1, by omega⟩ ⟨i.val - 1, by omega⟩
     2 (-1) (-1) hrow w
-  convert h using 1 <;> ring
+  simpa [sub_eq_add_neg, mul_comm] using h
 
 /-- Complexified signed cycle Laplacian, zero row (anti-periodic seam). -/
 theorem signed_mulVec_zero_complex
@@ -157,7 +157,7 @@ theorem signed_mulVec_zero_complex
     (signedCycleLaplacian n (by omega)) i
     ⟨1, by omega⟩ ⟨n - 1, by omega⟩
     2 (-1) 1 hrow w
-  convert h using 1 <;> ring
+  simpa [sub_eq_add_neg, mul_comm] using h
 
 /-- Complexified signed cycle Laplacian, final row (anti-periodic seam). -/
 theorem signed_mulVec_nm1_complex
@@ -175,7 +175,7 @@ theorem signed_mulVec_nm1_complex
     (signedCycleLaplacian n (by omega)) i
     ⟨n - 2, by omega⟩ ⟨0, by omega⟩
     2 (-1) 1 hrow w
-  convert h using 1 <;> ring
+  simpa [sub_eq_add_neg, mul_comm] using h
 
 /-- The standard primitive n-th complex root used as a spectral parameter. -/
 private noncomputable def ζ (n : ℕ) : ℂ :=
