@@ -138,6 +138,8 @@ The formal milestone is the actual characteristic-polynomial product
 and/or multiset roots equality for all `n≥3`, with no `sorry`,
 `admit`, `native_decide`, or new axioms.
 
-This branch intentionally inherits the PR #9 corrections. If #9 is
-merged with a different history (squash/rebase), rebase this feature
-branch before creating a clean PR against `main`.
+PR #9 has been merged into `main` with its original commit ancestry;
+a follow-up main-branch commit regenerated `paper.pdf`. GitHub's comparison
+against `main` shows only this feature branch's new proof/code/test files,
+so no ancestry rebase is required before review. The follow-up PDF is
+already on `main` and should be retained when merging this work.
