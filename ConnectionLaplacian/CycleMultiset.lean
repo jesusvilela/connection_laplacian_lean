@@ -177,6 +177,117 @@ theorem signed_mulVec_nm1_complex
     2 (-1) 1 hrow w
   simpa [sub_eq_add_neg, mul_comm] using h
 
+
+/-! ### The complete Fourier eigen-equations on both cycles -/
+
+/-- The preceding power, written using an inverse in a field. -/
+private theorem pow_pred (z : ℂ) (hz : z ≠ 0) (m : ℕ) (hm : 0 < m) :
+    z ^ (m - 1) = z ^ m * z⁻¹ := by
+  have hp : z ^ m = z ^ (m - 1) * z := by
+    calc
+      z ^ m = z ^ (m - 1 + 1) := by congr 1; omega
+      _ = z ^ (m - 1) * z := pow_succ _ _
+  calc
+    z ^ (m - 1) = (z ^ (m - 1) * z) * z⁻¹ := by
+      rw [mul_assoc, mul_inv_cancel₀ hz, mul_one]
+    _ = z ^ m * z⁻¹ := by rw [hp]
+
+/-- The periodic complex Fourier vectors are eigenvectors of the *actual
+complexification* of the scalar cycle Laplacian, including the seam. -/
+theorem scalarCycle_eigenvector_complex
+    (n : ℕ) (hn : 3 ≤ n) (z : ℂ) (hz : z ^ n = 1) :
+    (((scalarCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ)).mulVec
+      (fun j : Fin n => z ^ j.val)) =
+        (2 - z - z⁻¹) • (fun j : Fin n => z ^ j.val) := by
+  have hz0 : z ≠ 0 := by
+    intro h
+    subst z
+    simp at hz
+  funext i
+  rw [scalar_mulVec_row_complex n hn (fun j : Fin n => z ^ j.val) i,
+      Pi.smul_apply, smul_eq_mul]
+  change 2 * z ^ i.val -
+      z ^ (succFin n (by omega) i).val -
+      z ^ (predFin n (by omega) i).val =
+        (2 - z - z⁻¹) * z ^ i.val
+  by_cases hi0 : i.val = 0
+  · have hs : (succFin n (by omega) i).val = 1 := by
+      rw [succFin_val_at_lt n (by omega) i (by omega), hi0]
+      omega
+    have hp : (predFin n (by omega) i).val = n - 1 :=
+      predFin_val_at_zero n (by omega) i hi0
+    rw [hs, hp, hi0, pow_zero, pow_one,
+        pow_pred z hz0 n (by omega), hz]
+    ring
+  · by_cases hilast : i.val + 1 = n
+    · have hs : (succFin n (by omega) i).val = 0 :=
+        succFin_val_at_eq n (by omega) i hilast
+      have hp : (predFin n (by omega) i).val = i.val - 1 :=
+        predFin_val_at_pos n (by omega) i (by omega)
+      rw [hs, hp, pow_zero, pow_pred z hz0 i.val (by omega)]
+      have hlast : z ^ i.val * z = 1 := by
+        calc
+          z ^ i.val * z = z ^ (i.val + 1) := (pow_succ _ _).symm
+          _ = z ^ n := by rw [hilast]
+          _ = 1 := hz
+      calc
+        2 * z ^ i.val - 1 - z ^ i.val * z⁻¹ =
+            2 * z ^ i.val - (z ^ i.val * z) -
+              z ^ i.val * z⁻¹ := by rw [hlast]
+        _ = (2 - z - z⁻¹) * z ^ i.val := by ring
+    · have hs : (succFin n (by omega) i).val = i.val + 1 :=
+        succFin_val_at_lt n (by omega) i (by omega)
+      have hp : (predFin n (by omega) i).val = i.val - 1 :=
+        predFin_val_at_pos n (by omega) i (by omega)
+      rw [hs, hp, pow_succ, pow_pred z hz0 i.val (by omega)]
+      ring
+
+/-- The anti-periodic complex Fourier vectors are eigenvectors of the
+*actual complexification* of the one-wrap signed cycle Laplacian. -/
+theorem signedCycle_eigenvector_complex
+    (n : ℕ) (hn : 3 ≤ n) (z : ℂ) (hz : z ^ n = -1) :
+    (((signedCycleLaplacian n (by omega)).map (algebraMap ℝ ℂ)).mulVec
+      (fun j : Fin n => z ^ j.val)) =
+        (2 - z - z⁻¹) • (fun j : Fin n => z ^ j.val) := by
+  have hz0 : z ≠ 0 := by
+    intro h
+    subst z
+    simp at hz
+  funext i
+  by_cases hi0 : i.val = 0
+  · rw [signed_mulVec_zero_complex n hn (fun j : Fin n => z ^ j.val) i hi0,
+        Pi.smul_apply, smul_eq_mul]
+    change 2 * z ^ i.val - z ^ (1 : ℕ) + z ^ (n - 1) =
+      (2 - z - z⁻¹) * z ^ i.val
+    rw [hi0, pow_zero, pow_one, pow_pred z hz0 n (by omega), hz]
+    ring
+  · by_cases hilast : i.val = n - 1
+    · rw [signed_mulVec_nm1_complex n hn (fun j : Fin n => z ^ j.val) i hilast,
+          Pi.smul_apply, smul_eq_mul]
+      change 2 * z ^ i.val - z ^ (n - 2) + z ^ (0 : ℕ) =
+        (2 - z - z⁻¹) * z ^ i.val
+      have hpred : n - 2 = i.val - 1 := by omega
+      rw [hpred, pow_zero, pow_pred z hz0 i.val (by omega)]
+      have hlast : z ^ i.val * z = -1 := by
+        calc
+          z ^ i.val * z = z ^ (i.val + 1) := (pow_succ _ _).symm
+          _ = z ^ n := by congr 1; omega
+          _ = -1 := hz
+      calc
+        2 * z ^ i.val - z ^ i.val * z⁻¹ + 1 =
+            2 * z ^ i.val - z ^ i.val * z⁻¹ -
+              (z ^ i.val * z) := by rw [hlast]; ring
+        _ = (2 - z - z⁻¹) * z ^ i.val := by ring
+    · have hi : 1 ≤ i.val := by omega
+      have hi' : i.val + 1 < n := by omega
+      rw [signed_mulVec_middle_complex n hn
+            (fun j : Fin n => z ^ j.val) i hi hi',
+          Pi.smul_apply, smul_eq_mul]
+      change 2 * z ^ i.val - z ^ (i.val + 1) - z ^ (i.val - 1) =
+        (2 - z - z⁻¹) * z ^ i.val
+      rw [pow_succ, pow_pred z hz0 i.val hi]
+      ring
+
 /-- The standard primitive n-th complex root used as a spectral parameter. -/
 private noncomputable def ζ (n : ℕ) : ℂ :=
   Complex.exp (2 * Real.pi * Complex.I / (n : ℂ))
