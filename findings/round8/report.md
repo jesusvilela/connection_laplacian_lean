@@ -75,8 +75,8 @@ to W = E(C_n)) and by the `3 ≤ n` Lean eigenvalue theorems; two real errors
 WERE confirmed in Remark 6.5 (off-by-one H¹ threshold; bridge-in-W breaks
 equation (★) — verified on P₄); the Kronecker-ordering issue got its third
 independent confirmation; and the adjudication surfaced one new internal
-item: two vacuous public "spectrum" theorems in `CycleSpectrum.lean` that
-should be deleted or renamed.
+item: two vacuous public "spectrum" theorems in `CycleSpectrum.lean`, since removed. The remaining
+`mobius_more_eigenvalues` theorem has also been strengthened to require a real eigenpair.
 
 ## What this changes epistemically
 
