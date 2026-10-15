@@ -21,8 +21,8 @@ formalization wherever independence is the point.
 
 | Band | Graphs | Wrap coverage | Configs |
 |---|---|---|---|
-| A: all connected unlabeled n=8, e=7..12 (geng) | 23 + 89 + 236 + 486 + 814 + 1169 = 2817 | **all** 2^e subsets | 7,343,616 |
-| B: all unlabeled n=8, e=0..7 (connected or not) | 215 | **all** 2^e subsets | ~28k |
+| A: all connected unlabeled n=8, e=7..12 (geng) | 23 + 89 + 236 + 486 + 814 + 1169 = 2817 | **all** 2^e subsets | 7,099,520 |
+| B: all unlabeled n=8, e=0..7 (connected or not) | 215 | **all** 2^e subsets | 19,299 |
 | C: random dense G(8, ½), seeded | 2000 | 64 seeded subsets | ~128k |
 
 Checks per configuration (all via the independent implementation): kernel-dim
