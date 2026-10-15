@@ -51,4 +51,27 @@ theorem charpoly_of_vandermonde_eigenbasis
   rw [hM, Matrix.charpoly_conj_of_isUnit_det (Ne.isUnit hdet),
     Matrix.charpoly_diagonal]
 
+/-- The standard primitive n-th complex root used as a spectral parameter. -/
+private noncomputable def ζ (n : ℕ) : ℂ :=
+  Complex.exp (2 * Real.pi * Complex.I / (n : ℂ))
+
+/-- The anti-periodic twist, whose n-th power is -1. -/
+private noncomputable def α (n : ℕ) : ℂ :=
+  Complex.exp (Real.pi * Complex.I / (n : ℂ))
+
+private theorem ζ_primitive (n : ℕ) (hn : 3 ≤ n) :
+    IsPrimitiveRoot (ζ n) n := by
+  exact Complex.isPrimitiveRoot_exp n (by omega)
+
+private theorem ζ_injective (n : ℕ) (hn : 3 ≤ n) :
+    Function.Injective (fun k : Fin n => (ζ n) ^ k.val) := by
+  intro i j hij
+  exact Fin.ext ((ζ_primitive n hn).pow_inj i.isLt j.isLt hij)
+
+private theorem αζ_injective (n : ℕ) (hn : 3 ≤ n) :
+    Function.Injective (fun k : Fin n => α n * (ζ n) ^ k.val) := by
+  intro i j hij
+  apply ζ_injective n hn
+  exact mul_left_cancel₀ (Complex.exp_ne_zero _) hij
+
 end ConnectionLaplacian.Cycle
