@@ -415,6 +415,43 @@ def test_paper_examples():
           is_balanced_component(empty_adj(3), set(), (1,)))
 
 
+def test_corrected_parity_scope():
+    """Regression checks for the corrected Remark 6.5.
+
+    On connected graphs the parity shortcut agrees with the kernel formula
+    exactly when balance is equivalent to an even number of wrapped edges.
+    These examples explicitly cover both failure directions and cases that
+    invalidate the former necessity claim.
+    """
+    print("[5a] Corrected Remark 6.5: both directions and non-necessity")
+
+    def check_case(tag, A, W, expect):
+        B = beta(A, W) == 1
+        parity = len(W) % 2 == 0
+        shortcut_holds = (B == parity)
+        check("Rem 6.5: " + tag, shortcut_holds == expect,
+              "balance=%s, even-wrap=%s" % (B, parity))
+
+    K4 = complete_adj(4)
+    P3 = path_adj(3)
+    bowtie = np.zeros((5, 5))
+    for u, v in [(0, 1), (1, 2), (0, 2),
+                 (2, 3), (3, 4), (2, 4)]:
+        bowtie[u, v] = bowtie[v, u] = 1
+    check_case("K4 empty wraps: high H1, shortcut holds",
+               K4, set(), True)
+    check_case("K4 wrapped matching: unbalanced/even, fails",
+               K4, fs((0, 1), (2, 3)), False)
+    check_case("K4 single wrapped triangle: unbalanced/odd, holds",
+               K4, fs((0, 1), (1, 2), (0, 2)), True)
+    check_case("P3 two wrapped bridges: balanced/even, holds",
+               P3, fs((0, 1), (1, 2)), True)
+    check_case("P3 one wrapped bridge: balanced/odd, fails",
+               P3, fs((0, 1)), False)
+    check_case("bowtie one wrap per triangle: unbalanced/even, fails",
+               bowtie, fs((0, 1), (2, 3)), False)
+
+
 def test_cycle_spectrum_theorems():
     print("[5] Cycle spectra [Thm 7.1 flat-cycle; Thm 7.2 mobius-cycle]")
     for n in range(3, 7):
@@ -539,6 +576,7 @@ def main():
     test_hand_spectra()
     test_hand_kernel_dims()
     test_paper_examples()
+    test_corrected_parity_scope()
     test_cycle_spectrum_theorems()
     test_structural_on_named()
     test_exhaustive_cycles()
