@@ -104,8 +104,7 @@ accepting in parallel. Two deliberately broken controls — a one-token
 statement tamper and a smuggled axiom — are rejected, which is what makes
 the positive run mean something.
 
-The remaining honest ledger, after all of it: the challenge statements are
-still one author's reading; the numerical checks share an eigen-solver with
+The remaining honest ledger, after all of it: the independently transcribed challenge statements and the paper's intended statements remain subject to shared interpretive assumptions; the numerical checks share an eigen-solver with
 themselves; exhaustive strength stops where compute does. The evidence map
 publishes that ledger next to the results, because a trust boundary you
 can't see is a trust boundary you can't check.
