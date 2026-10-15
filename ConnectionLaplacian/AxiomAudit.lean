@@ -10,6 +10,7 @@ the workflow fail.
 -/
 
 #print axioms ConnectionLaplacian.ConnGraph.cover_charpoly_eq_scalar_times_mobius
+#print axioms ConnectionLaplacian.ConnGraph.cover_charpoly_roots_eq_union
 #print axioms ConnectionLaplacian.ConnGraph.isBalanced_iff_closedWalk_wrap_even
 #print axioms ConnectionLaplacian.ConnGraph.signedLaplacianMobius_posSemidef
 #print axioms ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonwrap_nonbridge
