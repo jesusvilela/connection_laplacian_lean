@@ -366,4 +366,120 @@ theorem signedCycle_charpoly_complex (n : ℕ) (hn : 3 ≤ n) :
     (fun k => signedCycle_eigenvector_complex n hn
       (α n * (ζ n) ^ k.val) (αζ_power_is_antiperiodic n hn k))
 
+
+/-! ### Euler phases and descent to the paper's real cosine spectra -/
+
+/-- Euler's cosine identity for the unit-modulus complex phase. -/
+private theorem exp_phase_plus_inv (θ : ℝ) :
+    Complex.exp ((θ : ℂ) * Complex.I) +
+      (Complex.exp ((θ : ℂ) * Complex.I))⁻¹ =
+        ((2 * Real.cos θ : ℝ) : ℂ) := by
+  simp only [Complex.ofReal_mul, Complex.ofReal_cos, Complex.cos,
+    neg_mul, Complex.exp_neg]
+  ring
+
+private theorem ζ_power_is_phase (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
+    (ζ n) ^ k.val =
+      Complex.exp ((((2 * Real.pi * (k.val : ℝ) / n : ℝ) : ℂ)) *
+        Complex.I) := by
+  unfold ζ
+  rw [← Complex.exp_nat_mul]
+  congr 1
+  push_cast
+  ring
+
+private theorem αζ_power_is_phase (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
+    α n * (ζ n) ^ k.val =
+      Complex.exp ((((Real.pi * (2 * (k.val : ℝ) + 1) / n : ℝ) : ℂ)) *
+        Complex.I) := by
+  unfold α ζ
+  rw [← Complex.exp_nat_mul, ← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+private theorem ζ_eigenvalue_cos (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
+    2 - (ζ n) ^ k.val - ((ζ n) ^ k.val)⁻¹ =
+      (((2 - 2 * Real.cos (2 * Real.pi * k.val / n) : ℝ)) : ℂ) := by
+  rw [ζ_power_is_phase n hn k]
+  set θ : ℝ := 2 * Real.pi * (k.val : ℝ) / n
+  have hphase := exp_phase_plus_inv θ
+  calc
+    2 - Complex.exp ((θ : ℂ) * Complex.I) -
+        (Complex.exp ((θ : ℂ) * Complex.I))⁻¹ =
+          2 - (Complex.exp ((θ : ℂ) * Complex.I) +
+            (Complex.exp ((θ : ℂ) * Complex.I))⁻¹) := by ring
+    _ = 2 - ((2 * Real.cos θ : ℝ) : ℂ) := by rw [hphase]
+    _ = (((2 - 2 * Real.cos θ : ℝ)) : ℂ) := by push_cast; ring
+
+private theorem αζ_eigenvalue_cos (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
+    2 - α n * (ζ n) ^ k.val -
+        (α n * (ζ n) ^ k.val)⁻¹ =
+      (((2 - 2 * Real.cos ((2 * k.val + 1) * Real.pi / n) : ℝ)) : ℂ) := by
+  rw [αζ_power_is_phase n hn k]
+  set θ : ℝ := Real.pi * (2 * (k.val : ℝ) + 1) / n
+  have hphase := exp_phase_plus_inv θ
+  have hθ : θ = (2 * (k.val : ℝ) + 1) * Real.pi / n := by
+    dsimp [θ]; ring
+  rw [← hθ]
+  calc
+    2 - Complex.exp ((θ : ℂ) * Complex.I) -
+        (Complex.exp ((θ : ℂ) * Complex.I))⁻¹ =
+          2 - (Complex.exp ((θ : ℂ) * Complex.I) +
+            (Complex.exp ((θ : ℂ) * Complex.I))⁻¹) := by ring
+    _ = 2 - ((2 * Real.cos θ : ℝ) : ℂ) := by rw [hphase]
+    _ = (((2 - 2 * Real.cos θ : ℝ)) : ℂ) := by push_cast; ring
+
+/-- The paper's **complete flat scalar cycle spectrum** as a
+real characteristic-polynomial product for every n ≥ 3. The factors
+are indexed by every Fourier frequency, so multiplicity is preserved. -/
+theorem scalarCycle_charpoly_real (n : ℕ) (hn : 3 ≤ n) :
+    (scalarCycleLaplacian n (by omega)).charpoly =
+      ∏ k : Fin n, (Polynomial.X -
+        Polynomial.C (2 - 2 * Real.cos (2 * Real.pi * k.val / n))) := by
+  apply Polynomial.map_injective (algebraMap ℝ ℂ) Complex.ofReal_injective
+  rw [← Matrix.charpoly_map]
+  rw [Polynomial.map_prod]
+  simp_rw [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
+  rw [scalarCycle_charpoly_complex n hn]
+  refine Finset.prod_congr rfl ?_
+  intro k _
+  rw [ζ_eigenvalue_cos n hn k]
+
+/-- The paper's **complete one-wrap Möbius signed cycle spectrum** as a
+real characteristic-polynomial product for every n ≥ 3. -/
+theorem signedCycle_charpoly_real (n : ℕ) (hn : 3 ≤ n) :
+    (signedCycleLaplacian n (by omega)).charpoly =
+      ∏ k : Fin n, (Polynomial.X -
+        Polynomial.C (2 - 2 * Real.cos ((2 * k.val + 1) * Real.pi / n))) := by
+  apply Polynomial.map_injective (algebraMap ℝ ℂ) Complex.ofReal_injective
+  rw [← Matrix.charpoly_map]
+  rw [Polynomial.map_prod]
+  simp_rw [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
+  rw [signedCycle_charpoly_complex n hn]
+  refine Finset.prod_congr rfl ?_
+  intro k _
+  rw [αζ_eigenvalue_cos n hn k]
+
+/-- Scalar cycle spectrum as a multiset, with algebraic multiplicity. -/
+theorem scalarCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
+    (scalarCycleLaplacian n (by omega)).charpoly.roots =
+      Multiset.map
+        (fun k : Fin n => 2 - 2 * Real.cos (2 * Real.pi * k.val / n))
+        (Finset.univ : Finset (Fin n)).val := by
+  rw [scalarCycle_charpoly_real n hn, Polynomial.roots_prod]
+  · simp
+  · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
+
+/-- One-wrap Möbius cycle spectrum as a multiset, with algebraic multiplicity. -/
+theorem signedCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
+    (signedCycleLaplacian n (by omega)).charpoly.roots =
+      Multiset.map
+        (fun k : Fin n =>
+          2 - 2 * Real.cos ((2 * k.val + 1) * Real.pi / n))
+        (Finset.univ : Finset (Fin n)).val := by
+  rw [signedCycle_charpoly_real n hn, Polynomial.roots_prod]
+  · simp
+  · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
+
 end ConnectionLaplacian.Cycle
