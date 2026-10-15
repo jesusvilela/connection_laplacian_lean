@@ -201,8 +201,8 @@ theorem scalarCycle_eigenvector_complex
         (2 - z - z⁻¹) • (fun j : Fin n => z ^ j.val) := by
   have hz0 : z ≠ 0 := by
     intro h
-    subst z
-    simp at hz
+    rw [h, zero_pow (by omega : n ≠ 0)] at hz
+    norm_num at hz
   funext i
   rw [scalar_mulVec_row_complex n hn (fun j : Fin n => z ^ j.val) i,
       Pi.smul_apply, smul_eq_mul]
@@ -213,7 +213,6 @@ theorem scalarCycle_eigenvector_complex
   by_cases hi0 : i.val = 0
   · have hs : (succFin n (by omega) i).val = 1 := by
       rw [succFin_val_at_lt n (by omega) i (by omega), hi0]
-      omega
     have hp : (predFin n (by omega) i).val = n - 1 :=
       predFin_val_at_zero n (by omega) i hi0
     rw [hs, hp, hi0, pow_zero, pow_one,
@@ -251,8 +250,8 @@ theorem signedCycle_eigenvector_complex
         (2 - z - z⁻¹) • (fun j : Fin n => z ^ j.val) := by
   have hz0 : z ≠ 0 := by
     intro h
-    subst z
-    simp at hz
+    rw [h, zero_pow (by omega : n ≠ 0)] at hz
+    norm_num at hz
   funext i
   by_cases hi0 : i.val = 0
   · rw [signed_mulVec_zero_complex n hn (fun j : Fin n => z ^ j.val) i hi0,
@@ -326,8 +325,7 @@ private theorem α_power_is_antiperiodic (n : ℕ) (hn : 3 ≤ n) :
   rw [← Complex.exp_nat_mul]
   have harg : (n : ℂ) * (Real.pi * Complex.I / (n : ℂ)) =
       Real.pi * Complex.I := by
-    field_simp
-    ring
+    field_simp [hn0]
   rw [harg, Complex.exp_pi_mul_I]
 
 private theorem αζ_power_is_antiperiodic (n : ℕ) (hn : 3 ≤ n)
