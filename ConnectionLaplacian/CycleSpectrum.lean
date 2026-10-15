@@ -44,22 +44,22 @@ private lemma succFin_val (n : ℕ) (hn : 1 ≤ n) (i : Fin n) :
 private lemma predFin_val (n : ℕ) (hn : 1 ≤ n) (i : Fin n) :
     (predFin n hn i).val = (i.val + n - 1) % n := rfl
 
-private lemma predFin_val_at_zero (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val = 0) :
+lemma predFin_val_at_zero (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val = 0) :
     (predFin n hn i).val = n - 1 := by
   rw [predFin_val, hi, Nat.zero_add]
   exact Nat.mod_eq_of_lt (by omega)
 
-private lemma predFin_val_at_pos (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : 1 ≤ i.val) :
+lemma predFin_val_at_pos (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : 1 ≤ i.val) :
     (predFin n hn i).val = i.val - 1 := by
   rw [predFin_val]
   have key : i.val + n - 1 = (i.val - 1) + n := by omega
   rw [key, Nat.add_mod_right, Nat.mod_eq_of_lt (by have := i.isLt; omega)]
 
-private lemma succFin_val_at_lt (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 < n) :
+lemma succFin_val_at_lt (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 < n) :
     (succFin n hn i).val = i.val + 1 := by
   rw [succFin_val, Nat.mod_eq_of_lt hi]
 
-private lemma succFin_val_at_eq (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 = n) :
+lemma succFin_val_at_eq (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 = n) :
     (succFin n hn i).val = 0 := by
   rw [succFin_val, hi, Nat.mod_self]
 
