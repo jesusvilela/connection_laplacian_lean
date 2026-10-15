@@ -117,9 +117,11 @@ Still open (paper↔formal boundary, from the round-8 transcription audit):
 1. **T4 bridge-monotonicity is not stated in the paper body** — *resolved
    2026-10-16: the errata published on main add Theorem `thm:bridge-monotone`
    with a proof sketch crediting the Lean proof.*
-2. **T3 public Lean statement is weaker than the paper's** — paper asserts
-   PSD *plus* the explicit quadratic-form identity; the identity lives in
-   private Lean lemmas. Promoting `sLM_quadForm_nonneg` would close it.
+2. **T3 public Lean statement was weaker than the paper's** — *resolved
+   2026-10-16: `signedLaplacianMobius_quadForm_eq` (the full sum-of-squares
+   identity, previously proven internally and discarded for the weaker
+   `0 ≤`) is now the public statement; `signedWeight` de-privatised so the
+   statement is user-writable. Axiom-clean (standard three only).*
 3. **T5 roots live in ℝ (Lean) vs Spec over ℂ (paper)** — equivalent here by
    real symmetry; a convention note, not an error.
 4. **T1's "Equivalently Spec ⊎ Spec" clause and Cor 5.7** have no separately

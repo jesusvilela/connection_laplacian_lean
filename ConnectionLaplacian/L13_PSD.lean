@@ -31,8 +31,9 @@ variable (G : ConnGraph)
 /-! ### L13.1 — Signed edge-weight helper. -/
 
 /-- The signed adjacency weight: `+1` on wrap edges, `−1` on non-wrap
-edges (among adjacent pairs), and `0` on non-edges. -/
-private noncomputable def signedWeight (u v : G.V) : ℝ :=
+edges (among adjacent pairs), and `0` on non-edges. (Formerly private;
+made public 2026-10-15 so the quadratic-form identity can be stated.) -/
+noncomputable def signedWeight (u v : G.V) : ℝ :=
   if h : G.graph.Adj u v then
     if G.wrap ⟨s(u, v), (SimpleGraph.mem_edgeSet G.graph).mpr h⟩ then (1 : ℝ) else -1
   else 0
@@ -194,9 +195,12 @@ and symmetrising (i↔j) yields
 
   x ⬝ᵥ (L_sg *ᵥ x) = (1/2) · Σ_{i,j: Adj} (x_i + s(i,j) x_j)²,
 
-in particular ≥ 0. -/
-private theorem sLM_quadForm_nonneg (x : G.V → ℝ) :
-    0 ≤ x ⬝ᵥ (G.signedLaplacianMobius *ᵥ x) := by
+in particular ≥ 0. The full identity is now the public theorem below;
+the `0 ≤` form is retained as a private corollary. -/
+theorem signedLaplacianMobius_quadForm_eq (x : G.V → ℝ) :
+    x ⬝ᵥ (G.signedLaplacianMobius *ᵥ x) =
+      (2⁻¹ : ℝ) * ∑ i : G.V, ∑ j : G.V,
+        if G.graph.Adj i j then (x i + G.signedWeight i j * x j) ^ 2 else 0 := by
   rw [G.sLM_quadForm_raw x]
   -- Rewrite degree as a sum of indicator, then combine.
   have hdeg : ∀ i : G.V, ((G.graph.neighborFinset i).card : ℝ) * (x i * x i) =
@@ -244,9 +248,8 @@ private theorem sLM_quadForm_nonneg (x : G.V → ℝ) :
     · exact sq_nonneg _
     · exact le_rfl
   suffices h : 2 * S = Q by
-    have : S = Q / 2 := by linarith
-    rw [this]
-    exact div_nonneg hQ_nonneg (by norm_num)
+    field_simp
+    linarith
   -- Prove 2 * S = Q by double-counting: swap (i ↔ j) gives S again.
   have hswap : S = ∑ i : G.V, ∑ j : G.V,
       if G.graph.Adj i j then x j * x j + G.signedWeight i j * x i * x j else 0 := by
@@ -291,6 +294,17 @@ private theorem sLM_quadForm_nonneg (x : G.V → ℝ) :
       rw [hexp, hs_sq]; ring
     rw [hsq]; ring
   · rw [if_neg hij, if_neg hij, if_neg hij, add_zero]
+
+/-- The previously-public-facing corollary, now derived from the identity. -/
+private theorem sLM_quadForm_nonneg (x : G.V → ℝ) :
+    0 ≤ x ⬝ᵥ (G.signedLaplacianMobius *ᵥ x) := by
+  rw [G.signedLaplacianMobius_quadForm_eq x]
+  apply mul_nonneg (by norm_num)
+  apply Finset.sum_nonneg; intro i _
+  apply Finset.sum_nonneg; intro j _
+  split_ifs
+  · exact sq_nonneg _
+  · exact le_rfl
 
 /-! ### L13.4 — Main theorem. -/
 

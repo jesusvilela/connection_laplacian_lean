@@ -656,32 +656,13 @@ theorem signedCycle_eigenvalue (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
       rw [hsum, hvi]
       ring
 
-theorem flat_cycle_spectrum (n : ℕ) (hn : 2 ≤ n) :
-    ∀ (k : Fin n),
-      (∃ (v₁ v₂ : (Fin n) × Fin 2 → ℝ),
-        LinearIndependent ℝ ![v₁, v₂] ∧
-        True) := by
-  intro _
-  have hn0 : (0 : ℕ) < n := by omega
-  refine ⟨(fun p : (Fin n) × Fin 2 => if p.2 = 0 then (1:ℝ) else 0),
-          (fun p : (Fin n) × Fin 2 => if p.2 = 1 then (1:ℝ) else 0),
-          ?_, trivial⟩
-  rw [Fintype.linearIndependent_iff]
-  intro g hg i
-  have h0 := congr_fun hg (⟨0, hn0⟩, (0 : Fin 2))
-  have h1 := congr_fun hg (⟨0, hn0⟩, (1 : Fin 2))
-  simp [Fin.sum_univ_two] at h0 h1
-  fin_cases i
-  · exact h0
-  · exact h1
-
-/-- **Theorem 2 (Möbius case)**. -/
-theorem mobius_cycle_spectrum (n : ℕ) (hn : 2 ≤ n) :
-    ∀ (k : Fin n),
-      (∃ v, v ≠ 0 ∧ True) ∧
-      (∃ w, w ≠ 0 ∧ True) := by
-  intro _
-  exact ⟨⟨(1 : ℕ), one_ne_zero, trivial⟩, ⟨(1 : ℕ), one_ne_zero, trivial⟩⟩
+/- The former `flat_cycle_spectrum` / `mobius_cycle_spectrum` declarations
+here were vacuous placeholders (statements mentioned no Laplacian and held
+trivially); removed 2026-10-15. The real spectral content lives in
+`scalarCycle_eigenvalue` / `signedCycle_eigenvalue` (per-k identities,
+n >= 3) and `mobius_more_eigenvalues`; assembling the per-k identities
+into the full multiset equality remains a documented TODO (see the
+paper's Remark on CycleSpectrum). -/
 
 /-- **Corollary**: The Möbius cycle has strictly more distinct eigenvalues
 than the flat cycle of the same length. -/
