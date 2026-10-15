@@ -39,17 +39,35 @@ theorem charpoly_of_vandermonde_eigenbasis
     exact Matrix.det_vandermonde_ne_zero_iff.mpr hroot
   have hdiag : M * V = V * Matrix.diagonal eig := by
     ext i k
-    simpa only [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.transpose_apply,
-      Matrix.vandermonde_apply, V, Matrix.mulVec_apply_eq_sum,
-      Pi.smul_apply, smul_eq_mul, mul_comm] using congrFun (heig k) i
+    have hleft : (M * V) i k =
+        (M *ᵥ (fun j : Fin n => root k ^ j.val)) i := by
+      rfl
+    have hright : (V * Matrix.diagonal eig) i k =
+        root k ^ i.val * eig k := by
+      simp [Matrix.mul_apply, Matrix.diagonal, V, Matrix.vandermonde]
+    rw [hleft, hright]
+    simpa only [Pi.smul_apply, smul_eq_mul, mul_comm] using
+      congrFun (heig k) i
   have hM : M = V * Matrix.diagonal eig * V⁻¹ := by
     calc
       M = M * (V * V⁻¹) := by
         rw [Matrix.mul_nonsing_inv V (Ne.isUnit hdet), Matrix.mul_one]
       _ = (M * V) * V⁻¹ := by rw [Matrix.mul_assoc]
       _ = V * Matrix.diagonal eig * V⁻¹ := by rw [hdiag]
-  rw [hM, Matrix.charpoly_conj_of_isUnit_det (Ne.isUnit hdet),
-    Matrix.charpoly_diagonal]
+  have hchar : (Matrix.diagonal eig).charpoly =
+      ∏ k : Fin n, (Polynomial.X - Polynomial.C (eig k)) := by
+    have hcharmatrix :
+        Matrix.charmatrix (Matrix.diagonal eig) =
+          Matrix.diagonal (fun k : Fin n =>
+            (Polynomial.X : Polynomial ℂ) - Polynomial.C (eig k)) := by
+      ext i j
+      by_cases h : i = j
+      · subst j
+        simp [Matrix.charmatrix, Matrix.diagonal]
+      · simp [Matrix.charmatrix, Matrix.diagonal, h]
+    rw [Matrix.charpoly, hcharmatrix, Matrix.det_diagonal]
+  rw [hM, Matrix.charpoly_conj_of_isUnit_det (Ne.isUnit hdet)]
+  exact hchar
 
 /-- The standard primitive n-th complex root used as a spectral parameter. -/
 private noncomputable def ζ (n : ℕ) : ℂ :=
