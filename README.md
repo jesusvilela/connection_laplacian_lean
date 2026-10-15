@@ -75,6 +75,17 @@ Representative end theorems (plain-language gloss in parentheses):
 - `trace_mul_scalar_signed_eq` *(the polarisation identity for the mixed
   trace)*
 
+## Human–AI division of labour
+
+The author originated the initial mathematical conjectures and designed the
+research apparatus. AI systems were directed to develop those conjectures,
+construct formalizations, and implement adversarial tests. The resulting
+claims were checked against Lean and independent computational evidence.
+The process, including failures and corrections, is documented in
+[the methodology note](docs/methods-note.md). This attribution reflects the
+author's account; the checks themselves do not establish the originality
+of the mathematical results.
+
 ## Three layers of confidence
 
 **1. The kernel.** Lean's kernel accepts the spine; CI forbids `sorry`,
