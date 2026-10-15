@@ -122,6 +122,16 @@ Closed via fiber-disjoint support vectors `v₁, v₂ : Fin n × Fin 2 → ℝ` 
 linear-dependence hypothesis at `(⟨0, _⟩, 0)` and `(⟨0, _⟩, 1)` collapses to
 `g 0 = 0` and `g 1 = 0` via `simp`, closed by `fin_cases`.
 
+## Spectrum separation correction
+
+The historical `mobius_more_eigenvalues` theorem formerly included
+`(∃ v, v ≠ 0 ∧ True)`, which did not connect its claimed additional
+spectral value to the signed Laplacian. The strengthened theorem now
+obtains a genuine signed-cycle eigenvector by specializing
+`signedCycle_eigenvalue` at `k = 0`; it then proves that eigenvalue
+is absent from the scalar-cycle spectrum. This is the intended
+spectral-separation statement, not a full multiset assembly proof.
+
 ## Mathlib dependencies exercised
 
 - `Mathlib.Combinatorics.SimpleGraph.LapMatrix.card_ConnectedComponent_eq_rank_ker_lapMatrix`
