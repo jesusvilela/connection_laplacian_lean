@@ -376,7 +376,7 @@ private theorem exp_phase_plus_inv (θ : ℝ) :
         ((2 * Real.cos θ : ℝ) : ℂ) := by
   simp only [Complex.ofReal_mul, Complex.ofReal_cos, Complex.cos,
     neg_mul, Complex.exp_neg]
-  ring
+  norm_num <;> ring
 
 private theorem ζ_power_is_phase (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
     (ζ n) ^ k.val =
@@ -445,6 +445,7 @@ theorem scalarCycle_charpoly_real (n : ℕ) (hn : 3 ≤ n) :
   refine Finset.prod_congr rfl ?_
   intro k _
   rw [ζ_eigenvalue_cos n hn k]
+  rfl
 
 /-- The paper's **complete one-wrap Möbius signed cycle spectrum** as a
 real characteristic-polynomial product for every n ≥ 3. -/
@@ -460,6 +461,7 @@ theorem signedCycle_charpoly_real (n : ℕ) (hn : 3 ≤ n) :
   refine Finset.prod_congr rfl ?_
   intro k _
   rw [αζ_eigenvalue_cos n hn k]
+  rfl
 
 /-- Scalar cycle spectrum as a multiset, with algebraic multiplicity. -/
 theorem scalarCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
@@ -468,8 +470,10 @@ theorem scalarCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
         (fun k : Fin n => 2 - 2 * Real.cos (2 * Real.pi * k.val / n))
         (Finset.univ : Finset (Fin n)).val := by
   rw [scalarCycle_charpoly_real n hn, Polynomial.roots_prod]
-  · simp
-  · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
+  · simp_rw [Polynomial.roots_X_sub_C]
+    rw [Multiset.bind_singleton]
+  · exact Finset.prod_ne_zero_iff.mpr
+      (fun k _ => Polynomial.X_sub_C_ne_zero _)
 
 /-- One-wrap Möbius cycle spectrum as a multiset, with algebraic multiplicity. -/
 theorem signedCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
@@ -479,7 +483,9 @@ theorem signedCycle_roots_real (n : ℕ) (hn : 3 ≤ n) :
           2 - 2 * Real.cos ((2 * k.val + 1) * Real.pi / n))
         (Finset.univ : Finset (Fin n)).val := by
   rw [signedCycle_charpoly_real n hn, Polynomial.roots_prod]
-  · simp
-  · simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero]
+  · simp_rw [Polynomial.roots_X_sub_C]
+    rw [Multiset.bind_singleton]
+  · exact Finset.prod_ne_zero_iff.mpr
+      (fun k _ => Polynomial.X_sub_C_ne_zero _)
 
 end ConnectionLaplacian.Cycle
