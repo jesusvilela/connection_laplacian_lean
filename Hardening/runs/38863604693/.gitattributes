@@ -1,4 +1,2 @@
-positive.log -text
-negative-phase.log -text
-negative-axiom.log -text
+*.log -text -whitespace
 versions.txt -text

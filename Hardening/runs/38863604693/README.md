@@ -8,6 +8,9 @@ not a locally recomputed ZIP digest. `job.log` is the separately retrieved,
 decoded GitHub job transcript. It is supporting context, not one of the
 four checksummed artifact files.
 
+Archive logs retain their original whitespace; the local attributes disable
+text conversion and whitespace linting for those preserved transcripts.
+
 The tested commit was GitHub's temporary PR #13 merge commit
 `380d09507df219a8a04fd7f63feb0a43c610aaff`, with PR head
 `e572a8c34212fd11471042d87bcd9cee5537bf48`; the later actual merge
@@ -39,4 +42,3 @@ Run `python scripts/audit_comparator_evidence.py` from the repository root
 to verify the preserved files and acceptance/rejection markers. This is
 archive validation; fresh proof replay uses the workflow described in
 [`CYCLE-COMPARATOR.md`](../../CYCLE-COMPARATOR.md).
-

@@ -138,16 +138,18 @@ kernel replay. The Windows `fake-landrun` pass remains a development path.
 
 Resolved on 2026-10-15 (round 8, see `findings/round8/report.md`):
 
-- **One-author transcription** — closed by dual transcription: a fresh agent
+- **One-author transcription** — reduced by dual transcription: a fresh agent
   re-transcribed all seven statements from source without seeing the
   challenge; after expanding the section variable they are token-identical,
   and the paper-pairing audit produced the four concrete findings below
-  instead of vague doubt.
-- **Shared convention stack** — closed at the definitional level: an
+  instead of vague doubt. Shared project context and interpretive
+  assumptions remain; this is not an external human referee's transcription.
+- **Shared convention stack** — checked on concrete instances: an
   implementation written from `paper.tex` only (selftested, 8,887 checks) now
   supplies the literal matrices that Lean itself verifies against the
   formalization's definitions (`Hardening/ConventionAnchor.lean` +
   `Hardening/ConventionBattery.lean`, 74 instances × 2 matrices).
+  This is bounded convention evidence, not a universal equivalence proof.
 - **n≥8 not tested at exhaustive strength** — closed bounded-exhaustively:
   all connected unlabeled n=8 graphs with 7–12 edges × *all* wraps, all n=8
   graphs with ≤7 edges × all wraps, plus dense random sampling — 7,246,819

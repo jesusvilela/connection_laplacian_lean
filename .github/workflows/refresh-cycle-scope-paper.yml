@@ -18,7 +18,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended texlive-science poppler-utils
+            texlive-fonts-recommended texlive-science texlive-fonts-extra \
+            cm-super poppler-utils
 
       - name: Compile and inspect manuscript
         run: |
