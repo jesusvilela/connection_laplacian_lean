@@ -22,8 +22,7 @@ Three recognition statements:
 3. `mobius_kernel_strict_iff_general` — strict inequality between
    flat and Möbius kernel iff at least one component is unbalanced.
 
-The cycle-graph specializations (recovering the original pre-registered
-formulas) live here too, as corollaries of (1)–(3) using the L6 cycle
+The cycle-graph specializations (recovering the original formulas from the initial written plan) live here too, as corollaries of (1)–(3) using the L6 cycle
 bridge lemma.
 -/
 
