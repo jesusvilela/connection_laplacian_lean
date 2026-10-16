@@ -132,7 +132,8 @@ whole research programme. In particular:
 | Strengthening `L14_CycleEw` without caller-supplied reverse hypothesis | **OPEN** |
 | General combinatorial mixed-trace identity `tr(L_sc * L_sg) = tr(L_sc²) - 4|W|` | **OPEN** |
 | Out-of-scope graph sizes / malformed-cycle boundary cases `n=0,1` | **OPEN**; cycle theorems explicitly assume `n≥3` |
-| Manuscript/PDF, release metadata, chronology, and independent proof replay | **Publication-level follow-up**; the new theorems compile in Lean but were not part of the older seven-theorem comparator run |
+| Manuscript LaTeX and tracked PDF | **UPDATED** in [PR #12](https://github.com/jesusvilela/connection_laplacian_lean/pull/12); GitHub Actions rebuilt `paper/paper.pdf` after synchronizing `paper/paper.tex` |
+| Archived DOI release metadata, chronology, and external comparator replay of the new declarations | **OPEN**; these proofs were not part of the older seven-theorem external comparator run |
 
 **Important convention:** The signed specialised matrix places its
 anti-periodic sign on the closing edge of the cyclic indexing. An arbitrary
