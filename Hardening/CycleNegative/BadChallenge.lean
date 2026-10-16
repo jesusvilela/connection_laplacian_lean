@@ -5,7 +5,7 @@ A comparator run against CycleSolution MUST reject statement mismatch.
 
 This challenge is outside the source-trusted theorem spine.
 -/
-import ConnectionLaplacian
+import ConnectionLaplacian.CycleSpectrum
 import Hardening.Compat
 
 namespace Hardening.Cycle
