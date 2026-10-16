@@ -19,7 +19,7 @@ that component fixes each sheet as a set).
 The signed-Laplacian kernel dimension is `numBalancedComponents`
 (proved in L8 using the L5 cover split + Mathlib scalar kernel dim).
 
-For the pre-registered scope (n-cycle): `H¹(C_n; Z/2) = ZMod 2`, and
+For the initial written plan's scope (n-cycle): `H¹(C_n; Z/2) = ZMod 2`, and
 the class is detected by `(total wrap count in C_n) mod 2`. This is
 why the original `numOddWrapComponents` formula is correct on cycles
 but false in general (non-cycle connected components have
@@ -454,7 +454,7 @@ theorem numComponents_cover :
 **Cycle corollary.** For a cycle graph (where `H¹ = ZMod 2`),
 a connected component is balanced iff its total wrap count is even.
 This recovers the original `numOddWrapComponents` formulation as the
-correct characterization on the pre-registered (cycle) scope, so the
+correct characterization on the initial written plan's cycle scope, so the
 old `signedLaplacian_kernel_dim` statement on cycles is a corollary
 of the general statement in L8.
 
