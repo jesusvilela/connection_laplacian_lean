@@ -128,8 +128,8 @@ theorem cover_charpoly_eq_scalar_times_mobius :
 
 /-- **Cover spectral multiset, with multiplicity.** This corollary packages
 the characteristic-polynomial factorization as an equality of multisets
-of polynomial roots, retaining their algebraic multiplicities. It is
-independent of the still-open *cycle-specific Fourier assembly* problem. -/
+of polynomial roots, retaining their algebraic multiplicities. It was proved independently of the (now completed) cycle-specific
+Fourier multiset assembly in `CycleMultiset.lean`. -/
 theorem cover_charpoly_roots_eq_union :
     (G.orientationDoubleCover.scalarLaplacian).charpoly.roots =
       G.scalarLaplacian.charpoly.roots +

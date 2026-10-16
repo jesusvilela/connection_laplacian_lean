@@ -160,3 +160,17 @@ reproduction: `findings/round8/report.md`.
   `ConventionBattery.lean` (generated), `independent-transcription/`.
 
 The spine itself was not modified in any way.
+
+## Addendum — later cycle-spectrum formalization (2026-10-16)
+
+This report is an immutable account of the **historical seven-target
+comparator run only**. Subsequent PRs #11 and #12 proved and audited the
+full scalar and one-wrap signed cycle spectra over every `n >= 3`,
+including repeated eigenvalues. A five-statement comparator transcript
+(plus two new negative controls) has since been prepared in
+[`CYCLE-COMPARATOR.md`](CYCLE-COMPARATOR.md).
+
+**Do not reuse this report's "PASS", 1,320,201 export lines, nanoda
+acceptance, or sandbox claim for the later spectrum theorems.** A new
+full-replay run, with its own recorded commit and tool SHAs, sandbox
+enforcement and negative-control logs, is required to make that claim.

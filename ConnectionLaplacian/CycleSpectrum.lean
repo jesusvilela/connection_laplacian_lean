@@ -658,11 +658,11 @@ theorem signedCycle_eigenvalue (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
 
 /- The former `flat_cycle_spectrum` / `mobius_cycle_spectrum` declarations
 here were vacuous placeholders (statements mentioned no Laplacian and held
-trivially); removed 2026-10-15. The real spectral content lives in
-`scalarCycle_eigenvalue` / `signedCycle_eigenvalue` (per-k identities,
-n >= 3) and `mobius_more_eigenvalues`; assembling the per-k identities
-into the full multiset equality remains a documented TODO (see the
-paper's Remark on CycleSpectrum). -/
+trivially); removed 2026-10-15. The original per-k spectral results are `scalarCycle_eigenvalue` and
+`signedCycle_eigenvalue` (`n >= 3`). The full characteristic-polynomial
+and exact eigenvalue-multiset results (including multiplicities) are now
+proved in `CycleMultiset.lean`; conditional graph-level transfer is
+provided by `CycleGraphTransfer.lean`. -/
 
 /-- **Spectral separation corollary.** For `n ≥ 4`, an actual eigenvalue
 of the signed cycle Laplacian is absent from the scalar-cycle spectrum.

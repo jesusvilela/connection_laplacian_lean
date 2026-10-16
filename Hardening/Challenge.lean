@@ -1,9 +1,11 @@
 /-
 Comparator CHALLENGE module (local hardening harness).
 
-The seven statements below are transcriptions of the representative
-end theorems of the repository's verified spine (the same list the CI
-axiom audit in `ConnectionLaplacian/AxiomAudit.lean` prints). Each is
+The seven statements below are historical transcriptions of
+representative end theorems of the repository's verified spine, used
+in the October 2026 original comparator replay. They form a subset
+of the now-larger CI axiom audit. The later cycle-specific comparator
+is in `Hardening/CycleChallenge.lean`. Each statement here is
 stated with `sorry`: this module asserts WHAT is claimed, and provides
 no proof. The companion `Hardening.Solution` module supplies proofs by
 aliasing the spine theorems. `comparator` checks that the two agree on

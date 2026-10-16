@@ -11,7 +11,9 @@ from pathlib import Path
 ALLOWED_AXIOMS = {"propext", "Quot.sound", "Classical.choice"}
 BANNED_TERMS = re.compile(r"\b(sorry|admit|native_decide)\b")
 AXIOM_DECL = re.compile(r"(?m)^\s*axiom\s+")
-AXIOM_LIST = re.compile(r"depends on axioms:\s*\[([^]]*)\]", re.MULTILINE)
+AXIOM_ENTRY = re.compile(r"'([^']+)' depends on axioms:\s*\[([^]]*)\]", re.MULTILINE)
+AXIOM_NONE = re.compile(r"'([^']+)' does not depend on any axioms", re.MULTILINE)
+AUDITED_NAME = re.compile(r"(?m)^\s*#print axioms\s+([A-Za-z_][A-Za-z0-9_.]*)\s*$")
 
 
 def without_comments(source: str) -> str:
@@ -74,18 +76,38 @@ def audit_sources(root: Path) -> None:
     print(f"source audit: {len(files)} files, no sorry/admit/native_decide/user axioms")
 
 
-def audit_axiom_output(path: Path) -> None:
+def audit_axiom_output(path: Path, root: Path) -> None:
+    """Require each requested #print to appear, with no undeclared axioms.
+
+    Silently omitting a requested theorem must FAIL rather than being
+    mistaken for broad proof coverage.
+    """
     output = path.read_text(encoding="utf-8")
-    matches = AXIOM_LIST.findall(output)
-    if not matches:
-        raise SystemExit("axiom audit: no '#print axioms' results found")
+    requested = AUDITED_NAME.findall(
+        (root / "ConnectionLaplacian/AxiomAudit.lean").read_text(encoding="utf-8")
+    )
+    if not requested or len(set(requested)) != len(requested):
+        raise SystemExit("axiom audit: no declarations or duplicate #print names")
+    with_axioms = AXIOM_ENTRY.findall(output)
+    without_axioms = AXIOM_NONE.findall(output)
+    recorded = [name for name, _ in with_axioms] + without_axioms
+    missing = set(requested) - set(recorded)
+    extra = set(recorded) - set(requested)
+    duplicates = sorted({x for x in recorded if recorded.count(x) > 1})
+    if missing or extra or duplicates:
+        raise SystemExit(
+            "axiom audit: incomplete/mismatched coverage:"
+            f" missing={sorted(missing)}, extra={sorted(extra)},"
+            f" duplicate={duplicates}"
+        )
     unexpected: set[str] = set()
-    for body in matches:
+    for _, body in with_axioms:
         used = {item.strip() for item in body.split(",") if item.strip()}
         unexpected.update(used - ALLOWED_AXIOMS)
     if unexpected:
         raise SystemExit("axiom audit: unexpected axioms: " + ", ".join(sorted(unexpected)))
-    print(f"axiom audit: {len(matches)} theorems; only {sorted(ALLOWED_AXIOMS)}")
+    print(f"axiom audit: {len(recorded)} / {len(requested)} requested theorems;"
+          f" only {sorted(ALLOWED_AXIOMS)}")
 
 
 def main() -> None:
@@ -95,7 +117,7 @@ def main() -> None:
     args = parser.parse_args()
     audit_sources(args.root)
     if args.axiom_output:
-        audit_axiom_output(args.axiom_output)
+        audit_axiom_output(args.axiom_output, args.root)
 
 
 if __name__ == "__main__":

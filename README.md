@@ -48,6 +48,7 @@ maintained `sorry`-free and free of user-introduced axioms.
 - `ConnectionLaplacian/KernelDimension.lean`
 - `ConnectionLaplacian/CycleSpectrum.lean`
 - `ConnectionLaplacian/CycleMultiset.lean` *(complete scalar and signed cycle spectra)*
+- `ConnectionLaplacian/CycleGraphTransfer.lean` *(conditional full connection-spectrum transfer)*
 - `ConnectionLaplacian/L5_Cover.lean`
 - `ConnectionLaplacian/L6_Cohomology.lean`
 - `ConnectionLaplacian/L8_Recognition.lean`
@@ -81,8 +82,11 @@ Representative end theorems (plain-language gloss in parentheses):
   *(exact root multisets, preserving every eigenvalue multiplicity)*
 
 These cycle results concern the **specialised** scalar and one-wrap signed
-matrices defined in `CycleSpectrum.lean`. A Lean identification with an
-arbitrary graph-level `ConnGraph` cycle instance remains separate work.
+matrices defined in `CycleSpectrum.lean`. Five new theorems transfer their
+characteristic polynomials and exact root multisets to a `ConnGraph`
+**conditional on a supplied vertex bijection and both matrix-reindexing
+identities**. Constructing those identifications from an abstract cycle-graph
+hypothesis remains separate, unproved work.
 See [`docs/cycle-spectrum-multiset-assembly.md`](docs/cycle-spectrum-multiset-assembly.md).
 
 ## Human–AI division of labour
@@ -101,7 +105,9 @@ of the mathematical results.
 **1. The kernel.** Lean's kernel accepts the spine; CI forbids `sorry`,
 `admit`, `native_decide`, and project-local axioms via a comment-aware source
 audit, and `AxiomAudit.lean` checks nine earlier selected end theorems plus nine
-cycle-spectrum proof declarations against the explicit allowlist above.
+cycle-spectrum proof declarations and five conditional graph-transfer
+statements against the explicit allowlist above. The audit also requires
+that every requested theorem actually appear in the Lean audit output.
 
 **2. Independent re-checking.** The seven end theorems were re-verified with
 `leanprover/comparator` (unmodified): statement equality against an
@@ -111,7 +117,11 @@ theorems. The authoritative run executed under a real landlock sandbox
 (landrun on WSL2) with the nanoda external kernel accepting alongside Lean's
 own; two deliberately broken controls (a one-token statement tamper, a
 smuggled axiom) are rejected as expected. See
-[`Hardening/REPORT.md`](Hardening/REPORT.md).
+[`Hardening/REPORT.md`](Hardening/REPORT.md). The report covers **seven
+historical theorems only**. A separate five-claim cycle-spectrum comparator
+challenge with two failure-mode controls has been added; its proof replay
+status is documented separately in
+[`Hardening/CYCLE-COMPARATOR.md`](Hardening/CYCLE-COMPARATOR.md).
 
 **3. Empirical falsification pressure.** The `findings/` rounds (2–6, 8–9) attack the
 theorems numerically — exhaustive enumeration of all graphs × all wrap sets at
@@ -122,8 +132,11 @@ battery (148 equalities tying the formalization's matrices to that
 implementation on 74 concrete graphs), and a bounded-exhaustive n = 8 sweep —
 7,246,819 configurations, zero failures. Round 10 independently tests both
 cycle Fourier bases and full eigenvalue multisets at `n = 3,...,64`,
-including a wrong-basis negative control. These scripts are empirical
-evidence, not verified Lean results.
+including a wrong-basis negative control. Another round-10 script
+tests 124 canonical cycle matrix identities, 372 reindexed matrix
+identities and 62 wrong-seam negative controls in exact integer
+arithmetic, with no dependencies beyond Python. These scripts are
+empirical evidence, not verified Lean results.
 
 The theorem-by-theorem chain — claim → Lean theorem → axiom audit → numerical
 check → comparator result → remaining gap — is tabulated in
@@ -154,6 +167,9 @@ toolchain):
 ```bash
 lake build Hardening.Challenge Hardening.Solution Hardening.ConventionAnchor \
   Hardening.BatteryA Hardening.BatteryB Hardening.BatteryC Hardening.BatteryD
+lake build Hardening.CycleChallenge Hardening.CycleSolution \
+  Hardening.CycleNegative.BadChallenge Hardening.CycleNegative.BadSolution
+python3 scripts/audit_cycle_comparator.py
 ```
 
 Additional build guidance: `BUILD.md`.
@@ -169,7 +185,10 @@ Additional build guidance: `BUILD.md`.
   development was made trustworthy (untrusted generation, heterogeneous
   critics, kernel-verified residue, published errata ledger).
 - `docs/cycle-spectrum-multiset-assembly.md` — the fully checked Fourier
-  diagonalisation and real-root multiset proof, with precise scope limits.
+  diagonalisation, real-root multisets, conditional graph transfer,
+  and precise scope limits.
+- `Hardening/CYCLE-COMPARATOR.md` — comparator challenges, negative
+  controls, reproduction and an explicit verified-vs-pending evidence ledger.
 
 ## Paper
 

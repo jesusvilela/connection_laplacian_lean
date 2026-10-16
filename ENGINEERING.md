@@ -129,8 +129,11 @@ The historical `mobius_more_eigenvalues` theorem formerly included
 spectral value to the signed Laplacian. The strengthened theorem now
 obtains a genuine signed-cycle eigenvector by specializing
 `signedCycle_eigenvalue` at `k = 0`; it then proves that eigenvalue
-is absent from the scalar-cycle spectrum. This is the intended
-spectral-separation statement, not a full multiset assembly proof.
+is absent from the scalar-cycle spectrum. This is a spectral-separation statement, not by itself a full multiset
+assembly proof. That stronger result has since been proved in
+`CycleMultiset.lean` (both scalar and signed charpolys and root multisets,
+including multiplicities). `CycleGraphTransfer.lean` supplies checked
+conditional reindexing into the general connection-graph framework.
 
 ## Mathlib dependencies exercised
 

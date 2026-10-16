@@ -939,6 +939,13 @@ in Lean~4 against Mathlib~v4.11.0. The flat and one-wrap signed cycle
 characteristic polynomials and real root multisets, for all $n\ge3$,
 are formalised in \texttt{CycleMultiset.lean}, beyond the individual
 eigenpairs from \texttt{CycleSpectrum.lean}.
+The \texttt{CycleGraphTransfer.lean} theorem
+\texttt{mobius\_connection\_roots\_of\_cycle\_reindex} extends
+the resulting union of scalar and signed spectral multisets to a
+general \texttt{ConnGraph} \emph{provided} a vertex equivalence and
+\emph{both} explicit scalar/signed matrix-reindexing equalities are
+supplied. It does not derive those equalities from a cycle-graph
+hypothesis: that separate graph-encoding proof remains open.
 The dependency graph is linear:
 \[
   \text{\texttt{Basic}} \to
@@ -1348,7 +1355,11 @@ If $G=C_n$ is a single cycle of length~$n\ge 3$, then
 \]
 In particular the pre-registered formula
 $\dim\Ker\Lsigned = \#\comp(G) - \#\{\text{odd-wrap components}\}$
-holds exactly for cycle graphs.
+holds for \emph{every wrap assignment} on a connected cycle graph.
+It is not a valid formula for arbitrary graphs. For a \emph{particular}
+wrap assignment, however, it can also hold on non-cycle graphs.
+as discussed in the corrected Remark above; thus this is not a
+pointwise characterisation of cycles.
 \end{corollary}
 
 \begin{proof}
@@ -1555,6 +1566,8 @@ Thm.~\ref{thm:mobius-cycle} (charpoly) &
   \texttt{signedCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
 Thm.~\ref{thm:mobius-cycle} (root multiset) &
   \texttt{signedCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
+\quad (graph-conditional transfer) &
+  \shortstack[l]{\texttt{mobius\_connection\_roots}\\\texttt{\_of\_cycle\_reindex}} & \texttt{CycleGraphTransfer.lean} \\
 Cor.~\ref{cor:cycle-ew} &
   \texttt{cycle\_isBalanced\_iff\_even\_wrap\_weak} & \texttt{L14\_CycleEw.lean} \\
 Ex.~\ref{ex:cross-merge} (R5 refinement, C1 $\tau=1$) &

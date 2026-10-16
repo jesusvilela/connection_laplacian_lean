@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Hardening.CycleChallenge",
+  "solution_module": "Hardening.CycleSolution",
+  "theorem_names": [
+    "Hardening.Cycle.periodic_charpoly",
+    "Hardening.Cycle.antiperiodic_charpoly",
+    "Hardening.Cycle.periodic_multiset",
+    "Hardening.Cycle.antiperiodic_multiset",
+    "Hardening.Cycle.mobius_graph_multiset"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

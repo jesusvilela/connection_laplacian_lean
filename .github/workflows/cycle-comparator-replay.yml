@@ -1,0 +1,153 @@
+name: Cycle comparator replay (experimental external gate)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Hardening/CycleChallenge.lean'
+      - 'Hardening/CycleSolution.lean'
+      - 'Hardening/CycleNegative/**'
+      - 'Hardening/config-cycle*.json'
+      - 'Hardening/lean4export-v4.11-port.diff'
+      - 'ConnectionLaplacian/CycleGraphTransfer.lean'
+      - '.github/workflows/cycle-comparator-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cycle-comparator-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  comparator-cycle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lean toolchains
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.x'
+
+      - name: Install Rust stable
+        run: |
+          rustup update stable
+          rustup default stable
+
+      - name: Establish evidence provenance
+        run: |
+          mkdir -p "$RUNNER_TEMP/cycle-comparator-evidence"
+          {
+            echo "repository_commit=$(git rev-parse HEAD)"
+            echo "date_utc=$(date -u +%FT%TZ)"
+            uname -a
+            lean --version
+            lake --version
+            go version
+            rustc --version
+          } | tee "$RUNNER_TEMP/cycle-comparator-evidence/versions.txt"
+
+      - name: Build project + comparator transcript modules
+        run: |
+          lake exe cache get
+          lake build
+          lake build Hardening.CycleChallenge Hardening.CycleSolution \
+            Hardening.CycleNegative.BadChallenge \
+            Hardening.CycleNegative.BadSolution
+          python3 scripts/audit_cycle_comparator.py
+
+      - name: Build comparator v4.35 and ported v4.11 exporter
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/cycle-tools"
+          git clone -q https://github.com/leanprover/comparator.git "$RUNNER_TEMP/cycle-tools/comparator"
+          git -C "$RUNNER_TEMP/cycle-tools/comparator" checkout -q e3dcf30
+          git clone -q https://github.com/leanprover/lean4export.git "$RUNNER_TEMP/cycle-tools/lean4export"
+          git -C "$RUNNER_TEMP/cycle-tools/lean4export" checkout -q 5a9a355
+          git -C "$RUNNER_TEMP/cycle-tools/lean4export" apply "$GITHUB_WORKSPACE/Hardening/lean4export-v4.11-port.diff"
+          (cd "$RUNNER_TEMP/cycle-tools/comparator" && lake build comparator)
+          (cd "$RUNNER_TEMP/cycle-tools/lean4export" && lake build lean4export)
+          {
+            echo "comparator_sha=$(git -C "$RUNNER_TEMP/cycle-tools/comparator" rev-parse HEAD)"
+            echo "lean4export_sha=$(git -C "$RUNNER_TEMP/cycle-tools/lean4export" rev-parse HEAD)"
+          } | tee -a "$RUNNER_TEMP/cycle-comparator-evidence/versions.txt"
+
+      - name: Compile landrun and independent nanoda kernel
+        run: |
+          set -euo pipefail
+          git clone -q https://github.com/Zouuup/landrun.git "$RUNNER_TEMP/cycle-tools/landrun"
+          git -C "$RUNNER_TEMP/cycle-tools/landrun" checkout -q 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+          (cd "$RUNNER_TEMP/cycle-tools/landrun" && go build -o "$RUNNER_TEMP/cycle-tools/landrun-bin" ./cmd/landrun)
+          git clone -q https://github.com/ammkrn/nanoda_lib.git "$RUNNER_TEMP/cycle-tools/nanoda"
+          git -C "$RUNNER_TEMP/cycle-tools/nanoda" checkout -q f67473ba5f9397266f89c7852082c9c914b5d219
+          (cd "$RUNNER_TEMP/cycle-tools/nanoda" && cargo build --release)
+          {
+            echo "landrun_sha=$(git -C "$RUNNER_TEMP/cycle-tools/landrun" rev-parse HEAD)"
+            echo "nanoda_sha=$(git -C "$RUNNER_TEMP/cycle-tools/nanoda" rev-parse HEAD)"
+          } | tee -a "$RUNNER_TEMP/cycle-comparator-evidence/versions.txt"
+
+      - name: Comparator positive dual-kernel replay and two negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.elan/toolchains/leanprover--lean4---v4.11.0/bin:$HOME/.elan/bin:/usr/bin:/bin"
+          export COMPARATOR_LANDRUN="$RUNNER_TEMP/cycle-tools/landrun-bin"
+          export COMPARATOR_LEAN4EXPORT="$RUNNER_TEMP/cycle-tools/lean4export/.lake/build/bin/lean4export"
+          export COMPARATOR_NANODA="$RUNNER_TEMP/cycle-tools/nanoda/target/release/nanoda_bin"
+          comparator="$RUNNER_TEMP/cycle-tools/comparator/.lake/build/bin/comparator"
+          log_dir="$RUNNER_TEMP/cycle-comparator-evidence"
+          lake env "$comparator" Hardening/config-cycle-nanoda.json \
+            > "$log_dir/positive.log" 2>&1 || {
+              tail -n 120 "$log_dir/positive.log"
+              exit 1
+            }
+          tail -n 45 "$log_dir/positive.log"
+          grep -q 'nanoda kernel accepts the solution' "$log_dir/positive.log" || {
+            echo "ERROR: independent nanoda kernel acceptance not observed"
+            exit 1
+          }
+          grep -q 'Lean default kernel accepts the solution' "$log_dir/positive.log" || {
+            echo "ERROR: Lean kernel acceptance not observed"
+            exit 1
+          }
+          grep -q 'Your solution is okay!' "$log_dir/positive.log" || {
+            echo "ERROR: comparator final statement/axiom/kernel gate not observed"
+            exit 1
+          }
+          if lake env "$comparator" Hardening/config-cycle-negative-phase.json \
+             > "$log_dir/negative-phase.log" 2>&1; then
+            echo "ERROR: comparator accepted tampered Fourier phase"
+            exit 1
+          fi
+          grep -q 'do not match' "$log_dir/negative-phase.log" || {
+            echo "Wrong failure mode in phase control"
+            tail -n 120 "$log_dir/negative-phase.log"
+            exit 1
+          }
+          if lake env "$comparator" Hardening/config-cycle-negative-axiom.json \
+             > "$log_dir/negative-axiom.log" 2>&1; then
+            echo "ERROR: comparator accepted smuggled local axiom"
+            exit 1
+          fi
+          grep -q 'Illegal axiom detected' "$log_dir/negative-axiom.log" || {
+            echo "Wrong failure mode in axiom control"
+            tail -n 120 "$log_dir/negative-axiom.log"
+            exit 1
+          }
+          echo "Cycle comparator PASS: positive dual-kernel replay; two intentional negative rejections."
+
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cycle-comparator-evidence
+          path: ${{ runner.temp }}/cycle-comparator-evidence/
+          if-no-files-found: warn
+          retention-days: 90

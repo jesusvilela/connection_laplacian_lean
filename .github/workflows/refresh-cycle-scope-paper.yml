@@ -1,0 +1,61 @@
+name: One-shot spectrum scope paper rebuild
+
+on:
+  push:
+    branches:
+      - audit/cycle-boundaries-comparator-20261016
+    paths:
+      - paper/paper.tex
+      - .github/workflows/refresh-cycle-scope-paper.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audit/cycle-boundaries-comparator-20261016
+
+      - name: Install LaTeX toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y texlive-latex-base texlive-latex-recommended \
+            texlive-latex-extra texlive-fonts-recommended texlive-science \
+            texlive-fonts-extra poppler-utils
+
+      - name: Compile paper and verify PDF is nonempty
+        run: |
+          set -eu
+          mkdir -p /tmp/paperbuild
+          for i in 1 2 3; do
+            pdflatex -halt-on-error -interaction=nonstopmode \
+              -output-directory=/tmp/paperbuild paper/paper.tex \
+              > /tmp/paperbuild/run-${i}.log 2>&1 || {
+                tail -n 160 /tmp/paperbuild/run-${i}.log
+                exit 1
+              }
+          done
+          test -s /tmp/paperbuild/paper.pdf
+          pdfinfo /tmp/paperbuild/paper.pdf | head -n 25
+          pdftotext /tmp/paperbuild/paper.pdf /tmp/paperbuild/paper.txt
+          test -s /tmp/paperbuild/paper.txt
+          echo "Extracted manuscript text lines:"
+          wc -l /tmp/paperbuild/paper.txt
+          cp /tmp/paperbuild/paper.pdf paper/paper.pdf
+
+      - name: Commit PDF on audit branch only
+        run: |
+          set -eu
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/paper.pdf
+          if git diff --cached --quiet; then
+            echo "PDF already synchronized"
+            exit 0
+          fi
+          git commit -m "Rebuild paper PDF for corrected parity scope and graph transfer notes"
+          git push origin HEAD:refs/heads/audit/cycle-boundaries-comparator-20261016

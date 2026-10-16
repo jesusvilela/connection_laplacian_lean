@@ -1,9 +1,9 @@
 /-
 # Full cycle spectra, including algebraic multiplicities
 
-This file is developed on an isolated proof branch and is not part of the
-production theorem spine until the scalar and signed cycle statements have
-both been checked by Lean.
+This file is in the production theorem spine. Both scalar and signed full
+cycle spectral multisets, with algebraic multiplicity, are checked by Lean
+for every n >= 3; the explicit end theorems appear in AxiomAudit.lean.
 
 The abstract Vandermonde assembly lemma below prevents the unsound inference
 from per-frequency eigenpairs to multiset equality: it explicitly requires
