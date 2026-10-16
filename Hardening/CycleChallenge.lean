@@ -9,7 +9,7 @@ It is not imported by the production ConnectionLaplacian library.
 The comparator compares each elaborated theorem TYPE with CycleSolution
 and checks the latter's axioms and transitive proof-term kernel replay.
 -/
-import ConnectionLaplacian
+import ConnectionLaplacian.CycleSpectrum
 import Hardening.Compat
 
 namespace Hardening.Cycle
