@@ -35,7 +35,7 @@ Lean elaboration and `#print axioms` alone are **not** comparator replay.
 - `Hardening/config-cycle.json`: standard comparator
 - `Hardening/config-cycle-nanoda.json`: Lean + nanoda dual kernel
 - `Hardening/CycleNegative/BadChallenge.lean`: changes signed
-  eigenphase from `(2*k+1)` to `(2*k+3)`; must be rejected
+  eigenphase from anti-periodic `(2*k+1)` to periodic `(2*k)`; must be rejected
 - `Hardening/CycleNegative/BadSolution.lean`: uses local axiom
   `smuggled_cycle_multiset`; must be rejected
 - `Hardening/config-cycle-negative-{phase,axiom}.json`: negative gates
