@@ -198,13 +198,15 @@ formal Lean development.
 
 The main structural decomposition, cover-splitting, cohomological
 recognition, kernel-dimension, and auxiliary identities are
-machine-checked in Lean~4 against Mathlib~v4.11.0. For the cycle
-spectra, the Lean development proves the per-mode eigenvalue identities;
-the displayed spectrum formulas are the corresponding mathematical
-assembly (see Remark~\ref{rem:cycle-spectrum-lean} in
-Section~\ref{sec:cycles}). The complete proof scripts and an
-exhaustive numerical verification are included in the accompanying
-Lean project.
+machine-checked in Lean~4 against Mathlib~v4.11.0. The emph{complete}
+flat and one-wrap signed cycle characteristic polynomials and real
+root multisets, including algebraic multiplicities for every $n\ge3$,
+are also machine-checked in 	exttt{CycleMultiset.lean}; see
+Remark~\ref{rem:cycle-spectrum-lean}. The claims concern the explicit
+cycle matrices used in the Lean project. A further graph-level
+identification with arbitrary 	exttt{ConnGraph} cycle instances
+is not asserted. The complete proof scripts and independent numerical
+checks are included in the accompanying repository.
 
 %=============================================================
 \section{Preliminaries}\label{sec:prelim}
@@ -869,23 +871,37 @@ transformation $v_j \mapsto \alpha^j v_j$ with $\alpha=e^{i\pi/n}$
 (relabelled so the branch cut lies on the wrap edge $\{0,1\}$)
 converts it into the circulant $2\II-(\alpha S+\alpha^{-1}S^{-1})$,
 giving eigenvalues $2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$.
-The Lean per-frequency proofs in \texttt{CycleSpectrum.lean} carry out the
-Fourier algebra without appealing to gauge equivalence, producing
-each eigenvector explicitly and verifying the eigen-equation by a
-direct \texttt{Finset.sum\_eq\_single} reduction.
+The Lean proof in \texttt{CycleMultiset.lean} checks the complete
+periodic and anti-periodic complex Fourier eigen-equations on the
+explicit cycle matrices, including the signed closing-edge sign.
+The distinct Fourier parameters yield an invertible Vandermonde
+eigenbasis, hence similarity to a diagonal matrix and the full
+characteristic-polynomial products. Euler's identity and injectivity
+of the coefficient inclusion $\RR\hookrightarrow\CC$ descend the
+products to real cosines; the polynomial-root theorems then certify
+the stated eigenvalue multisets with all algebraic multiplicities.
+The signed specialised matrix places its wrap on the closing edge;
+the single-edge convention $W=\{\{0,1\}\}$ above is obtained by
+cyclic relabelling, rather than by a separately formalised
+\texttt{ConnGraph} matrix-equivalence theorem.
 \end{proof}
 
 \begin{remark}\label{rem:cycle-spectrum-lean}
-What \texttt{CycleSpectrum.lean} formalises is the \emph{per-$k$
-eigenvalue identity}: for each $k\in\operatorname{Fin} n$ it produces
-an explicit nonzero vector $v_k$ with
-$\Lscalar(C_n)\cdot v_k=(2-2\cos(2\pi k/n))\,v_k$
-(\texttt{scalarCycle\_eigenvalue}, $n\ge 3$) and similarly for the
-signed Möbius cycle (\texttt{signedCycle\_eigenvalue}). Assembly of
-these per-$k$ identities into the full multiset equality
-$\operatorname{Spec}\Lscalar(C_n)=\{2-2\cos(2\pi k/n)\}$ of
-Theorems~\ref{thm:flat-cycle}--\ref{thm:mobius-cycle} follows by a
-dimension count, and is not itself a named Lean theorem.
+The earlier \texttt{CycleSpectrum.lean} theorems
+\texttt{scalarCycle\_eigenvalue} and \texttt{signedCycle\_eigenvalue}
+produce one real eigenvector per frequency; these witnesses alone do
+\emph{not} establish multiplicities because distinct frequencies can
+yield the same cosine vector. This gap is now closed in
+\texttt{CycleMultiset.lean}. The named theorems
+\texttt{scalarCycle\_charpoly\_real} and
+\texttt{signedCycle\_charpoly\_real} prove both entire cosine
+characteristic-polynomial products for every $n\ge3$; the theorems
+\texttt{scalarCycle\_roots\_real} and
+\texttt{signedCycle\_roots\_real} establish the corresponding
+\emph{multisets} of roots, including repeated eigenvalues. The
+completeness argument uses the nonzero Vandermonde determinant of the
+distinct \emph{complex} Fourier parameters and is itself formalised
+as \texttt{charpoly\_of\_vandermonde\_eigenbasis}.
 \end{remark}
 
 \begin{corollary}
@@ -919,9 +935,10 @@ $n\bmod 2$, so $C_n$ is balanced exactly when $n$ is even.
 %=============================================================
 
 The central kernel-dimension and decomposition development is formalised
-in Lean~4 against Mathlib~v4.11.0. The cycle-spectrum statements are
-formalised per eigenvalue; completeness of the cycle spectral multiset
-is established in the paper, not separately in Lean.
+in Lean~4 against Mathlib~v4.11.0. The flat and one-wrap signed cycle
+characteristic polynomials and real root multisets, for all $n\ge3$,
+are formalised in \texttt{CycleMultiset.lean}, beyond the individual
+eigenpairs from \texttt{CycleSpectrum.lean}.
 The dependency graph is linear:
 \[
   \text{\texttt{Basic}} \to
@@ -929,17 +946,20 @@ The dependency graph is linear:
   \text{\texttt{L5\_Cover}} \to \cdots \to
   \text{\texttt{L17\_TracesAndLipschitz}},
 \]
-with a lateral \texttt{CycleSpectrum} file depending on
-\texttt{Basic} and \texttt{KernelDimension} (the full file list is
-tabulated in Appendix~\ref{app:formal-index}).
+with the \texttt{CycleSpectrum} file depending on \texttt{Basic}
+and \texttt{KernelDimension}, and \texttt{CycleMultiset} extending
+the cycle argument by Fourier-basis completeness (the full file list
+is tabulated in Appendix~\ref{app:formal-index}).
 
 \subsection*{Axiomatic footprint}
 
-Every named theorem of this paper was checked by the
-\texttt{\#print axioms} command to depend only on the three
-standard Lean axioms \texttt{propext}, \texttt{Classical.choice},
-and \texttt{Quot.sound}; none involve \texttt{sorryAx} or any
-user-introduced axiom. In particular:
+The formal development's source audit excludes \texttt{sorry},
+\texttt{admit}, \texttt{native\_decide}, and project-local axiom
+declarations. A selected set of representative end theorems,
+including all nine stages of the cycle-spectrum proof, is checked
+by \texttt{\#print axioms} against only the three standard Lean
+axioms \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}. These checked declarations include:
 \begin{itemize}
   \item Theorem~\ref{thm:decomp} is
     \texttt{ConnGraph.laplacian\_decomposes};
@@ -954,10 +974,10 @@ user-introduced axiom. In particular:
   \item Theorem~\ref{thm:strict} is
     \texttt{ConnGraph.mobius\_kernel\_strict\_iff\_general};
   \item Theorems~\ref{thm:flat-cycle}--\ref{thm:mobius-cycle} are
-    certified per eigenvalue by
-    \texttt{CycleSpectrum.scalarCycle\_eigenvalue} and
-    \texttt{CycleSpectrum.signedCycle\_eigenvalue}; see
-    Remark~\ref{rem:cycle-spectrum-lean} below.
+    certified with \emph{all algebraic multiplicities} by
+    \texttt{Cycle.scalarCycle\_roots\_real} and
+    \texttt{Cycle.signedCycle\_roots\_real}; see
+    Remark~\ref{rem:cycle-spectrum-lean}.
 \end{itemize}
 
 \subsection*{Numerical cross-check}
@@ -1527,6 +1547,14 @@ Cor.~\ref{cor:forest-star-path} &
   \multicolumn{2}{l}{\emph{specialisation of the tree ker-dim theorem}} \\
 Thm.~\ref{thm:walk-sum} &
   \texttt{isBalanced\_iff\_closedWalk\_wrap\_even} & \texttt{L12\_WalkH1.lean} \\
+Thm.~\ref{thm:flat-cycle} (charpoly) &
+  \texttt{scalarCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
+Thm.~\ref{thm:flat-cycle} (root multiset) &
+  \texttt{scalarCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
+Thm.~\ref{thm:mobius-cycle} (charpoly) &
+  \texttt{signedCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
+Thm.~\ref{thm:mobius-cycle} (root multiset) &
+  \texttt{signedCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
 Cor.~\ref{cor:cycle-ew} &
   \texttt{cycle\_isBalanced\_iff\_even\_wrap\_weak} & \texttt{L14\_CycleEw.lean} \\
 Ex.~\ref{ex:cross-merge} (R5 refinement, C1 $\tau=1$) &
