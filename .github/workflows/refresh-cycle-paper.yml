@@ -1,0 +1,57 @@
+name: One-shot cycle-paper PDF refresh
+
+on:
+  push:
+    branches:
+      - fix/cycle-full-spectrum-proof-audit
+    paths:
+      - paper/paper.tex
+      - .github/workflows/refresh-cycle-paper.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/cycle-full-spectrum-proof-audit
+
+      - name: Install publication LaTeX toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y texlive-latex-base texlive-latex-recommended \
+            texlive-latex-extra texlive-fonts-recommended texlive-science \
+            texlive-fonts-extra
+
+      - name: Build and verify paper PDF
+        run: |
+          set -eu
+          mkdir -p /tmp/paperbuild
+          for i in 1 2 3; do
+            pdflatex -halt-on-error -interaction=nonstopmode \
+              -output-directory=/tmp/paperbuild paper/paper.tex \
+              > /tmp/paperbuild/run-${i}.log 2>&1 || {
+                tail -n 140 /tmp/paperbuild/run-${i}.log
+                exit 1
+              }
+          done
+          test -s /tmp/paperbuild/paper.pdf
+          pdfinfo /tmp/paperbuild/paper.pdf | head -n 18
+          cp /tmp/paperbuild/paper.pdf paper/paper.pdf
+
+      - name: Commit the rebuilt binary PDF only to the proof-audit branch
+        run: |
+          set -eu
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper/paper.pdf
+          if git diff --cached --quiet; then
+            echo "PDF already matches the committed artifact"
+            exit 0
+          fi
+          git commit -m "Rebuild paper PDF with complete cycle spectral multisets"
+          git push origin HEAD:fix/cycle-full-spectrum-proof-audit
