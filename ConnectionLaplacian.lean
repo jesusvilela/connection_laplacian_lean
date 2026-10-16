@@ -15,3 +15,4 @@ import ConnectionLaplacian.L16_SpectrumUnion
 import ConnectionLaplacian.L17_TracesAndLipschitz
 
 import ConnectionLaplacian.CycleMultiset
+import ConnectionLaplacian.CycleGraphTransfer
