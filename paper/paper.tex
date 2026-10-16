@@ -1530,11 +1530,15 @@ Lemmas~\ref{lem:fiber-subset}, \ref{lem:sep-if-balanced},
 \ref{lem:merge-if-unbalanced}---are implicitly witnessed inside
 the proofs of theorems listed below and are not tabulated
 separately.) The table below
-pairs them explicitly. All listed declarations are sorry-free and
-their \texttt{\#print axioms} output is exactly
-$\{\texttt{propext},\, \texttt{Classical.choice},\, \texttt{Quot.sound}\}$ —
-the standard constructive--classical foundation of Mathlib, with no
-\texttt{sorryAx} and no ad-hoc \texttt{axiom}~declarations. The file
+pairs them explicitly. The production source audit forbids
+\texttt{sorry}, \texttt{admit}, \texttt{native\_decide} and local axiom
+declarations. The separate CI axiom audit selects $23$ declarations
+($18$ before the five conditional graph-transfer results), requiring
+each requested output to contain no axioms outside
+$\{\texttt{propext},\, \texttt{Classical.choice},\, \texttt{Quot.sound}\}$.
+This selected audit does not print every helper or every table row.
+Comparator replay covers seven historical and five later cycle statements
+in two separate runs; the evidence map records their exact scope. The file
 paths are relative to
 \path{connection_laplacian_lean/ConnectionLaplacian/}.
 
