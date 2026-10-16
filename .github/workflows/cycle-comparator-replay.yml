@@ -16,6 +16,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: cycle-comparator-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   comparator-cycle:
     runs-on: ubuntu-24.04
@@ -79,8 +83,10 @@ jobs:
         run: |
           set -euo pipefail
           git clone -q https://github.com/Zouuup/landrun.git "$RUNNER_TEMP/cycle-tools/landrun"
+          git -C "$RUNNER_TEMP/cycle-tools/landrun" checkout -q 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
           (cd "$RUNNER_TEMP/cycle-tools/landrun" && go build -o "$RUNNER_TEMP/cycle-tools/landrun-bin" ./cmd/landrun)
           git clone -q https://github.com/ammkrn/nanoda_lib.git "$RUNNER_TEMP/cycle-tools/nanoda"
+          git -C "$RUNNER_TEMP/cycle-tools/nanoda" checkout -q f67473ba5f9397266f89c7852082c9c914b5d219
           (cd "$RUNNER_TEMP/cycle-tools/nanoda" && cargo build --release)
           {
             echo "landrun_sha=$(git -C "$RUNNER_TEMP/cycle-tools/landrun" rev-parse HEAD)"
@@ -103,6 +109,18 @@ jobs:
               exit 1
             }
           tail -n 45 "$log_dir/positive.log"
+          grep -q 'nanoda kernel accepts the solution' "$log_dir/positive.log" || {
+            echo "ERROR: independent nanoda kernel acceptance not observed"
+            exit 1
+          }
+          grep -q 'Lean default kernel accepts the solution' "$log_dir/positive.log" || {
+            echo "ERROR: Lean kernel acceptance not observed"
+            exit 1
+          }
+          grep -q 'Your solution is okay!' "$log_dir/positive.log" || {
+            echo "ERROR: comparator final statement/axiom/kernel gate not observed"
+            exit 1
+          }
           if lake env "$comparator" Hardening/config-cycle-negative-phase.json \
              > "$log_dir/negative-phase.log" 2>&1; then
             echo "ERROR: comparator accepted tampered Fourier phase"
