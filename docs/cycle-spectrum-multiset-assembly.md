@@ -144,6 +144,15 @@ Their presence prevents an unsupported inference from
 A further theorem deriving both identities from an explicit
 `SimpleGraph.cycleGraph` is still **not proved**.
 
+As a non-vacuity and sign-convention *empirical* check,
+`findings/round10/test_cycle_graph_transfer.py` separately builds the
+finite graph's exact-integer degree/signed adjacency matrices, then
+verifies both matrix reindexing identities for `n=3..64`, including
+three randomly relabelled representations per size. It also rejects
+the wrong closing-edge sign. This shows the hypotheses are
+mathematically realizable on explicit cycle graphs; it does **not**
+discharge the Lean graph-equivalence hypotheses.
+
 ## Comparator extension and trust distinctions
 
 `Hardening/CycleChallenge.lean` and `CycleSolution.lean` now state five
