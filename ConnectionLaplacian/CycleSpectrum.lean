@@ -32,10 +32,10 @@ noncomputable def signedCycleLaplacian (n : ℕ) (_hn : 2 ≤ n) :
 
 /-! ### Helpers for cycle indexing. -/
 
-private def succFin (n : ℕ) (hn : 1 ≤ n) (i : Fin n) : Fin n :=
+def succFin (n : ℕ) (hn : 1 ≤ n) (i : Fin n) : Fin n :=
   ⟨(i.val + 1) % n, Nat.mod_lt _ hn⟩
 
-private def predFin (n : ℕ) (hn : 1 ≤ n) (i : Fin n) : Fin n :=
+def predFin (n : ℕ) (hn : 1 ≤ n) (i : Fin n) : Fin n :=
   ⟨(i.val + n - 1) % n, Nat.mod_lt _ hn⟩
 
 private lemma succFin_val (n : ℕ) (hn : 1 ≤ n) (i : Fin n) :
@@ -44,22 +44,22 @@ private lemma succFin_val (n : ℕ) (hn : 1 ≤ n) (i : Fin n) :
 private lemma predFin_val (n : ℕ) (hn : 1 ≤ n) (i : Fin n) :
     (predFin n hn i).val = (i.val + n - 1) % n := rfl
 
-private lemma predFin_val_at_zero (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val = 0) :
+lemma predFin_val_at_zero (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val = 0) :
     (predFin n hn i).val = n - 1 := by
   rw [predFin_val, hi, Nat.zero_add]
   exact Nat.mod_eq_of_lt (by omega)
 
-private lemma predFin_val_at_pos (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : 1 ≤ i.val) :
+lemma predFin_val_at_pos (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : 1 ≤ i.val) :
     (predFin n hn i).val = i.val - 1 := by
   rw [predFin_val]
   have key : i.val + n - 1 = (i.val - 1) + n := by omega
   rw [key, Nat.add_mod_right, Nat.mod_eq_of_lt (by have := i.isLt; omega)]
 
-private lemma succFin_val_at_lt (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 < n) :
+lemma succFin_val_at_lt (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 < n) :
     (succFin n hn i).val = i.val + 1 := by
   rw [succFin_val, Nat.mod_eq_of_lt hi]
 
-private lemma succFin_val_at_eq (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 = n) :
+lemma succFin_val_at_eq (n : ℕ) (hn : 1 ≤ n) (i : Fin n) (hi : i.val + 1 = n) :
     (succFin n hn i).val = 0 := by
   rw [succFin_val, hi, Nat.mod_self]
 
@@ -141,7 +141,7 @@ private lemma scalar_off_iff (n : ℕ) (hn : 3 ≤ n) (i j : Fin n) :
 
 /-- For `n ≥ 3`, the scalar cycle Laplacian acts on a vector `w` by
 `(L·w)(i) = 2 w(i) − w(succ(i)) − w(pred(i))`. -/
-private lemma scalar_mulVec_row
+lemma scalar_mulVec_row
     (n : ℕ) (hn : 3 ≤ n) (w : Fin n → ℝ) (i : Fin n) :
     (scalarCycleLaplacian n (by omega)).mulVec w i =
       2 * w i - w (succFin n (by omega) i) - w (predFin n (by omega) i) := by
@@ -309,7 +309,7 @@ theorem scalarCycle_eigenvalue (n : ℕ) (hn : 3 ≤ n) (k : Fin n) :
   rw [hsum, hvi, ← hθ_cos]
   ring
 
-private lemma signed_mulVec_middle
+lemma signed_mulVec_middle
     (n : ℕ) (hn : 3 ≤ n) (w : Fin n → ℝ) (i : Fin n)
     (h1 : 1 ≤ i.val) (h2 : i.val + 1 < n) :
     (signedCycleLaplacian n (by omega)).mulVec w i =
@@ -380,7 +380,7 @@ private lemma signed_mulVec_middle
   rw [hL_ii, hL_isu, hL_ipr]
   ring
 
-private lemma signed_mulVec_zero
+lemma signed_mulVec_zero
     (n : ℕ) (hn : 3 ≤ n) (w : Fin n → ℝ) (i : Fin n) (hi : i.val = 0) :
     (signedCycleLaplacian n (by omega)).mulVec w i =
       2 * w i - w ⟨1, by omega⟩ + w ⟨n - 1, by omega⟩ := by
@@ -460,7 +460,7 @@ private lemma signed_mulVec_zero
   rw [hL_ii, hL_i1, hL_inm1]
   ring
 
-private lemma signed_mulVec_nm1
+lemma signed_mulVec_nm1
     (n : ℕ) (hn : 3 ≤ n) (w : Fin n → ℝ) (i : Fin n) (hi : i.val = n - 1) :
     (signedCycleLaplacian n (by omega)).mulVec w i =
       2 * w i - w ⟨n - 2, by omega⟩ + w ⟨0, by omega⟩ := by

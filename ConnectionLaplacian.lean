@@ -13,3 +13,5 @@ import ConnectionLaplacian.L14_CycleEw
 import ConnectionLaplacian.L15_BridgeMonotone
 import ConnectionLaplacian.L16_SpectrumUnion
 import ConnectionLaplacian.L17_TracesAndLipschitz
+
+import ConnectionLaplacian.CycleMultiset
