@@ -7,6 +7,7 @@ leanprover/comparator with the actual challenge and solution exports.
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
@@ -78,6 +79,16 @@ def main() -> None:
           "axiom negative theorem drift")
     bad_phase = (H / "CycleNegative/BadChallenge.lean").read_text()
     check("2 * j.val * Real.pi / n" in bad_phase, "phase perturbation removed")
+    # Check a concrete mathematical counterexample: a mere permutation of
+    # Fourier frequencies would be a poor negative control even if the
+    # comparator rejected the differently written statement.
+    n = 4
+    signed = sorted(2 - 2 * math.cos((2 * k + 1) * math.pi / n)
+                    for k in range(n))
+    tampered = sorted(2 - 2 * math.cos(2 * k * math.pi / n)
+                      for k in range(n))
+    check(max(abs(a - b) for a, b in zip(signed, tampered)) > 0.1,
+          "phase perturbation is a merely equivalent reindexing")
     bad_solution = (H / "CycleNegative/BadSolution.lean").read_text()
     check("axiom smuggled_cycle_multiset" in bad_solution,
           "axiom-smuggling perturbation removed")
