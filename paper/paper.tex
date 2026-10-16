@@ -292,7 +292,7 @@ direct sum-of-squares expression
   + \sum_{\{u,v\}\in W} (x_u + x_v)^2,
 \]
 which Lemma~\ref{lem:signed-psd} (\S\ref{sec:bounds}) turns into the
-Lean fact \texttt{signedLaplacianMöbius\_posSemidef}
+Lean fact \path{signedLaplacianMobius_posSemidef}
 (\texttt{L13\_PSD.lean}). Equivalently --- but through a heavier route
 not used by the Lean proof --- PSD follows from the cover splitting
 (Theorem~\ref{thm:cover-splits}): the orientation double cover's
@@ -915,7 +915,7 @@ cyclic relabelling, rather than by a separately formalised
 
 \begin{remark}\label{rem:cycle-spectrum-lean}
 The earlier \texttt{CycleSpectrum.lean} theorems
-\texttt{scalarCycle\_eigenvalue} and \texttt{signedCycle\_eigenvalue}
+\path{scalarCycle_eigenvalue} and \path{signedCycle_eigenvalue}
 produce one real eigenvector per frequency; these witnesses alone do
 \emph{not} establish multiplicities because distinct frequencies can
 yield the same cosine vector. This gap is now closed in
