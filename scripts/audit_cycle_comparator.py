@@ -77,7 +77,7 @@ def main() -> None:
     check(theorem_names("CycleNegative/BadSolution.lean") == [NAMES[3]],
           "axiom negative theorem drift")
     bad_phase = (H / "CycleNegative/BadChallenge.lean").read_text()
-    check("2 * j.val + 3" in bad_phase, "phase perturbation removed")
+    check("2 * j.val * Real.pi / n" in bad_phase, "phase perturbation removed")
     bad_solution = (H / "CycleNegative/BadSolution.lean").read_text()
     check("axiom smuggled_cycle_multiset" in bad_solution,
           "axiom-smuggling perturbation removed")
