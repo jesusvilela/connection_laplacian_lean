@@ -42,3 +42,13 @@ jobs:
         run: |
           lake env lean ConnectionLaplacian/AxiomAudit.lean 2>&1 | tee axiom-audit.log
           python3 scripts/audit_trust.py --axiom-output axiom-audit.log
+
+      - name: Cycle comparator harness integrity
+        run: python3 scripts/audit_cycle_comparator.py
+
+      - name: Elaborate comparator challenge and solution
+        run: |
+          lake build Hardening.CycleChallenge Hardening.CycleSolution \
+            Hardening.CycleNegative.BadChallenge \
+            Hardening.CycleNegative.BadSolution
+
