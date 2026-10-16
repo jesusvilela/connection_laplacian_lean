@@ -1,9 +1,14 @@
 # Evidence Map — ℤ/2 Connection-Laplacian kernel-dimension theory
 
 **Date:** 2026-10-13, hardened 2026-10-14, gap-closure round 2026-10-15.
-**Scope:** the seven representative end theorems of the verified Lean spine
-(the same list audited by `ConnectionLaplacian/AxiomAudit.lean` in CI), plus
-the core kernel-dimension statements that feed them.
+**Scope:** this table documents the seven *historically comparator-replayed*
+representative end theorems plus supporting core claims. It is **not** a
+complete list of declarations checked by current CI. `AxiomAudit.lean`
+checks the original selected statements, nine full cycle-spectrum stages,
+and five conditional graph-transfer declarations. The new five-theorem
+cycle comparator challenge/solution package is specified separately in
+`Hardening/CYCLE-COMPARATOR.md`. Do not treat passing CI elaboration or
+an axiom printout as independent comparator/kernel replay.
 
 Each row follows the chain
 
@@ -24,7 +29,7 @@ Each row follows the chain
 - **Numerical** — the Python cross-checks under `findings/` (empirical,
   not theorems).
 
-## Theorem-by-theorem map
+## Theorem-by-theorem map (historical comparator seven)
 
 | # | Claim (informal) | Lean theorem | Axiom audit | Numerical / exhaustive evidence | Comparator | Remaining gap |
 |---|------------------|--------------|-------------|--------------------------------|------------|---------------|
