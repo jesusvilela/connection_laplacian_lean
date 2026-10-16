@@ -37,8 +37,11 @@ Observed local run (Python/NumPy), 2026-10-15:
 ```
 
 These results depend on floating-point arithmetic and NumPy and should
-not be mistaken for kernel verification. The main remaining obstruction
-is formalising full-rank/independence of complex Fourier columns and
-thereby deriving the characteristic-polynomial product.
+not be mistaken for kernel verification. **Subsequent formal closure
+(2026-10-16):** `ConnectionLaplacian/CycleMultiset.lean` now proves the
+complex Fourier eigen-equations, Vandermonde invertibility, both real
+cosine characteristic-polynomial products, and both exact eigenvalue
+multisets for every `n >= 3`. This round-10 test remains independent
+empirical corroboration of that later proof, not its justification.
 
-See [formal proof plan](../../docs/cycle-spectrum-multiset-assembly.md).
+See [the completed proof ledger](../../docs/cycle-spectrum-multiset-assembly.md).
