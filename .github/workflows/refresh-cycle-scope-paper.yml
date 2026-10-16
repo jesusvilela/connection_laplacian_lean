@@ -41,6 +41,10 @@ jobs:
           done
           test -s /tmp/paperbuild/paper.pdf
           pdfinfo /tmp/paperbuild/paper.pdf | head -n 25
+          pdftotext /tmp/paperbuild/paper.pdf /tmp/paperbuild/paper.txt
+          test -s /tmp/paperbuild/paper.txt
+          echo "Extracted manuscript text lines:"
+          wc -l /tmp/paperbuild/paper.txt
           cp /tmp/paperbuild/paper.pdf paper/paper.pdf
 
       - name: Commit PDF on audit branch only
