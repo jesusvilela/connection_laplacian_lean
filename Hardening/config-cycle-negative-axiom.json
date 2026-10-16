@@ -1,0 +1,12 @@
+{
+  "challenge_module": "Hardening.CycleChallenge",
+  "solution_module": "Hardening.CycleNegative.BadSolution",
+  "theorem_names": [
+    "Hardening.Cycle.antiperiodic_multiset"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}
