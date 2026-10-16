@@ -131,7 +131,7 @@ graph transfer). The cycle run records real landrun invocation but no
 standalone OS denial probe. Its scope is documented separately in
 [`Hardening/CYCLE-COMPARATOR.md`](Hardening/CYCLE-COMPARATOR.md).
 
-**3. Empirical falsification pressure.** The `findings/` rounds (2–6, 8–9) attack the
+**3. Empirical falsification pressure.** The `findings/` rounds (2–6, 8–10) attack the
 theorems numerically — exhaustive enumeration of all graphs × all wrap sets at
 n ≤ 5–6 (rounds 2–3), adversarial negators (rounds 3–5), randomized gap
 checks at n = 7 (round 6), and round 8, which adds an implementation written
