@@ -132,8 +132,11 @@ battery (148 equalities tying the formalization's matrices to that
 implementation on 74 concrete graphs), and a bounded-exhaustive n = 8 sweep —
 7,246,819 configurations, zero failures. Round 10 independently tests both
 cycle Fourier bases and full eigenvalue multisets at `n = 3,...,64`,
-including a wrong-basis negative control. These scripts are empirical
-evidence, not verified Lean results.
+including a wrong-basis negative control. Another round-10 script
+tests 124 canonical cycle matrix identities, 372 reindexed matrix
+identities and 62 wrong-seam negative controls in exact integer
+arithmetic, with no dependencies beyond Python. These scripts are
+empirical evidence, not verified Lean results.
 
 The theorem-by-theorem chain — claim → Lean theorem → axiom audit → numerical
 check → comparator result → remaining gap — is tabulated in
