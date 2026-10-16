@@ -95,7 +95,7 @@ specification gap explicitly, and every attack left an artifact:
 
 The final layer was `comparator`, the Lean FRO's "trustworthy judge." The
 point of using it was not ceremony: an unmodified binary verifies that the
-seven historical end theorems prove *exactly* the separately transcribed statements,
+seven historical end theorems prove *exactly* the statements transcribed independently of the Lean proof sources,
 depend on *only* the three standard axioms, and that every constant in the
 exported transitive closure — 10,324 theorems' worth — re-passes a kernel
 replay. Running it demanded the same discipline it enforces: the exporter
@@ -119,7 +119,7 @@ selects 23 declarations (18 before the five graph-transfer declarations).
 The conditional cycle result still requires both matrix identifications.
 L14's reverse implication and the combinatorial mixed trace remain open.
 
-The remaining honest ledger, after all of it: the independently transcribed challenge statements and the paper's intended statements remain subject to shared interpretive assumptions; the numerical checks share an eigen-solver with
+The remaining honest ledger, after all of it: the challenge statements transcribed independently of the Lean proof sources and the paper's intended statements remain subject to shared interpretive assumptions; the numerical checks share an eigen-solver with
 themselves; exhaustive strength stops where compute does. The evidence map
 publishes that ledger next to the results, because a trust boundary you
 can't see is a trust boundary you can't check.
