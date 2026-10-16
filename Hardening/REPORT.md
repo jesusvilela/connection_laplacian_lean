@@ -5,7 +5,7 @@
 The seven representative end theorems of the verified spine were
 independently re-verified with `leanprover/comparator`
 ("a trustworthy judge for Lean proofs"): their compiled proof terms match an
-independently transcribed statement set, depend only on Lean's three
+statement set transcribed by a fresh agent without access to the existing challenge file (copied from the Lean sources and checked against the paper), depend only on Lean's three
 standard axioms, and every constant in the exported transitive closure
 kernel-replays from scratch — **under a real landlock sandbox, with two
 independent kernels** (Lean's own and nanoda) both accepting.
