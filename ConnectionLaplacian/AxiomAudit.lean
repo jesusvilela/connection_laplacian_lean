@@ -18,3 +18,16 @@ the workflow fail.
 #print axioms ConnectionLaplacian.ConnGraph.mobius_charpoly_roots_eq_union
 #print axioms ConnectionLaplacian.ConnGraph.frobenius_laplacian_decomposes
 #print axioms ConnectionLaplacian.ConnGraph.trace_mul_scalar_signed_eq
+
+/-! Full n-cycle characteristic polynomials and spectral multisets (n ≥ 3).
+     Includes the independently checked Fourier eigen-equations, invertible
+     Vandermonde assembly, complex formulas, and real cosine descent. -/
+#print axioms ConnectionLaplacian.Cycle.charpoly_of_vandermonde_eigenbasis
+#print axioms ConnectionLaplacian.Cycle.scalarCycle_eigenvector_complex
+#print axioms ConnectionLaplacian.Cycle.signedCycle_eigenvector_complex
+#print axioms ConnectionLaplacian.Cycle.scalarCycle_charpoly_complex
+#print axioms ConnectionLaplacian.Cycle.signedCycle_charpoly_complex
+#print axioms ConnectionLaplacian.Cycle.scalarCycle_charpoly_real
+#print axioms ConnectionLaplacian.Cycle.signedCycle_charpoly_real
+#print axioms ConnectionLaplacian.Cycle.scalarCycle_roots_real
+#print axioms ConnectionLaplacian.Cycle.signedCycle_roots_real

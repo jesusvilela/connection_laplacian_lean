@@ -47,6 +47,7 @@ maintained `sorry`-free and free of user-introduced axioms.
 - `ConnectionLaplacian/Basic.lean`
 - `ConnectionLaplacian/KernelDimension.lean`
 - `ConnectionLaplacian/CycleSpectrum.lean`
+- `ConnectionLaplacian/CycleMultiset.lean` *(complete scalar and signed cycle spectra)*
 - `ConnectionLaplacian/L5_Cover.lean`
 - `ConnectionLaplacian/L6_Cohomology.lean`
 - `ConnectionLaplacian/L8_Recognition.lean`
@@ -74,6 +75,15 @@ Representative end theorems (plain-language gloss in parentheses):
 - `frobenius_laplacian_decomposes` *(‖L‖²_F splits as scalar + signed parts)*
 - `trace_mul_scalar_signed_eq` *(the polarisation identity for the mixed
   trace)*
+- `Cycle.scalarCycle_charpoly_real` and `Cycle.signedCycle_charpoly_real`
+  *(complete cosine characteristic-polynomial products for n ≥ 3)*
+- `Cycle.scalarCycle_roots_real` and `Cycle.signedCycle_roots_real`
+  *(exact root multisets, preserving every eigenvalue multiplicity)*
+
+These cycle results concern the **specialised** scalar and one-wrap signed
+matrices defined in `CycleSpectrum.lean`. A Lean identification with an
+arbitrary graph-level `ConnGraph` cycle instance remains separate work.
+See [`docs/cycle-spectrum-multiset-assembly.md`](docs/cycle-spectrum-multiset-assembly.md).
 
 ## Human–AI division of labour
 
@@ -90,8 +100,8 @@ of the mathematical results.
 
 **1. The kernel.** Lean's kernel accepts the spine; CI forbids `sorry`,
 `admit`, `native_decide`, and project-local axioms via a comment-aware source
-audit, and `AxiomAudit.lean` checks the seven end theorems against the
-explicit allowlist above.
+audit, and `AxiomAudit.lean` checks nine earlier selected end theorems plus nine
+cycle-spectrum proof declarations against the explicit allowlist above.
 
 **2. Independent re-checking.** The seven end theorems were re-verified with
 `leanprover/comparator` (unmodified): statement equality against an
@@ -110,7 +120,9 @@ checks at n = 7 (round 6), and round 8, which adds an implementation written
 from the paper alone (no Lean sources consulted), a Lean-verified convention
 battery (148 equalities tying the formalization's matrices to that
 implementation on 74 concrete graphs), and a bounded-exhaustive n = 8 sweep —
-7,246,819 configurations, zero failures. These scripts are empirical
+7,246,819 configurations, zero failures. Round 10 independently tests both
+cycle Fourier bases and full eigenvalue multisets at `n = 3,...,64`,
+including a wrong-basis negative control. These scripts are empirical
 evidence, not verified Lean results.
 
 The theorem-by-theorem chain — claim → Lean theorem → axiom audit → numerical
@@ -156,6 +168,8 @@ Additional build guidance: `BUILD.md`.
 - `docs/methods-note.md` — the methodology note: how the AI-assisted
   development was made trustworthy (untrusted generation, heterogeneous
   critics, kernel-verified residue, published errata ledger).
+- `docs/cycle-spectrum-multiset-assembly.md` — the fully checked Fourier
+  diagonalisation and real-root multiset proof, with precise scope limits.
 
 ## Paper
 
