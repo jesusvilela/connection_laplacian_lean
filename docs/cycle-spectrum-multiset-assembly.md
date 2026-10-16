@@ -116,7 +116,56 @@ to depend only on Lean's standard
 `propext`, `Classical.choice`, and `Quot.sound` axioms.
 The post-merge audit adds all nine spectrum-related statements to that
 check (including the abstract completeness lemma and concrete
-eigen-equations).
+eigen-equations). The follow-on scope-hardening also audits the five
+conditional graph-transfer claims from `CycleGraphTransfer.lean`.
+The trust-audit script now fails if an expected `#print axioms`
+declaration is silently absent from the resulting log.
+
+## Formal transfer into the general connection-graph theory
+
+`ConnectionLaplacian/CycleGraphTransfer.lean` establishes **five further
+Lean theorems**, including `mobius_connection_roots_of_cycle_reindex`.
+Given a `ConnGraph G`, a vertex bijection `e : G.V ≃ Fin n` and proofs
+
+```text
+reindex e e G.scalarLaplacian = scalarCycleLaplacian n
+reindex e e G.signedLaplacianMobius = signedCycleLaplacian n
+```
+
+it transports *both* real cycle charpolys and exact root multisets
+to `G`, and combines them into the complete Möbius connection
+root multiset using the separately formalised general
+`G.mobius_charpoly_roots_eq_union`.
+
+The hypotheses are **not** tautological or automatically discharged:
+they encode exactly the graph-to-matrix identification obligation.
+Their presence prevents an unsupported inference from
+"this graph is called a cycle" to "these matrices coincide".
+A further theorem deriving both identities from an explicit
+`SimpleGraph.cycleGraph` is still **not proved**.
+
+## Comparator extension and trust distinctions
+
+`Hardening/CycleChallenge.lean` and `CycleSolution.lean` now state five
+claims (both real charpolys, both root multisets, and one conditional
+full connection multiset) for comparator checking. The challenge
+imports `CycleSpectrum` but not the completed `CycleMultiset` proof.
+`config-cycle-nanoda.json` requests built-in and external-kernel replay;
+two negative controls tamper with the signed phase and inject an axiom.
+
+**Three different verification stages must not be conflated:**
+
+- Lean CI and the strengthened axiom audit prove and check the
+  original theorems in the standard three-axiom footprint.
+- CI compiles the comparator challenge and solution and audits the
+  *configuration integrity*. This is a useful preflight, **not**
+  comparator or dual-kernel execution.
+- The actual pinned comparator with landlock/nanoda and negative
+  controls requires an observed successful run; record its status,
+  SHAs, evidence logs, and OS enforcement separately.
+
+See [the dedicated comparator ledger](../Hardening/CYCLE-COMPARATOR.md)
+for the precise commands and acceptance criteria.
 
 ## Scope boundary and remaining work
 
@@ -128,12 +177,12 @@ whole research programme. In particular:
 | Cover factorisation, root union, and pointwise multiplicity corollaries | **PROVED** in `L10_CoverCharpoly.lean` |
 | Scalar cycle full real charpoly and root multiset, `n≥3` | **PROVED** in `CycleMultiset.lean` |
 | One-wrap signed cycle full real charpoly and root multiset, `n≥3` | **PROVED** in `CycleMultiset.lean` |
-| Formal equivalence of these specialised matrices with an arbitrary `ConnGraph` cycle instance | **OPEN**; must construct actual matrix equality or permutation similarity |
+| Transfer of full cycle spectra under proven `ConnGraph` matrix reindexing | **PROVED, conditional** in `CycleGraphTransfer.lean` (5 named statements); concrete cycle-instance equivalence still **OPEN** |
 | Strengthening `L14_CycleEw` without caller-supplied reverse hypothesis | **OPEN** |
 | General combinatorial mixed-trace identity `tr(L_sc * L_sg) = tr(L_sc²) - 4|W|` | **OPEN** |
 | Out-of-scope graph sizes / malformed-cycle boundary cases `n=0,1` | **OPEN**; cycle theorems explicitly assume `n≥3` |
 | Manuscript LaTeX and tracked PDF | **UPDATED** in [PR #12](https://github.com/jesusvilela/connection_laplacian_lean/pull/12); GitHub Actions rebuilt `paper/paper.pdf` after synchronizing `paper/paper.tex` |
-| Archived DOI release metadata, chronology, and external comparator replay of the new declarations | **OPEN**; these proofs were not part of the older seven-theorem external comparator run |
+| Archived DOI release metadata, chronology, and external comparator replay of the new declarations | **OPEN**; comparator challenge/solution and an attempted dual-kernel runner are prepared, but the original seven-theorem run did not include these claims |
 
 **Important convention:** The signed specialised matrix places its
 anti-periodic sign on the closing edge of the cyclic indexing. An arbitrary
