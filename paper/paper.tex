@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=black!70!blue,citecolor=black!70!blue,urlcolor=black!70!blue]{hyperref}
+\usepackage{xurl}
 \usepackage{microtype}
 
 \theoremstyle{plain}
@@ -110,8 +111,7 @@ axioms (\texttt{propext}, \texttt{Classical.choice},
 The bespoke arguments are the Hadamard rotation of part~(i)--(ii)
 (a Kronecker-conjugation computation) and the double-cover lift
 of part~(iii) (a walk induction). Along the way we observe and
-correct an incorrect statement that appeared in our pre-registered
-plan: the identity
+correct an incorrect statement in our initial written plan: the identity
 $\dim\Ker L^{\operatorname{sg}}(G) = \#\comp(G) -
   \#\{\text{components of odd total wrap}\}$
 holds for every wrap assignment on a cycle, but fails for some wrap assignments
@@ -176,6 +176,25 @@ exactly when the \emph{wrap} holonomy of the bundle around every
 cycle in that component is trivial; this is the condition of
 \emph{balance} in the language of Harary, Cartwright and Zaslavsky
 \cite{HararyCartwright, Zaslavsky82}.
+
+\subsection*{Contribution and prior work}
+
+The contribution is a Lean formalisation and a documented verification
+process for classical spectral graph theory. We do not claim new
+mathematical discovery of the balance--nullity or lift-splitting formulas.
+For the signed Laplacian $D-A_{\mathrm{sg}}$, the standard nullity
+formula is stated explicitly in Zaslavsky's survey
+\cite[Lemma~IV.2]{ZaslavskyMatrices}.
+Bilu and Linial's $2$-lift result gives the adjacency spectrum as the
+base and signed spectra with multiplicities
+\cite[preprint Lemma~3.1]{BiluLinial}. Our Laplacian splitting uses
+the same sheet-symmetric and sheet-antisymmetric subspaces: the
+degree block acts as $D$ in both. This also works for irregular
+finite simple graphs; it does not require replacing $D$ by a scalar.
+The repository certifies the resulting identities and records the
+remaining specification and formalisation obligations.
+The numerical work is a cross-check, not an ML application or a
+scalability benchmark.
 
 \subsection*{Organisation and results}
 
@@ -265,7 +284,7 @@ encodes the wrap sign on the off-diagonal:
 \]
 Both are real symmetric and positive semidefinite as quadratic forms
 on $\RR^V$. For $\Lscalar$ this is Mathlib's
-\texttt{SimpleGraph.posSemidef\_lapMatrix}. For $\Lsigned$ we use the
+\path{SimpleGraph.posSemidef_lapMatrix}. For $\Lsigned$ we use the
 direct sum-of-squares expression
 \[
   \pair{x}{\Lsigned x}
@@ -273,7 +292,7 @@ direct sum-of-squares expression
   + \sum_{\{u,v\}\in W} (x_u + x_v)^2,
 \]
 which Lemma~\ref{lem:signed-psd} (\S\ref{sec:bounds}) turns into the
-Lean fact \texttt{signedLaplacianMöbius\_posSemidef}
+Lean fact \path{signedLaplacianMobius_posSemidef}
 (\texttt{L13\_PSD.lean}). Equivalently --- but through a heavier route
 not used by the Lean proof --- PSD follows from the cover splitting
 (Theorem~\ref{thm:cover-splits}): the orientation double cover's
@@ -365,7 +384,7 @@ syntactically disjoint.
 In the Lean script the bijection $\varphi$ is
 \texttt{prodFinTwoEquivSum} and the Kronecker-product
 identity is the lemma \texttt{mul\_kronecker\_mul} from
-\texttt{Mathlib.Data.Matrix.Kronecker}. The entrywise
+\path{Mathlib.Data.Matrix.Kronecker}. The entrywise
 calculation is made into a single-sum \texttt{Finset.sum\_eq\_single}
 reduction that kills $V$-off-diagonal terms using the
 $\II_V$ factor of~$P$, and then reduces the remaining
@@ -725,7 +744,7 @@ $\dim_\RR \Ker \Lscalar(G) = \#\comp(G)$.
 \end{theorem}
 
 This is Mathlib's
-\texttt{SimpleGraph.card\_ConnectedComponent\_eq\_rank\_ker\_lapMatrix}
+\path{SimpleGraph.card_ConnectedComponent_eq_rank_ker_lapMatrix}
 applied to the ordinary graph Laplacian and used as a primitive.
 
 \begin{theorem}\label{thm:signed-kernel}
@@ -786,8 +805,8 @@ inclusion $\comp^{\mathrm{bal}}(G)\subseteq\comp(G)$ of
 Definition~\ref{def:balanced}.
 \end{proof}
 
-\begin{remark}[Pre-registered plan vs.\ correct statement]
-Our pre-registered plan contained the assertion
+\begin{remark}[Initial written plan vs.\ correct statement]
+Our initial written plan contained the assertion
 \[
   \dim\Ker\Lsigned(G) \;\overset{?}{=}\; \#\comp(G) -
     \#\{C\in\comp(G) : |W\cap E(C)|\text{ is odd}\}. \tag{$\star$}
@@ -796,8 +815,9 @@ This is \emph{false} in general. Example: let $G=K_4$ with
 $W=\{\{1,2\},\{3,4\}\}$, two disjoint wrap edges forming a
 matching. The whole graph is one component, the total wrap count
 is $2$ (even), so~$(\star)$ predicts
-$\dim\Ker\Lsigned = 1$. However a brute-force eigenvalue computation
-shows $\dim \Ker\Lsigned = 0$, which is indeed~$\beta(K_4)=0$
+$\dim\Ker\Lsigned = 1$. The signed matrix has determinant $48$,
+so its kernel is zero; eigenvalue computation agrees. Thus
+$\dim \Ker\Lsigned = 0$, which is indeed~$\beta(K_4)=0$
 from Theorem~\ref{thm:signed-kernel} (the two wrap edges
 together form a non-trivial cohomology class on~$K_4$).
 Equation~$(\star)$ is correct on $G=C_n$: there
@@ -822,7 +842,14 @@ matching; two triangles sharing a vertex with one wrap in each), and a
 odd number of wrapped bridges, e.g.\ $P_3$ with one wrapped edge ---
 where $\dim H^1=0$, so a small cohomology alone guarantees nothing).
 All six example computations above are reproduced by the independent
-implementation in \texttt{findings/round8}.
+implementation in \texttt{findings/round8}, written from the manuscript
+alone without consulting Lean sources. The counterexample and corrected
+formula are already present in the initial public commit (2026-04-22).
+That record establishes neither which tool first found the error nor
+a causal order between computation and formalisation. We have not
+identified a timestamped preregistration. Exact rational checks for
+both this matching and the different adjacent-edge example in the
+Lean comment are in \path{findings/round10/test_k4_counterexamples.py}.
 \end{remark}
 
 %=============================================================
@@ -888,7 +915,7 @@ cyclic relabelling, rather than by a separately formalised
 
 \begin{remark}\label{rem:cycle-spectrum-lean}
 The earlier \texttt{CycleSpectrum.lean} theorems
-\texttt{scalarCycle\_eigenvalue} and \texttt{signedCycle\_eigenvalue}
+\path{scalarCycle_eigenvalue} and \path{signedCycle_eigenvalue}
 produce one real eigenvector per frequency; these witnesses alone do
 \emph{not} establish multiplicities because distinct frequencies can
 yield the same cosine vector. This gap is now closed in
@@ -901,7 +928,7 @@ characteristic-polynomial products for every $n\ge3$; the theorems
 \emph{multisets} of roots, including repeated eigenvalues. The
 completeness argument uses the nonzero Vandermonde determinant of the
 distinct \emph{complex} Fourier parameters and is itself formalised
-as \texttt{charpoly\_of\_vandermonde\_eigenbasis}.
+as \path{charpoly_of_vandermonde_eigenbasis}.
 \end{remark}
 
 \begin{corollary}
@@ -940,7 +967,7 @@ characteristic polynomials and real root multisets, for all $n\ge3$,
 are formalised in \texttt{CycleMultiset.lean}, beyond the individual
 eigenpairs from \texttt{CycleSpectrum.lean}.
 The \texttt{CycleGraphTransfer.lean} theorem
-\texttt{mobius\_connection\_roots\_of\_cycle\_reindex} extends
+\path{mobius_connection_roots_of_cycle_reindex} extends
 the resulting union of scalar and signed spectral multisets to a
 general \texttt{ConnGraph} \emph{provided} a vertex equivalence and
 \emph{both} explicit scalar/signed matrix-reindexing equalities are
@@ -969,21 +996,21 @@ axioms \texttt{propext}, \texttt{Classical.choice}, and
 \texttt{Quot.sound}. These checked declarations include:
 \begin{itemize}
   \item Theorem~\ref{thm:decomp} is
-    \texttt{ConnGraph.laplacian\_decomposes};
+    \path{ConnGraph.laplacian_decomposes};
   \item Theorem~\ref{thm:cover-splits} is
-    \texttt{ConnGraph.scalarLap\_cover\_splits};
+    \path{ConnGraph.scalarLap_cover_splits};
   \item Theorem~\ref{thm:fiber-card} is
-    \texttt{ConnGraph.componentProj\_fiber\_card};
+    \path{ConnGraph.componentProj_fiber_card};
   \item Theorem~\ref{thm:signed-kernel} is
-    \texttt{ConnGraph.signedLaplacian\_kernel\_dim\_general};
+    \path{ConnGraph.signedLaplacian_kernel_dim_general};
   \item Theorem~\ref{thm:connection-ker} is
-    \texttt{ConnGraph.connectionLaplacian\_kernel\_dim\_general};
+    \path{ConnGraph.connectionLaplacian_kernel_dim_general};
   \item Theorem~\ref{thm:strict} is
-    \texttt{ConnGraph.mobius\_kernel\_strict\_iff\_general};
+    \path{ConnGraph.mobius_kernel_strict_iff_general};
   \item Theorems~\ref{thm:flat-cycle}--\ref{thm:mobius-cycle} are
     certified with \emph{all algebraic multiplicities} by
-    \texttt{Cycle.scalarCycle\_roots\_real} and
-    \texttt{Cycle.signedCycle\_roots\_real}; see
+    \path{Cycle.scalarCycle_roots_real} and
+    \path{Cycle.signedCycle_roots_real}; see
     Remark~\ref{rem:cycle-spectrum-lean}.
 \end{itemize}
 
@@ -991,7 +1018,7 @@ axioms \texttt{propext}, \texttt{Classical.choice}, and
 
 As an independent safety net against the formal statements being
 merely \emph{provable} but not intended, the accompanying Python
-script \texttt{findings/round2/fuzzer/fuzz.py} enumerates every
+script \path{findings/round2/fuzzer/fuzz.py} enumerates every
 simple graph on
 $n\in\{2,3,4,5\}$ vertices up to isomorphism (51~graphs, matching
 OEIS A000088) and every $2^{|E|}$ wrap subset, totalling
@@ -1016,7 +1043,7 @@ The ``mathematical'' content, in descending order of novelty:
     Mathlib; it requires the walk-lift construction,
     XOR-parity invariant, and deck-action freeness argument,
     all of which are built from scratch against Mathlib's
-    \texttt{SimpleGraph.ConnectedComponent} eliminators.
+    \path{SimpleGraph.ConnectedComponent} eliminators.
   \item The cover-splitting Theorem~\ref{thm:cover-splits} is an
     entrywise matrix identity. Mathlib's Kronecker library
     (\texttt{Matrix.mul\_kronecker\_mul}, etc.) mechanises
@@ -1032,19 +1059,19 @@ The ``mathematical'' content, in descending order of novelty:
 
 \subsection*{Lessons}
 
-The formalisation surfaced one genuine bug in our informal plan
-(the false equation~$(\star)$). This is a modest-but-real example
-of Lean's mathematical utility: the computer cannot be negotiated
-with when $\beta(G)$ and
-$\#\comp(G)-\#\{\text{odd-wrap components}\}$ fail to agree on
-$K_4$ with a matching wrap.
+The development corrected the false equation~$(\star)$ in the initial
+written plan. Numerical counterexamples and the formal balanced-component
+theorem supply different checks of that correction. The public history
+already records both in its initial commit, so it does not determine
+the first detector or the order of discovery. The methodological lesson
+is to retain explicit counterexamples and verified replacement statements.
 
 \bigskip
 
 \noindent\textit{Acknowledgements.} This work was carried out as
 an independent formal-verification project on combinatorial
-spectral identities, under a pre-registered discovery and
-adversarial-review discipline.
+spectral identities, guided by an initial written plan and
+adversarial review.
 
 %=============================================================
 \section{Further Identities: Traces, Bounds, and the
@@ -1059,10 +1086,10 @@ are stated at the level of generality on which the formalised
 library already operates. Together they close the
 ``trace-and-inequality gap'' left open in earlier versions of this
 manuscript. All are formalised in
-\texttt{ConnectionLaplacian/L9\_Bounds.lean}, and the
+\path{ConnectionLaplacian/L9_Bounds.lean}, and the
 multiplicative spectral partition
 (Theorem~\ref{thm:cover-charpoly}) is formalised in
-\texttt{ConnectionLaplacian/L10\_CoverCharpoly.lean}.
+\path{ConnectionLaplacian/L10_CoverCharpoly.lean}.
 
 \begin{proposition}[Trace formulas]\label{prop:traces}
 For every connection graph $G=(V,E,W)$,
@@ -1084,7 +1111,7 @@ contributing $2\deg(v)$. Summing over $v$ and applying the
 degree-sum identity
 $\sum_v \deg(v) = 2\,\#E$
 (Mathlib's
-\texttt{SimpleGraph.sum\_degrees\_eq\_twice\_card\_edges}) proves
+\path{SimpleGraph.sum_degrees_eq_twice_card_edges}) proves
 all four equalities.
 \end{proof}
 
@@ -1118,21 +1145,23 @@ The cross-term identity is pure algebra: expand
 $(\Lscalar+\Lsigned)^2$ and use symmetry of the scalar and signed
 Laplacians together with the cyclic property
 $\tr(\Lscalar\Lsigned)=\tr(\Lsigned\Lscalar)$. The Lean names are
-\texttt{trace\_sq\_laplacian\_decomposes},
-\texttt{frobenius\_laplacian\_decomposes} and
+\path{trace_sq_laplacian_decomposes},
+\path{frobenius_laplacian_decomposes} and
 \texttt{trace\_mul\_scalar\_signed\_eq}.
 \end{proof}
 
 \begin{remark}[Polarisation versus combinatorial form]
 The cross-term identity above is stated in \emph{polarisation form}
-and is pure matrix algebra. An equivalent combinatorial form
+and is pure matrix algebra. For these graph Laplacians the additional
+combinatorial identity
 $\tr(\Lscalar\cdot\Lsigned)=\tr({\Lscalar}^{2})-4\,\#W$, which can be
 read off the entrywise formula for $\Lscalar\cdot\Lsigned$ by
 summing contributions at diagonal and off-diagonal positions, is
 confirmed numerically by the R6 Stage-6 fuzzer (zero deviation
 across $300$ random connected graphs at $n=7$) but is not yet a
-separately named Lean theorem; a $\le 20$-line bridge lemma is
-recorded as an R7 carry-over.
+separately named Lean theorem. Its proof needs the graph-entry
+calculation and finite edge counting; the polarisation theorem alone
+does not establish it. This remains an open formalisation obligation.
 \end{remark}
 
 \begin{proposition}[Kernel inequalities]\label{prop:kernel-ineq}
@@ -1221,9 +1250,9 @@ $\det(L_{\mathrm{Mob}}+\alpha\II)=\det(\Lscalar+\alpha\II)\cdot
 \det(\Lsigned+\alpha\II)$. As multisets,
 $\operatorname{Spec}(L_{\mathrm{Mob}}) = \operatorname{Spec}(\Lscalar)
 \uplus \operatorname{Spec}(\Lsigned)$. These are Lean theorems
-\texttt{mobius\_charpoly\_eq\_scalar\_times\_signed},
+\path{mobius_charpoly_eq_scalar_times_signed},
 \texttt{shiftedDet\_factorises} and
-\texttt{mobius\_charpoly\_roots\_eq\_union}.
+\path{mobius_charpoly_roots_eq_union}.
 \end{remark}
 
 \begin{proof}
@@ -1288,7 +1317,7 @@ and the strict inequality of Theorem~\ref{thm:strict} fails.
 \begin{proof}
 Fix a root $r$ of each tree component. For $v$ in that component,
 let $p_{r\to v}$ be the unique simple $r\to v$ path (Mathlib's
-\texttt{SimpleGraph.IsAcyclic.path\_unique}). Define
+\path{SimpleGraph.IsAcyclic.path_unique}). Define
 $\varepsilon(v)\defeq \sum_{e\in p_{r\to v}} \mathbf{1}_{e\in W}
   \pmod 2$, with $\varepsilon(r)=\bot$ by the empty sum. We show
 $\varepsilon(u)\oplus \varepsilon(v) = \mathbf{1}_{\{u,v\}\in W}$
@@ -1353,7 +1382,7 @@ If $G=C_n$ is a single cycle of length~$n\ge 3$, then
   \dim\Ker \Lsigned(C_n,W) = \begin{cases} 1 & \#W \text{ even,}\\
     0 & \#W \text{ odd.}\end{cases}
 \]
-In particular the pre-registered formula
+In particular the initial plan's formula
 $\dim\Ker\Lsigned = \#\comp(G) - \#\{\text{odd-wrap components}\}$
 holds for \emph{every wrap assignment} on a connected cycle graph.
 It is not a valid formula for arbitrary graphs. For a \emph{particular}
@@ -1377,13 +1406,14 @@ $\beta\in\{0,1\}$ to $\dim\Ker\Lsigned\in\{0,1\}$.
 
 \begin{remark}
 The Lean certificate
-\texttt{cycle\_isBalanced\_iff\_even\_wrap\_weak}
+\path{cycle_isBalanced_iff_even_wrap_weak}
 (\texttt{L14\_CycleEw.lean}) names this a \emph{weak} form: it
-takes an Eulerian closed walk around the cycle and a reverse-direction
-hypothesis as explicit inputs to the caller. Lifting this to the
-fully constructive form stated above requires a
-\texttt{fundamentalCycleWalk} helper plus a winding-number argument
-currently tracked as an R7 carry-over.
+takes an Eulerian closed walk and the reverse implication as explicit
+inputs. Its signature quantifies over a general \texttt{ConnGraph};
+a cycle-graph identification is not constructed there.
+Only balancedness implying even total wrap is proved from the Eulerian
+walk. The reverse implication needs a cycle-space argument, together
+with an explicit \texttt{fundamentalCycleWalk}; both remain open.
 \end{remark}
 
 %=============================================================
@@ -1462,7 +1492,7 @@ $e\in E(G)$ that is not a bridge of the underlying graph,
 
 \begin{proof}[Proof (formalised)]
 The Lean proof (\texttt{L15\_BridgeMonotone.lean},
-\texttt{numBalancedComponents\_monotone\_remove\_nonwrap\_nonbridge})
+\path{numBalancedComponents_monotone_remove_nonwrap_nonbridge})
 constructs an injection from the balanced components of $G$ into the
 balanced components of $G-e$: deleting a non-bridge edge leaves every
 component connected, and each balanced component of $G$ yields a
@@ -1500,13 +1530,17 @@ Lemmas~\ref{lem:fiber-subset}, \ref{lem:sep-if-balanced},
 \ref{lem:merge-if-unbalanced}---are implicitly witnessed inside
 the proofs of theorems listed below and are not tabulated
 separately.) The table below
-pairs them explicitly. All listed declarations are sorry-free and
-their \texttt{\#print axioms} output is exactly
-$\{\texttt{propext},\, \texttt{Classical.choice},\, \texttt{Quot.sound}\}$ —
-the standard constructive--classical foundation of Mathlib, with no
-\texttt{sorryAx} and no ad-hoc \texttt{axiom}~declarations. The file
+pairs them explicitly. The production source audit forbids
+\texttt{sorry}, \texttt{admit}, \texttt{native\_decide} and local axiom
+declarations. The separate CI axiom audit selects $23$ declarations
+($18$ before the five conditional graph-transfer results), requiring
+each requested output to contain no axioms outside
+$\{\texttt{propext},\, \texttt{Classical.choice},\, \texttt{Quot.sound}\}$.
+This selected audit does not print every helper or every table row.
+Comparator replay covers seven historical and five later cycle statements
+in two separate runs; the evidence map records their exact scope. The file
 paths are relative to
-\texttt{connection\_laplacian\_lean/ConnectionLaplacian/}.
+\path{connection_laplacian_lean/ConnectionLaplacian/}.
 
 \begin{center}\footnotesize
 \renewcommand{\arraystretch}{1.05}
@@ -1519,7 +1553,7 @@ Thm.~\ref{thm:scalar-ker} &
 Thm.~\ref{thm:decomp} (direct sum) &
   \texttt{laplacian\_decomposes} & \texttt{KernelDim.lean} \\
 Thm.~\ref{thm:decomp} (ker dim) &
-  \texttt{laplacian\_kernel\_dim\_decomposes} & \texttt{L8\_Recognition.lean} \\
+  \path{laplacian_kernel_dim_decomposes} & \texttt{L8\_Recognition.lean} \\
 \S\ref{sec:cover} &
   \texttt{scalarLap\_cover\_splits} & \texttt{L5\_Cover.lean} \\
 Def.~\ref{def:balanced} &
@@ -1527,37 +1561,37 @@ Def.~\ref{def:balanced} &
 Thm.~\ref{thm:fiber-card} &
   \texttt{componentProj\_fiber\_card} & \texttt{L6\_Cohomology.lean} \\
 Thm.~\ref{thm:signed-kernel} &
-  \texttt{signedLaplacian\_kernel\_dim\_general} & \texttt{L8\_Recognition.lean} \\
+  \path{signedLaplacian_kernel_dim_general} & \texttt{L8\_Recognition.lean} \\
 Thm.~\ref{thm:connection-ker} &
-  \texttt{connectionLaplacian\_kernel\_dim\_general} & \texttt{L8\_Recognition.lean} \\
+  \path{connectionLaplacian_kernel_dim_general} & \texttt{L8\_Recognition.lean} \\
 Thm.~\ref{thm:strict} &
-  \texttt{mobius\_kernel\_strict\_iff\_general} & \texttt{L8\_Recognition.lean} \\
+  \path{mobius_kernel_strict_iff_general} & \texttt{L8\_Recognition.lean} \\
 Prop.~\ref{prop:traces} (sc) &
   \texttt{trace\_scalarLaplacian} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:traces} (sg) &
   \texttt{trace\_signedLaplacianMobius} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (mono) &
-  \texttt{signed\_kernel\_le\_scalar\_kernel} & \texttt{L9\_Bounds.lean} \\
+  \path{signed_kernel_le_scalar_kernel} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
   \texttt{kernel\_drop\_eq\_unbalanced} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$\le\#\comp$) &
-  \texttt{kernel\_drop\_le\_numComponents} & \texttt{L9\_Bounds.lean} \\
+  \path{kernel_drop_le_numComponents} & \texttt{L9\_Bounds.lean} \\
 Lem.~\ref{lem:signed-psd} &
-  \texttt{signedLaplacianMobius\_posSemidef} & \texttt{L13\_PSD.lean} \\
+  \path{signedLaplacianMobius_posSemidef} & \texttt{L13\_PSD.lean} \\
 Thm.~\ref{thm:cover-charpoly} &
-  \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
+  \path{cover_charpoly_eq_scalar_times_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
 Cor.~\ref{cor:mult-pointwise} &
-  \multicolumn{2}{l}{\emph{corollary of \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius}}} \\
+  \multicolumn{2}{l}{\emph{corollary of \path{cover_charpoly_eq_scalar_times_mobius}}} \\
 Thm.~\ref{thm:tree-balanced} &
   \texttt{tree\_isBalanced\_of\_isTree} & \texttt{L11\_Trees.lean} \\
 \quad (ker dim) &
-  \texttt{connectionLaplacian\_kernel\_dim\_tree\_mobius} & \texttt{L11\_Trees.lean} \\
+  \path{connectionLaplacian_kernel_dim_tree_mobius} & \texttt{L11\_Trees.lean} \\
 \quad (gap zero) &
   \texttt{tree\_kernel\_gap\_zero} & \texttt{L11\_Trees.lean} \\
 Cor.~\ref{cor:forest-star-path} &
   \multicolumn{2}{l}{\emph{specialisation of the tree ker-dim theorem}} \\
 Thm.~\ref{thm:walk-sum} &
-  \texttt{isBalanced\_iff\_closedWalk\_wrap\_even} & \texttt{L12\_WalkH1.lean} \\
+  \path{isBalanced_iff_closedWalk_wrap_even} & \texttt{L12\_WalkH1.lean} \\
 Thm.~\ref{thm:flat-cycle} (charpoly) &
   \texttt{scalarCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
 Thm.~\ref{thm:flat-cycle} (root multiset) &
@@ -1569,21 +1603,21 @@ Thm.~\ref{thm:mobius-cycle} (root multiset) &
 \quad (graph-conditional transfer) &
   \shortstack[l]{\texttt{mobius\_connection\_roots}\\\texttt{\_of\_cycle\_reindex}} & \texttt{CycleGraphTransfer.lean} \\
 Cor.~\ref{cor:cycle-ew} &
-  \texttt{cycle\_isBalanced\_iff\_even\_wrap\_weak} & \texttt{L14\_CycleEw.lean} \\
+  \path{cycle_isBalanced_iff_even_wrap_weak} & \texttt{L14\_CycleEw.lean} \\
 Ex.~\ref{ex:cross-merge} (R5 refinement, C1 $\tau=1$) &
-  \texttt{numBalancedComponents\_monotone\_remove\_nonwrap\_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
+  \path{numBalancedComponents_monotone_remove_nonwrap_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (direct charpoly) &
-  \texttt{mobius\_charpoly\_eq\_scalar\_times\_signed} & \texttt{L16\_SpectrumUnion.lean} \\
+  \path{mobius_charpoly_eq_scalar_times_signed} & \texttt{L16\_SpectrumUnion.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (spec union) &
-  \texttt{mobius\_charpoly\_roots\_eq\_union} & \texttt{L16\_SpectrumUnion.lean} \\
+  \path{mobius_charpoly_roots_eq_union} & \texttt{L16\_SpectrumUnion.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (shifted det) &
   \texttt{shiftedDet\_factorises} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces} ($\tr L_{\mathrm{Mob}}$) &
   \texttt{trace\_laplacian\_mobius} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} ($\tr(\cdot^2)$) &
-  \texttt{trace\_sq\_laplacian\_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{trace_sq_laplacian_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} (Frobenius) &
-  \texttt{frobenius\_laplacian\_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{frobenius_laplacian_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} (polarisation) &
   \texttt{trace\_mul\_scalar\_signed\_eq} & \texttt{L17\_TracesAndLipschitz.lean} \\
 \bottomrule
@@ -1596,11 +1630,16 @@ live at
 \url{https://github.com/jesusvilela/connection\_laplacian\_lean}
 (DOI
 \href{https://doi.org/10.5281/zenodo.19695396}{10.5281/zenodo.19695396}).
+As checked on 2026-10-16, this concept DOI resolves to v.0.0.5
+(2026-10-15), version DOI
+\href{https://doi.org/10.5281/zenodo.23401896}{10.5281/zenodo.23401896}.
+Later repository changes, including the full cycle-spectrum proofs and
+their comparator replay, are not asserted to be part of that archive.
 From the project root,
 \begin{quote}
-\verb|elan run lake build|
+\verb|lake build|
 \end{quote}
-rebuilds all 1833 Lean objects (Mathlib~v4.11.0 +
+builds the pinned development (Mathlib~v4.11.0 +
 \texttt{ConnectionLaplacian}); the table above can be regenerated by
 invoking \verb|#print axioms| on each listed name. Continuous
 fuzz-sweeps now span five rounds of the discovery swarm. The R3/R4
@@ -1608,11 +1647,11 @@ baseline exhausts $176{,}169$ connection-graph configurations
 ($n\le 5$ exhaustive; $n\in\{6,7,8\}$ wrap-subset / random-graph);
 R5 extends this to a $456{,}950$-configuration sweep at $n\le 7$
 targeting the cover-charpoly and kernel-dimension identities; R6
-Stage-2 \texttt{FUZZER-A} (\texttt{findings/round6/stage2\_fuzzer\_A/})
+Stage-2 \texttt{FUZZER-A} (\path{findings/round6/stage2_fuzzer_A/})
 certifies the M6 multiset-union identity at $1.5\cdot 10^{-15}$
 relative precision on $3{,}727$ iso-configurations at $n=6$ plus a
 random $n=7$ sample; R6 Stage-6 \texttt{FUZZER-B}
-(\texttt{findings/round6/stage6\_fuzzer\_B/}) cross-checks the
+(\path{findings/round6/stage6_fuzzer_B/}) cross-checks the
 shifted-determinant, trace-square, Frobenius-norm and
 cross-polarisation identities of L17 at $n=7$ ($300$ graphs,
 $14{,}011$ probes, zero counterexamples). Across all rounds, the
@@ -1622,7 +1661,7 @@ in evaluating $\operatorname{charpoly}(\widetilde L^{\mathrm{cov}})$
 through the companion matrix (attributable to condition-number
 growth, bounded by standard float-polynomial perturbation theory;
 max deviation $7.3\cdot 10^{-3}$). The underlying Lean identity
-\texttt{cover\_charpoly\_eq\_scalar\_times\_mobius} is an exact
+\path{cover_charpoly_eq_scalar_times_mobius} is an exact
 statement over $\ZZ[\lambda]$ and is unaffected. Fuzzer scripts and
 JSON outputs live under
 \texttt{findings/round\{3,4,5,6\}/}.
@@ -1649,6 +1688,12 @@ T.~Zaslavsky.
 \emph{Signed graphs}.
 Discrete Appl.\ Math.\ \textbf{4} (1982), 47--74.
 
+\bibitem{ZaslavskyMatrices}
+T.~Zaslavsky.
+\emph{Matrices in the Theory of Signed Simple Graphs}.
+\href{https://arxiv.org/abs/1303.3083}{arXiv:1303.3083}, 2013,
+Section~IV.D, Lemma~IV.2.
+
 \bibitem{Chung}
 F.~R.~K.~Chung.
 \emph{Spectral Graph Theory},
@@ -1659,6 +1704,9 @@ American Mathematical Society, Providence, 1997.
 Y.~Bilu and N.~Linial.
 \emph{Lifts, discrepancy and nearly optimal spectral gap}.
 Combinatorica \textbf{26} (2006), 495--519.
+Preprint: \emph{Constructing expander graphs by 2-lifts and discrepancy
+vs.\ spectral gap},
+\href{https://arxiv.org/abs/math/0312022}{arXiv:math/0312022}.
 
 \bibitem{Mathlib}
 The Mathlib Community.

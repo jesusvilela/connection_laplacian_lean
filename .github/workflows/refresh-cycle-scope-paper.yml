@@ -1,61 +1,57 @@
-name: One-shot spectrum scope paper rebuild
+name: Rebuild paper PDF
 
 on:
-  push:
-    branches:
-      - audit/cycle-boundaries-comparator-20261016
-    paths:
-      - paper/paper.tex
-      - .github/workflows/refresh-cycle-scope-paper.yml
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  refresh:
+  paper:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: audit/cycle-boundaries-comparator-20261016
 
-      - name: Install LaTeX toolchain
+      - name: Install LaTeX and PDF inspection tools
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y texlive-latex-base texlive-latex-recommended \
-            texlive-latex-extra texlive-fonts-recommended texlive-science \
-            texlive-fonts-extra poppler-utils
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-science texlive-fonts-extra \
+            cm-super poppler-utils
 
-      - name: Compile paper and verify PDF is nonempty
+      - name: Compile and inspect manuscript
         run: |
-          set -eu
-          mkdir -p /tmp/paperbuild
+          set -euo pipefail
+          mkdir -p paperbuild
+          git rev-parse HEAD > paperbuild/source-commit.txt
+          sha256sum paper/paper.tex > paperbuild/source-sha256.txt
           for i in 1 2 3; do
             pdflatex -halt-on-error -interaction=nonstopmode \
-              -output-directory=/tmp/paperbuild paper/paper.tex \
-              > /tmp/paperbuild/run-${i}.log 2>&1 || {
-                tail -n 160 /tmp/paperbuild/run-${i}.log
+              -output-directory=paperbuild paper/paper.tex \
+              > paperbuild/run-${i}.log 2>&1 || {
+                tail -n 100 paperbuild/run-${i}.log
                 exit 1
               }
           done
-          test -s /tmp/paperbuild/paper.pdf
-          pdfinfo /tmp/paperbuild/paper.pdf | head -n 25
-          pdftotext /tmp/paperbuild/paper.pdf /tmp/paperbuild/paper.txt
-          test -s /tmp/paperbuild/paper.txt
-          echo "Extracted manuscript text lines:"
-          wc -l /tmp/paperbuild/paper.txt
-          cp /tmp/paperbuild/paper.pdf paper/paper.pdf
-
-      - name: Commit PDF on audit branch only
-        run: |
-          set -eu
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add paper/paper.pdf
-          if git diff --cached --quiet; then
-            echo "PDF already synchronized"
-            exit 0
+          test -s paperbuild/paper.pdf
+          pdfinfo paperbuild/paper.pdf | tee paperbuild/pdfinfo.txt
+          pdftotext -layout paperbuild/paper.pdf paperbuild/paper.txt
+          test -s paperbuild/paper.txt
+          if grep -E 'LaTeX Warning: (Reference|Citation).*undefined|There were undefined references|undefined control sequence' paperbuild/run-3.log; then
+            exit 1
           fi
-          git commit -m "Rebuild paper PDF for corrected parity scope and graph transfer notes"
-          git push origin HEAD:refs/heads/audit/cycle-boundaries-comparator-20261016
+          # Export representative pages for visual review alongside the PDF.
+          pdftoppm -f 3 -l 3 -scale-to 1400 -png -singlefile \
+            paperbuild/paper.pdf paperbuild/page-3
+          pdftoppm -f 13 -l 13 -scale-to 1400 -png -singlefile \
+            paperbuild/paper.pdf paperbuild/page-13
+
+      - name: Preserve PDF and build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf
+          path: paperbuild/
+          retention-days: 90

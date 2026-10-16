@@ -1,12 +1,15 @@
 # Evidence Map — ℤ/2 Connection-Laplacian kernel-dimension theory
 
-**Date:** 2026-10-13, hardened 2026-10-14, gap-closure round 2026-10-15.
+**Date:** 2026-10-13, hardened through 2026-10-16.
 **Scope:** this table documents the seven *historically comparator-replayed*
 representative end theorems plus supporting core claims. It is **not** a
 complete list of declarations checked by current CI. `AxiomAudit.lean`
-checks the original selected statements, nine full cycle-spectrum stages,
-and five conditional graph-transfer declarations. The new five-theorem
-cycle comparator challenge/solution package is specified separately in
+checks **23 declarations**: nine earlier selected statements, nine full
+cycle-spectrum stages (the earlier total of **18**), and five conditional
+graph-transfer declarations. These are declarations checked against an
+allowlist of **three axioms**. Comparator replay covers **seven historical
++ five newly replayed statements** in two separate runs. The cycle package
+and archived run are specified separately in
 `Hardening/CYCLE-COMPARATOR.md`. Do not treat passing CI elaboration or
 an axiom printout as independent comparator/kernel replay.
 
@@ -67,17 +70,21 @@ axiom smuggling. See [the comparator acceptance ledger](CYCLE-COMPARATOR.md).
 
 | Evidence gate | Earlier 7 | New cycle 5 |
 |---|---|---|
-| Lean kernel accepts claimed theorems | PASS | Four cycle + graph-transfer theorems are already imported/verified; branch CI extends these checks |
-| Explicit `#print axioms` allowlist | PASS for historical checks | Added for all five graph-transfer statements; enhanced audit rejects missing check output |
-| Comparator challenge/solution elaboration | PASS in historical run | **NEW CI preflight**; not equivalent to comparison/kernel replay |
-| Comparator full statement matching, transitive axiom walk, kernel replay | PASS (2026-10-14) | **REQUIRES fresh logged replay** |
-| Real landlock + nanoda external kernel | PASS in historical WSL2 run | **REQUIRES fresh logged run and OS-enforcement check** |
-| Negative mismatch and smuggled-axiom rejection | PASS historical controls | New controls **prepared**; acceptance requires observed rejection |
+| Lean kernel accepts claimed theorems | PASS | PASS; specialised spectra and conditional graph transfer compiled |
+| Explicit `#print axioms` allowlist | PASS for historical checks | PASS; current audit requests 23 declarations; only three standard axioms allowed |
+| Comparator challenge/solution elaboration | PASS in historical run | PASS in run 38863604693 |
+| Comparator full statement matching, transitive axiom walk, kernel replay | PASS (2026-10-14) | **PASS (2026-10-16), five targets**; Lean and nanoda accept |
+| Real landrun invocation + nanoda external kernel | PASS in historical WSL2 run | PASS for invocation and kernel acceptance; **no standalone OS denial probe recorded** |
+| Negative mismatch and smuggled-axiom rejection | PASS historical controls | **PASS**, expected `do not match` / `Illegal axiom detected` failures |
 
 Do not reinterpret the older 7-theorem exported closure or nanoda
 evidence as having verified the new cycle statements. In particular,
-"18 axioms audited" (before this follow-up) and "7 comparator checked"
-refer to genuinely different evidence classes.
+"18 declarations axiom-audited" (before graph transfer), the current 23,
+and "7 + 5 comparator-replayed statements" refer to different coverage.
+The cycle run tested temporary PR merge 380d09507df219a8a04fd7f63feb0a43c610aaff;
+its original four artifact files, tool SHAs and supporting job transcript are
+archived with checksums in [runs/38863604693/](runs/38863604693/).
+This replay does not discharge either graph-identification hypothesis.
 
 ## Hostility checklist (specification-gap classes)
 
@@ -131,16 +138,18 @@ kernel replay. The Windows `fake-landrun` pass remains a development path.
 
 Resolved on 2026-10-15 (round 8, see `findings/round8/report.md`):
 
-- **One-author transcription** — closed by dual transcription: a fresh agent
+- **One-author transcription** — reduced by dual transcription: a fresh agent
   re-transcribed all seven statements from source without seeing the
   challenge; after expanding the section variable they are token-identical,
   and the paper-pairing audit produced the four concrete findings below
-  instead of vague doubt.
-- **Shared convention stack** — closed at the definitional level: an
+  instead of vague doubt. Shared project context and interpretive
+  assumptions remain; this is not an external human referee's transcription.
+- **Shared convention stack** — checked on concrete instances: an
   implementation written from `paper.tex` only (selftested, 8,887 checks) now
   supplies the literal matrices that Lean itself verifies against the
   formalization's definitions (`Hardening/ConventionAnchor.lean` +
   `Hardening/ConventionBattery.lean`, 74 instances × 2 matrices).
+  This is bounded convention evidence, not a universal equivalence proof.
 - **n≥8 not tested at exhaustive strength** — closed bounded-exhaustively:
   all connected unlabeled n=8 graphs with 7–12 edges × *all* wraps, all n=8
   graphs with ≤7 edges × all wraps, plus dense random sampling — 7,246,819
@@ -159,8 +168,10 @@ Still open (paper↔formal boundary, from the round-8 transcription audit):
    statement is user-writable. Axiom-clean (standard three only).*
 3. **T5 roots live in ℝ (Lean) vs Spec over ℂ (paper)** — equivalent here by
    real symmetry; a convention note, not an error.
-4. **T1's "Equivalently Spec ⊎ Spec" clause and Cor 5.7** have no separately
-   named cover theorem in Lean (appendix lists them as unnamed).
+4. **T1's cover root-multiset clause** — *resolved in PR #10 by
+   `cover_charpoly_roots_eq_union` and `cover_charpoly_root_count_eq_sum`
+   (`L10_CoverCharpoly.lean`); both are axiom-audited. This does not
+   resolve the separately unnamed component-count Cor 5.7.*
 5. **The paper's eq. (1) Kronecker formula was internally inconsistent**
    (vertex-major `D⊗I₂` vs fibre-major `Φ(e)⊗1_e`) — *resolved 2026-10-16:
    the errata reorder the second factor to `1_e ⊗ Φ(e)` with an ordering
@@ -189,9 +200,11 @@ sources):
    (`flat_cycle_spectrum`, `mobius_cycle_spectrum`) whose statements mentioned
    no Laplacian and held trivially; the real content is the public per-k
    `scalarCycle_eigenvalue` / `signedCycle_eigenvalue` (both `3 ≤ n`), and
-   the paper says exactly that. **Resolved:** the vacuous pair was removed in
+   the paper described that earlier state. **Resolved:** the vacuous pair was removed in
    commit `0b67037`. An additional eigenvalue-separation declaration was
-   subsequently strengthened to require an actual eigenpair (see audit PR).
+   subsequently strengthened to require an actual eigenpair. PR #11 later
+   proved both full specialised-cycle multisets; PR #13 added conditional
+   graph transfer and the separate five-target comparator replay.
 9. **The manuscript lacked a code URL/DOI**; Section 8's dependency graph
    predates L9–L17; swarm shorthand (C1/C2/τ/R5) was undefined — *resolved
    in the October 2026 errata (DOI + URL added, spine list updated, shorthand
@@ -212,12 +225,24 @@ machine verification of the resulting statements.
 
 
 
-The verification pipeline recorded here was not produced by treating a
-language model as an authority. The originating research architecture
-(NP Bunny / UTAI / Uber-UTAI sessions → conjecture generation → adversarial
-and ambiguator passes → Lean formalization → CI trust boundary → fuzzers and
-negators → comparator) treated the *entire generative process as untrusted*
-and published only the residue that survived heterogeneous, executable
-attack. That architecture — not any single proof — is the project's
-methodological contribution; the same discipline later crystallized into the
-Lambda SAT Solver line of work.
+The verification process treats generated conjectures, proof attempts and
+statement transcriptions as untrusted inputs. Numerical counterexample
+searches, specification reviews, Lean checks and comparator replay provide
+different evidence. Git authorship alone cannot recover the human/model
+division of labour; the artifacts support narrower claims about outputs.
+
+## Publication and unresolved proof boundaries
+
+The concept DOI `10.5281/zenodo.19695396` resolved on 2026-10-16 to
+version DOI `10.5281/zenodo.23401896`, **v.0.0.5 (2026-10-15)**,
+linked by Zenodo to tag `v.0.0.5` at `fce9bcbcc97c104e155839499d1dbf72b59da8c0`.
+Audited main `b92bcb6` is 96 commits beyond that tag; its cycle proofs,
+transfer results and replay are **not claimed as part of that archive**.
+No release/tag or Zenodo record is updated by this documentation pass.
+
+Still open: construction of both cycle-to-`ConnGraph` matrix identities;
+L14's reverse parity implication without caller-supplied `hrev`; and
+the combinatorial identity `tr(L_sc L_sg) = tr(L_sc²) - 4|W|`.
+The historical seventh comparator statement proves matrix polarisation,
+which is a different statement. See the
+[chronology and review adjudication](audit-reconciliation-2026-10-16.md).

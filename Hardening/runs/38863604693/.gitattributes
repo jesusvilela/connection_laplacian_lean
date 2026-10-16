@@ -1,0 +1,2 @@
+*.log -text -whitespace
+versions.txt -text

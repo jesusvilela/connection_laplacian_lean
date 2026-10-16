@@ -1,0 +1,11 @@
+repository_commit=380d09507df219a8a04fd7f63feb0a43c610aaff
+date_utc=2026-10-16T06:52:16Z
+Linux runnervm8k3b6 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+Lean (version 4.11.0, x86_64-unknown-linux-gnu, commit ec3042d94bd1, Release)
+Lake version 5.0.0-ec3042d (Lean version 4.11.0)
+go version go1.24.13 linux/amd64
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+comparator_sha=e3dcf3083fc53d44b27a4431fabf7d43181583f5
+lean4export_sha=5a9a355dc6c5fd82b69058d433e2ae2e8dfbf8fe
+landrun_sha=811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+nanoda_sha=f67473ba5f9397266f89c7852082c9c914b5d219

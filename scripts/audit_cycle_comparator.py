@@ -49,9 +49,9 @@ def main() -> None:
     check(set(positive["permitted_axioms"]) == ALLOWED, "axiom allowlist drift")
     check(theorem_names("CycleChallenge.lean") == NAMES, "challenge coverage drift")
     check(theorem_names("CycleSolution.lean") == NAMES, "solution coverage drift")
-    check("sorry" not in (H / "CycleSolution.lean").read_text().split(
+    check("sorry" not in (H / "CycleSolution.lean").read_text(encoding="utf-8").split(
         "namespace Hardening.Cycle", 1)[1], "solution must be sorry-free")
-    check("axiom " not in (H / "CycleSolution.lean").read_text().split(
+    check("axiom " not in (H / "CycleSolution.lean").read_text(encoding="utf-8").split(
         "namespace Hardening.Cycle", 1)[1], "solution must not declare axioms")
     check(nanoda["enable_nanoda"] is True, "dual-kernel config disabled")
     check({k: v for k, v in nanoda.items() if k != "enable_nanoda"} == positive,
@@ -77,7 +77,7 @@ def main() -> None:
           "phase negative theorem drift")
     check(theorem_names("CycleNegative/BadSolution.lean") == [NAMES[3]],
           "axiom negative theorem drift")
-    bad_phase = (H / "CycleNegative/BadChallenge.lean").read_text()
+    bad_phase = (H / "CycleNegative/BadChallenge.lean").read_text(encoding="utf-8")
     check("2 * j.val * Real.pi / n" in bad_phase, "phase perturbation removed")
     # Check a concrete mathematical counterexample: a mere permutation of
     # Fourier frequencies would be a poor negative control even if the
@@ -89,7 +89,7 @@ def main() -> None:
                       for k in range(n))
     check(max(abs(a - b) for a, b in zip(signed, tampered)) > 0.1,
           "phase perturbation is a merely equivalent reindexing")
-    bad_solution = (H / "CycleNegative/BadSolution.lean").read_text()
+    bad_solution = (H / "CycleNegative/BadSolution.lean").read_text(encoding="utf-8")
     check("axiom smuggled_cycle_multiset" in bad_solution,
           "axiom-smuggling perturbation removed")
 

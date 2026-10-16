@@ -9,7 +9,12 @@ on:
       - 'Hardening/CycleNegative/**'
       - 'Hardening/config-cycle*.json'
       - 'Hardening/lean4export-v4.11-port.diff'
-      - 'ConnectionLaplacian/CycleGraphTransfer.lean'
+      - 'ConnectionLaplacian/**'
+      - 'ConnectionLaplacian.lean'
+      - 'lakefile.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
+      - 'scripts/audit_cycle_comparator.py'
       - '.github/workflows/cycle-comparator-replay.yml'
   workflow_dispatch:
 

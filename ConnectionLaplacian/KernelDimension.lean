@@ -490,11 +490,14 @@ lemma numOddWrapComponents_le :
 The historical `signedLaplacian_kernel_dim`, `connectionLaplacian_kernel_dim`,
 and `mobius_kernel_strict_iff` lived here with `= numComponents − numOddWrapComponents`
 on their RHS. That RHS is FALSE on arbitrary wrap (counterexample: K₄ with
-wrap = {a–b, a–c} — one odd-count component, but the component is already
+wrap = {a–b, a–c} — one component with two wrap edges (even), so the
+historical formula predicts nullity 1, but the component is already
 unbalanced on the triangle a–b–d–a, whose edge signs are (−,+,+). The
 correct statement uses `numBalancedComponents` and lives in
-`ConnectionLaplacian.L8_Recognition` as `…_general`. See
-`memory/signed_kernel_dim_false.md` for the counterexample derivation.
+`ConnectionLaplacian.L8_Recognition` as `…_general`. This adjacent-edge
+example differs from the manuscript's matching W = {12,34}; both have
+signed nullity 0. See `Hardening/audit-reconciliation-2026-10-16.md`
+and `findings/round10/test_k4_counterexamples.py` for exact checks.
 -/
 
 end ConnGraph
