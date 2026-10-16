@@ -49,6 +49,36 @@ CI only):
 | dim ker L̃ = dim ker L_scalar + dim ker L_signed | `scalarLap_cover_kernel_dim` (L5) | round2 T2: 0/3456 failures, SVD kernel dims |
 | per base component, cover fibre has 2 sheets iff balanced, else 1 | fibre-cardinality theorem (L6) | round2 T3: 0/3456 failures, incl. disconnected and isolated-vertex cases |
 
+## Post-merge cycle-spectrum comparison (not part of the historical seven)
+
+The four fully quantified Fourier spectrum statements in
+`CycleMultiset.lean` were **proved by Lean and audited for axioms**
+after the original 2026-10-14 comparator replay. Five additional
+conditional graph-transfer declarations in `CycleGraphTransfer.lean`
+are also imported into the production spine and audited.
+
+A separate **five-target comparator package** exists in
+`Hardening/CycleChallenge.lean`, `CycleSolution.lean`, and
+`config-cycle-nanoda.json`. Its fifth statement is the complete
+connection multiset **conditional on two explicit matrix
+identifications**, not an unconditional arbitrary-graph spectral
+claim. The two negative configurations test phase mismatch and
+axiom smuggling. See [the comparator acceptance ledger](CYCLE-COMPARATOR.md).
+
+| Evidence gate | Earlier 7 | New cycle 5 |
+|---|---|---|
+| Lean kernel accepts claimed theorems | PASS | Four cycle + graph-transfer theorems are already imported/verified; branch CI extends these checks |
+| Explicit `#print axioms` allowlist | PASS for historical checks | Added for all five graph-transfer statements; enhanced audit rejects missing check output |
+| Comparator challenge/solution elaboration | PASS in historical run | **NEW CI preflight**; not equivalent to comparison/kernel replay |
+| Comparator full statement matching, transitive axiom walk, kernel replay | PASS (2026-10-14) | **REQUIRES fresh logged replay** |
+| Real landlock + nanoda external kernel | PASS in historical WSL2 run | **REQUIRES fresh logged run and OS-enforcement check** |
+| Negative mismatch and smuggled-axiom rejection | PASS historical controls | New controls **prepared**; acceptance requires observed rejection |
+
+Do not reinterpret the older 7-theorem exported closure or nanoda
+evidence as having verified the new cycle statements. In particular,
+"18 axioms audited" (before this follow-up) and "7 comparator checked"
+refer to genuinely different evidence classes.
+
 ## Hostility checklist (specification-gap classes)
 
 | Error class | Status |
