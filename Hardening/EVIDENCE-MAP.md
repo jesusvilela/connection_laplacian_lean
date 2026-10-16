@@ -25,7 +25,7 @@ Each row follows the chain
 - **Axiom audit** — `#print axioms` (CI) and, stronger, comparator's
   transitive `checkAxioms` walk over the exported proof terms.
 - **Comparator** — `leanprover/comparator` @ master `e3dcf30` (v4.35.0):
-  statement-equality against an independently transcribed challenge,
+  statement-equality against a challenge transcribed independently of the Lean proof sources,
   axiom hygiene, and full kernel replay of the exported transitive closure,
   run under a real landlock sandbox with Lean + nanoda dual kernels
   (see `Hardening/REPORT.md`).
@@ -108,7 +108,7 @@ This replay does not discharge either graph-identification hypothesis.
    `sorry`/`native_decide`/project axioms (`scripts/audit_trust.py`).
 2. **Semantic correspondence** — comparator (Lean FRO, unmodified binary)
    verified: the spine's seven end theorems prove *exactly* the
-   independently transcribed challenge statements, depend on *only*
+   challenge statements transcribed independently of the Lean proof sources, depend on *only*
    `propext, Quot.sound, Classical.choice`, and every constant of the
    exported transitive closure (1,320,201 NDJSON lines: 10,324 theorems,
    4,363 definitions, 469 inductives, 3 axioms, 4 quot, 16 opaques)
