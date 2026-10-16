@@ -110,8 +110,7 @@ axioms (\texttt{propext}, \texttt{Classical.choice},
 The bespoke arguments are the Hadamard rotation of part~(i)--(ii)
 (a Kronecker-conjugation computation) and the double-cover lift
 of part~(iii) (a walk induction). Along the way we observe and
-correct an incorrect statement that appeared in our pre-registered
-plan: the identity
+correct an incorrect statement in our initial written plan: the identity
 $\dim\Ker L^{\operatorname{sg}}(G) = \#\comp(G) -
   \#\{\text{components of odd total wrap}\}$
 holds for every wrap assignment on a cycle, but fails for some wrap assignments
@@ -176,6 +175,25 @@ exactly when the \emph{wrap} holonomy of the bundle around every
 cycle in that component is trivial; this is the condition of
 \emph{balance} in the language of Harary, Cartwright and Zaslavsky
 \cite{HararyCartwright, Zaslavsky82}.
+
+\subsection*{Contribution and prior work}
+
+The contribution is a Lean formalisation and a documented verification
+process for classical spectral graph theory. We do not claim new
+mathematical discovery of the balance--nullity or lift-splitting formulas.
+For the signed Laplacian $D-A_{\mathrm{sg}}$, the standard nullity
+formula is stated explicitly in Zaslavsky's survey
+\cite[Lemma~IV.2]{ZaslavskyMatrices}.
+Bilu and Linial's $2$-lift result gives the adjacency spectrum as the
+base and signed spectra with multiplicities
+\cite[preprint Lemma~3.1]{BiluLinial}. Our Laplacian splitting uses
+the same sheet-symmetric and sheet-antisymmetric subspaces: the
+degree block acts as $D$ in both. This also works for irregular
+finite simple graphs; it does not require replacing $D$ by a scalar.
+The repository certifies the resulting identities and records the
+remaining specification and formalisation obligations.
+The numerical work is a cross-check, not an ML application or a
+scalability benchmark.
 
 \subsection*{Organisation and results}
 
@@ -786,8 +804,8 @@ inclusion $\comp^{\mathrm{bal}}(G)\subseteq\comp(G)$ of
 Definition~\ref{def:balanced}.
 \end{proof}
 
-\begin{remark}[Pre-registered plan vs.\ correct statement]
-Our pre-registered plan contained the assertion
+\begin{remark}[Initial written plan vs.\ correct statement]
+Our initial written plan contained the assertion
 \[
   \dim\Ker\Lsigned(G) \;\overset{?}{=}\; \#\comp(G) -
     \#\{C\in\comp(G) : |W\cap E(C)|\text{ is odd}\}. \tag{$\star$}
@@ -796,8 +814,9 @@ This is \emph{false} in general. Example: let $G=K_4$ with
 $W=\{\{1,2\},\{3,4\}\}$, two disjoint wrap edges forming a
 matching. The whole graph is one component, the total wrap count
 is $2$ (even), so~$(\star)$ predicts
-$\dim\Ker\Lsigned = 1$. However a brute-force eigenvalue computation
-shows $\dim \Ker\Lsigned = 0$, which is indeed~$\beta(K_4)=0$
+$\dim\Ker\Lsigned = 1$. The signed matrix has determinant $48$,
+so its kernel is zero; eigenvalue computation agrees. Thus
+$\dim \Ker\Lsigned = 0$, which is indeed~$\beta(K_4)=0$
 from Theorem~\ref{thm:signed-kernel} (the two wrap edges
 together form a non-trivial cohomology class on~$K_4$).
 Equation~$(\star)$ is correct on $G=C_n$: there
@@ -822,7 +841,14 @@ matching; two triangles sharing a vertex with one wrap in each), and a
 odd number of wrapped bridges, e.g.\ $P_3$ with one wrapped edge ---
 where $\dim H^1=0$, so a small cohomology alone guarantees nothing).
 All six example computations above are reproduced by the independent
-implementation in \texttt{findings/round8}.
+implementation in \texttt{findings/round8}, written from the manuscript
+alone without consulting Lean sources. The counterexample and corrected
+formula are already present in the initial public commit (2026-04-22).
+That record establishes neither which tool first found the error nor
+a causal order between computation and formalisation. We have not
+identified a timestamped preregistration. Exact rational checks for
+both this matching and the different adjacent-edge example in the
+Lean comment are in \texttt{findings/round10/test\_k4\_counterexamples.py}.
 \end{remark}
 
 %=============================================================
@@ -1032,19 +1058,19 @@ The ``mathematical'' content, in descending order of novelty:
 
 \subsection*{Lessons}
 
-The formalisation surfaced one genuine bug in our informal plan
-(the false equation~$(\star)$). This is a modest-but-real example
-of Lean's mathematical utility: the computer cannot be negotiated
-with when $\beta(G)$ and
-$\#\comp(G)-\#\{\text{odd-wrap components}\}$ fail to agree on
-$K_4$ with a matching wrap.
+The development corrected the false equation~$(\star)$ in the initial
+written plan. Numerical counterexamples and the formal balanced-component
+theorem supply different checks of that correction. The public history
+already records both in its initial commit, so it does not determine
+the first detector or the order of discovery. The methodological lesson
+is to retain explicit counterexamples and verified replacement statements.
 
 \bigskip
 
 \noindent\textit{Acknowledgements.} This work was carried out as
 an independent formal-verification project on combinatorial
-spectral identities, under a pre-registered discovery and
-adversarial-review discipline.
+spectral identities, guided by an initial written plan and
+adversarial review.
 
 %=============================================================
 \section{Further Identities: Traces, Bounds, and the
@@ -1125,14 +1151,16 @@ $\tr(\Lscalar\Lsigned)=\tr(\Lsigned\Lscalar)$. The Lean names are
 
 \begin{remark}[Polarisation versus combinatorial form]
 The cross-term identity above is stated in \emph{polarisation form}
-and is pure matrix algebra. An equivalent combinatorial form
+and is pure matrix algebra. For these graph Laplacians the additional
+combinatorial identity
 $\tr(\Lscalar\cdot\Lsigned)=\tr({\Lscalar}^{2})-4\,\#W$, which can be
 read off the entrywise formula for $\Lscalar\cdot\Lsigned$ by
 summing contributions at diagonal and off-diagonal positions, is
 confirmed numerically by the R6 Stage-6 fuzzer (zero deviation
 across $300$ random connected graphs at $n=7$) but is not yet a
-separately named Lean theorem; a $\le 20$-line bridge lemma is
-recorded as an R7 carry-over.
+separately named Lean theorem. Its proof needs the graph-entry
+calculation and finite edge counting; the polarisation theorem alone
+does not establish it. This remains an open formalisation obligation.
 \end{remark}
 
 \begin{proposition}[Kernel inequalities]\label{prop:kernel-ineq}
@@ -1353,7 +1381,7 @@ If $G=C_n$ is a single cycle of length~$n\ge 3$, then
   \dim\Ker \Lsigned(C_n,W) = \begin{cases} 1 & \#W \text{ even,}\\
     0 & \#W \text{ odd.}\end{cases}
 \]
-In particular the pre-registered formula
+In particular the initial plan's formula
 $\dim\Ker\Lsigned = \#\comp(G) - \#\{\text{odd-wrap components}\}$
 holds for \emph{every wrap assignment} on a connected cycle graph.
 It is not a valid formula for arbitrary graphs. For a \emph{particular}
@@ -1379,11 +1407,12 @@ $\beta\in\{0,1\}$ to $\dim\Ker\Lsigned\in\{0,1\}$.
 The Lean certificate
 \texttt{cycle\_isBalanced\_iff\_even\_wrap\_weak}
 (\texttt{L14\_CycleEw.lean}) names this a \emph{weak} form: it
-takes an Eulerian closed walk around the cycle and a reverse-direction
-hypothesis as explicit inputs to the caller. Lifting this to the
-fully constructive form stated above requires a
-\texttt{fundamentalCycleWalk} helper plus a winding-number argument
-currently tracked as an R7 carry-over.
+takes an Eulerian closed walk and the reverse implication as explicit
+inputs. Its signature quantifies over a general \texttt{ConnGraph};
+a cycle-graph identification is not constructed there.
+Only balancedness implying even total wrap is proved from the Eulerian
+walk. The reverse implication needs a cycle-space argument, together
+with an explicit \texttt{fundamentalCycleWalk}; both remain open.
 \end{remark}
 
 %=============================================================
@@ -1596,11 +1625,16 @@ live at
 \url{https://github.com/jesusvilela/connection\_laplacian\_lean}
 (DOI
 \href{https://doi.org/10.5281/zenodo.19695396}{10.5281/zenodo.19695396}).
+As checked on 2026-10-16, this concept DOI resolves to v.0.0.5
+(2026-10-15), version DOI
+\href{https://doi.org/10.5281/zenodo.23401896}{10.5281/zenodo.23401896}.
+Later repository changes, including the full cycle-spectrum proofs and
+their comparator replay, are not asserted to be part of that archive.
 From the project root,
 \begin{quote}
-\verb|elan run lake build|
+\verb|lake build|
 \end{quote}
-rebuilds all 1833 Lean objects (Mathlib~v4.11.0 +
+builds the pinned development (Mathlib~v4.11.0 +
 \texttt{ConnectionLaplacian}); the table above can be regenerated by
 invoking \verb|#print axioms| on each listed name. Continuous
 fuzz-sweeps now span five rounds of the discovery swarm. The R3/R4
@@ -1649,6 +1683,12 @@ T.~Zaslavsky.
 \emph{Signed graphs}.
 Discrete Appl.\ Math.\ \textbf{4} (1982), 47--74.
 
+\bibitem{ZaslavskyMatrices}
+T.~Zaslavsky.
+\emph{Matrices in the Theory of Signed Simple Graphs}.
+\href{https://arxiv.org/abs/1303.3083}{arXiv:1303.3083}, 2013,
+Section~IV.D, Lemma~IV.2.
+
 \bibitem{Chung}
 F.~R.~K.~Chung.
 \emph{Spectral Graph Theory},
@@ -1659,6 +1699,9 @@ American Mathematical Society, Providence, 1997.
 Y.~Bilu and N.~Linial.
 \emph{Lifts, discrepancy and nearly optimal spectral gap}.
 Combinatorica \textbf{26} (2006), 495--519.
+Preprint: \emph{Constructing expander graphs by 2-lifts and discrepancy
+vs.\ spectral gap},
+\href{https://arxiv.org/abs/math/0312022}{arXiv:math/0312022}.
 
 \bibitem{Mathlib}
 The Mathlib Community.

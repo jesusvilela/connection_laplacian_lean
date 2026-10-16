@@ -88,14 +88,28 @@ GitHub Actions' `lake-build.yml` only checks source trust, Lean build,
 axioms, harness JSON integrity, and successful elaboration of the
 challenge/solution. It does **not** by itself execute comparator.
 
-## Status ledger
+## Observed replay and status ledger
+
+[Actions run 38863604693](https://github.com/jesusvilela/connection_laplacian_lean/actions/runs/38863604693)
+on 2026-10-16 **passed the five-target comparison**, Lean and nanoda
+kernel replay, and both intentional negative controls. The original
+positive/rejection logs, exact tool SHAs, tested commit and checksums
+are archived in [runs/38863604693/](runs/38863604693/).
+The tested commit is temporary PR merge 380d09507df219a8a04fd7f63feb0a43c610aaff;
+the later actual main merge is b92bcb6. The fifth target remains conditional.
+
+The job builds and selects the pinned real landrun binary; it does
+not record a separate OS denial probe or the additional AF_UNIX restriction.
+Those stronger isolation properties are **not established by these logs**.
+The historical WSL sandbox probe must not be attributed to this runner.
 
 - Historical seven-theorem comparator: **PASS** on 2026-10-14; dual
   Lean/nanoda kernels (see `REPORT.md`).
 - All four cycle spectrum theorem statements: **Lean kernel VERIFIED**
   (PR #11) and explicitly `#print axioms` audited (PR #12).
-- Five-theorem comparator challenge/solution: **new prepared harness**;
-  record a new PASS only after actual comparator + both negative runs.
+- Five-theorem comparator challenge/solution: **PASS**, 2026-10-16,
+  run 38863604693: both kernels accept; phase mismatch and smuggled
+  axiom are rejected with their expected errors.
 - Graph-level theorem: **proved conditional transport** requiring an
   explicit graph-vertex equivalence and the scalar/signed Laplacian
   reindexing equalities. **Still open:** constructing these two
@@ -104,7 +118,7 @@ challenge/solution. It does **not** by itself execute comparator.
 - Strong wrap-parity iff and combinatorial mixed trace: **not implied**
   by the Fourier completeness work; remain independent obligations.
 
-An immutable comparator run should record exact `git rev-parse HEAD`,
+For future runs, record exact `git rev-parse HEAD`,
 all toolchain/tool SHAs, `uname -r`, `landrun` enforcement check,
 the challenge/solution module names, full acceptance/rejection logs,
 and whether nanoda really ran. Archive these files before claiming an

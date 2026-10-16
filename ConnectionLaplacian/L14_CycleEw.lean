@@ -8,8 +8,10 @@ ConnectionLaplacian/L14_CycleEw.lean
 slot was taken by `L13_PSD` concurrently; this file is renamed to L14
 without changing its scope.)
 
-This file specializes `isBalanced_iff_closedWalk_wrap_even` (L12) to
-graphs whose underlying `SimpleGraph` is `SimpleGraph.cycleGraph n`.
+This file supplies Eulerian-walk lemmas toward a future specialization
+of `isBalanced_iff_closedWalk_wrap_even` (L12) to `SimpleGraph.cycleGraph n`.
+The actual theorem signatures below quantify over a general `ConnGraph`;
+they do not construct or identify a cycle graph.
 
 On a cycle graph, `H¹(-; ZMod 2) = ZMod 2` is one-dimensional, and a
 closed walk's wrap-parity is determined by a single global parity:
@@ -21,9 +23,10 @@ the total number of wrap edges, mod 2.
    Eulerian circuit, its wrap count equals the cardinality of the wrap
    subset of `edgeFinset`.
 
-2. `cycle_isBalanced_iff_even_wrap_weak`: assuming the user supplies a
-   closed Eulerian walk on `G.graph` (and that `G` has only one
-   connected component), `balanced everywhere ↔ total wrap count even`.
+2. `cycle_isBalanced_iff_even_wrap_weak`: assuming a closed Eulerian walk
+   on `G.graph` AND the reverse implication `hrev`,
+   `balanced everywhere ↔ total wrap count even`.
+   There is no separate connectedness hypothesis in its signature.
 
 ## What's stubbed
 
@@ -34,9 +37,10 @@ the total number of wrap edges, mod 2.
   and boundary `by_cases`). Deferred to a dedicated stratum (future L16) per
   Round-5 PROVER-CYCLE-EW constraint #4.
 
-The weak form is sufficient to close the "unbalanced ⇒ odd total wrap
-count" implication on any concrete cycle graph the caller constructs,
-by plugging in the explicit walk.
+The proved direction is "balanced everywhere ⇒ even total wrap count".
+Its contrapositive is "odd total wrap count ⇒ not balanced everywhere".
+The converse "unbalanced ⇒ odd total wrap count" needs `hrev`; an
+Eulerian walk alone does not prove it.
 
 -/
 

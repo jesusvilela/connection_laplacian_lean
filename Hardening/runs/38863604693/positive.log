@@ -1,0 +1,61 @@
+Building Hardening.CycleChallenge
+⚠ [1811/1813] Replayed ConnectionLaplacian.CycleSpectrum
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:240:57: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:255:67: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+info: ././././ConnectionLaplacian/CycleSpectrum.lean:298:15: Try this: ring_nf
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:426:38: unused variable `hii`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:503:19: unused variable `hjlt`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+info: ././././ConnectionLaplacian/CycleSpectrum.lean:649:19: Try this: ring_nf
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:684:11: unused variable `h2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1813/1813] Replayed Hardening.CycleChallenge
+warning: ././././Hardening/CycleChallenge.lean:20:8: declaration uses 'sorry'
+warning: ././././Hardening/CycleChallenge.lean:27:8: declaration uses 'sorry'
+warning: ././././Hardening/CycleChallenge.lean:34:8: declaration uses 'sorry'
+warning: ././././Hardening/CycleChallenge.lean:42:8: declaration uses 'sorry'
+warning: ././././Hardening/CycleChallenge.lean:52:8: declaration uses 'sorry'
+Build completed successfully.
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, Hardening.Cycle.periodic_charpoly, Hardening.Cycle.antiperiodic_charpoly, Hardening.Cycle.periodic_multiset, Hardening.Cycle.antiperiodic_multiset, Hardening.Cycle.mobius_graph_multiset, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Hardening.CycleChallenge
+Building Hardening.CycleSolution
+⚠ [1811/1839] Replayed ConnectionLaplacian.CycleSpectrum
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:240:57: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:255:67: 'push_cast' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+info: ././././ConnectionLaplacian/CycleSpectrum.lean:298:15: Try this: ring_nf
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:426:38: unused variable `hii`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:503:19: unused variable `hjlt`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+info: ././././ConnectionLaplacian/CycleSpectrum.lean:649:19: Try this: ring_nf
+warning: ././././ConnectionLaplacian/CycleSpectrum.lean:684:11: unused variable `h2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1822/1839] Replayed ConnectionLaplacian.L13_PSD
+warning: ././././ConnectionLaplacian/L13_PSD.lean:244:7: unused variable `hQ_nonneg`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1835/1839] Replayed ConnectionLaplacian.CycleMultiset
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:119:47: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:137:56: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:155:51: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:173:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:379:11: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:381:42: unused variable `hn`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+warning: ././././ConnectionLaplacian/CycleMultiset.lean:391:43: unused variable `hn`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+Build completed successfully.
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, Hardening.Cycle.periodic_charpoly, Hardening.Cycle.antiperiodic_charpoly, Hardening.Cycle.periodic_multiset, Hardening.Cycle.antiperiodic_multiset, Hardening.Cycle.mobius_graph_multiset, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Hardening.CycleSolution
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!

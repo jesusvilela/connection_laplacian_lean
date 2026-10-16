@@ -23,7 +23,10 @@ in [`Hardening/EVIDENCE-MAP.md`](Hardening/EVIDENCE-MAP.md).
 The accompanying paper lives under `paper/` and has been submitted as a
 candidate to the upcoming FLoC Lisbon cycle.
 
-> **DOI:** <https://doi.org/10.5281/zenodo.19695396>
+> **DOI:** <https://doi.org/10.5281/zenodo.19695396>. Checked 2026-10-16:
+> this resolves to **v.0.0.5 (2026-10-15)**, version DOI
+> [10.5281/zenodo.23401896](https://doi.org/10.5281/zenodo.23401896).
+> Current main contains later changes; the archived DOI does not certify them.
 
 ## What is where
 
@@ -31,7 +34,7 @@ candidate to the upcoming FLoC Lisbon cycle.
 |---|---|---|
 | Verified spine | everything imported by `ConnectionLaplacian.lean` | machine-checked Lean proofs, CI-enforced trust boundary |
 | Hardening harness | `Hardening/` | comparator challenge/solution modules, convention-anchor battery, run logs, evidence map, review adjudication |
-| Numerical cross-checks | `findings/` (rounds 2–6, 8–9; round 7 is kept local-only) | Python; empirical evidence for the formal statements, not theorems |
+| Numerical cross-checks | `findings/` (rounds 2–6, 8–10; see methods note for omitted round 7) | Python; empirical evidence for the formal statements, not theorems |
 | Paper + guides | `paper/`, `docs/` | manuscript (LaTeX + PDF) and reader companions |
 
 The repository is scoped solely to the ℤ/2 connection-Laplacian
@@ -119,8 +122,13 @@ own; two deliberately broken controls (a one-token statement tamper, a
 smuggled axiom) are rejected as expected. See
 [`Hardening/REPORT.md`](Hardening/REPORT.md). The report covers **seven
 historical theorems only**. A separate five-claim cycle-spectrum comparator
-challenge with two failure-mode controls has been added; its proof replay
-status is documented separately in
+challenge **passed** on 2026-10-16 in run 38863604693, including both
+Lean/nanoda acceptance and both negative rejections. The original logs
+and exact tested commit are archived under `Hardening/runs/38863604693/`.
+Thus the two runs cover **seven + five statements**, distinct from the
+**23 declarations** selected for the current Lean axiom audit (18 before
+graph transfer). The cycle run records real landrun invocation but no
+standalone OS denial probe. Its scope is documented separately in
 [`Hardening/CYCLE-COMPARATOR.md`](Hardening/CYCLE-COMPARATOR.md).
 
 **3. Empirical falsification pressure.** The `findings/` rounds (2–6, 8–9) attack the

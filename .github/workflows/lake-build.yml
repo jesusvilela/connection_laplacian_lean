@@ -46,6 +46,12 @@ jobs:
       - name: Cycle comparator harness integrity
         run: python3 scripts/audit_cycle_comparator.py
 
+      - name: Archived comparator evidence integrity
+        run: python3 scripts/audit_comparator_evidence.py
+
+      - name: Exact K4 counterexamples and singular controls
+        run: python3 findings/round10/test_k4_counterexamples.py
+
       - name: Exact graph/cycle matrix-reindex probes
         run: python3 findings/round10/test_cycle_graph_transfer.py
 

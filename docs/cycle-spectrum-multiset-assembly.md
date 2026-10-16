@@ -169,9 +169,11 @@ two negative controls tamper with the signed phase and inject an axiom.
 - CI compiles the comparator challenge and solution and audits the
   *configuration integrity*. This is a useful preflight, **not**
   comparator or dual-kernel execution.
-- The actual pinned comparator with landlock/nanoda and negative
-  controls requires an observed successful run; record its status,
-  SHAs, evidence logs, and OS enforcement separately.
+- The actual pinned comparator **passed** in run 38863604693 on
+  2026-10-16: all five statements, both Lean/nanoda kernels, and both
+  expected negative rejections. Original logs and tool SHAs are archived
+  under `Hardening/runs/38863604693/`. The runner used real landrun;
+  a separate OS denial probe and AF_UNIX restriction were not recorded.
 
 See [the dedicated comparator ledger](../Hardening/CYCLE-COMPARATOR.md)
 for the precise commands and acceptance criteria.
@@ -191,7 +193,8 @@ whole research programme. In particular:
 | General combinatorial mixed-trace identity `tr(L_sc * L_sg) = tr(L_sc²) - 4|W|` | **OPEN** |
 | Out-of-scope graph sizes / malformed-cycle boundary cases `n=0,1` | **OPEN**; cycle theorems explicitly assume `n≥3` |
 | Manuscript LaTeX and tracked PDF | **UPDATED** in [PR #12](https://github.com/jesusvilela/connection_laplacian_lean/pull/12); GitHub Actions rebuilt `paper/paper.pdf` after synchronizing `paper/paper.tex` |
-| Archived DOI release metadata, chronology, and external comparator replay of the new declarations | **OPEN**; comparator challenge/solution and an attempted dual-kernel runner are prepared, but the original seven-theorem run did not include these claims |
+| External comparator replay of five cycle statements | **PASS**, run 38863604693; logs archived with exact tested commit and tool SHAs |
+| Archived DOI release | **v.0.0.5 only** as checked 2026-10-16; later main changes require a future release/archive |
 
 **Important convention:** The signed specialised matrix places its
 anti-periodic sign on the closing edge of the cyclic indexing. An arbitrary

@@ -21,9 +21,8 @@ that the methodology is auditable the same way the mathematics is.
 
 ## Where it came from
 
-The pipeline did not start as a verification project. It started as an
-experimental research ecology — the NP Bunny / UTAI / Uber-UTAI sessions —
-in which the human researcher originated the initial mathematical
+The project began as AI-assisted mathematical exploration, in which the
+human researcher originated the initial mathematical
 conjectures and designed the research and adversarial apparatus. The models
 were tasked with developing the conjectures, proposing subsequent
 intermediate statements, exploring proofs, formalising results, and
@@ -41,10 +40,13 @@ meaning drifted under translation — and it could not reliably tell which
 was which. Neither could any single critic. What worked was **heterogeneous
 criticism**: fuzzers that enumerate, negators that try to falsify,
 ambiguators that hunt meaning drift between the informal claim and its
-formalization. Failures were feedstock, not embarrassments — the
-pre-registered parity conjecture died at the hands of an exhaustive fuzzer
-(a K₄ with a wrap matching), and its corpse became the correct cohomological
-statement.
+formalization. The initial written plan's total-wrap parity formula fails on K₄ with
+a wrap matching. Both that numerical counterexample and the corrected
+balanced-component formula are already recorded in the first public commit
+(2026-04-22). The public artifacts do not establish which tool or person
+first detected the error, or a causal order between computation and
+formalization. We therefore attribute the correction to the development
+process as a whole. No timestamped preregistration has been identified.
 
 Second, **every layer of trust had to be earned downward**. "The model says
 the proof works" was worth nothing. "The Lean kernel accepts it" was worth a
@@ -52,10 +54,11 @@ lot, but only once three other things were true: the build forbids `sorry`
 and `native_decide` (CI-enforced, comment-aware source audit), the axiom
 footprint is exactly Lean's three standard axioms (a named-allowlist audit
 in CI), and the *statements* being proved are the ones the paper claims.
-The later evolution of this discipline into Lambda SAT Solver — turning
-parts of the exploratory reasoning into explicit computational machinery —
-was the same instinct: get cognition out of the model and into checkable
-artifacts.
+The numerical implementation was written from the manuscript alone,
+without access to Lean sources; its provenance is recorded in
+`findings/round8/independent_impl_report.md`. This establishes a separate
+implementation path, while shared manuscript conventions and numerical
+libraries remain possible common sources of error.
 
 ## The three failure surfaces
 
@@ -92,7 +95,7 @@ specification gap explicitly, and every attack left an artifact:
 
 The final layer was `comparator`, the Lean FRO's "trustworthy judge." The
 point of using it was not ceremony: an unmodified binary verifies that the
-seven end theorems prove *exactly* independently transcribed statements,
+seven historical end theorems prove *exactly* the separately transcribed statements,
 depend on *only* the three standard axioms, and that every constant in the
 exported transitive closure — 10,324 theorems' worth — re-passes a kernel
 replay. Running it demanded the same discipline it enforces: the exporter
@@ -103,6 +106,18 @@ under a real landlock sandbox with a second, independent kernel (nanoda)
 accepting in parallel. Two deliberately broken controls — a one-token
 statement tamper and a smuggled axiom — are rejected, which is what makes
 the positive run mean something.
+
+A later run on 2026-10-16 replayed five additional cycle statements,
+including four full characteristic-polynomial/root-multiset formulas and
+one conditional graph-level multiset. Both Lean and nanoda accepted;
+the phase-tamper and smuggled-axiom controls failed as intended. The
+original logs and exact tool/source identities are archived in
+`Hardening/runs/38863604693/`. Its real-landrun invocation is recorded,
+but no separate OS denial probe is present in this run. The two runs
+therefore cover seven + five statements; the current Lean axiom audit
+selects 23 declarations (18 before the five graph-transfer declarations).
+The conditional cycle result still requires both matrix identifications.
+L14's reverse implication and the combinatorial mixed trace remain open.
 
 The remaining honest ledger, after all of it: the independently transcribed challenge statements and the paper's intended statements remain subject to shared interpretive assumptions; the numerical checks share an eigen-solver with
 themselves; exhaustive strength stops where compute does. The evidence map
@@ -147,13 +162,23 @@ Every claim above resolves to a file in this repository:
   `Hardening/EVIDENCE-MAP.md`.
 - The independent paper-only reimplementation and its Lean-verified
   convention battery: `findings/round8/`.
+- Round 7 is excluded by `.gitignore`: the recorded policy says it was
+  kept local pending its own round discipline. No public report in this
+  checkout establishes its contents, results, or a more specific reason.
+  It contributes no public evidence here; unresolved items once called
+  "R7 carry-overs" remain open regardless of that label.
 - Numerical falsification pressure: `findings/round2`–`round6`,
   `findings/round8` (7.25M n=8 configurations), `findings/round9`
   (3.31M structured-adversarial configurations at n = 9–10: every cut,
   seeded spanning trees and maximal matchings per graph — the wrap families
   where the historical counterexample lived).
 - The review adjudication: `Hardening/paper-review-adjudication.md`;
-  published corrections through the v.0.0.5 manuscript.
+  published corrections through the v.0.0.5 manuscript, followed by
+  later repository corrections. The DOI currently resolves to v.0.0.5,
+  not those later changes.
+- Artifact-based chronology, exact K₄ cases, and the 2026-10-16 review:
+  `Hardening/audit-reconciliation-2026-10-16.md`. Git commit authorship
+  does not identify the human/model split.
 
 That is the invention we would defend: not any theorem, but the pile of
 receipts.

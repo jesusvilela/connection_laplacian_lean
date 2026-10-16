@@ -1,0 +1,16 @@
+{
+  "run_id": 38863604693,
+  "job_id": 116851409968,
+  "artifact_id": 12029793515,
+  "artifact_zip_sha256": "abd6158759c74dc9376903e84ca3e0b6517e73b89314280d1400a4cff35073be",
+  "tested_commit": "380d09507df219a8a04fd7f63feb0a43c610aaff",
+  "pr_head": "e572a8c34212fd11471042d87bcd9cee5537bf48",
+  "merged_main": "b92bcb643643676d14dcdc0694e4af36c96eaaf3",
+  "targets": ["periodic_charpoly", "antiperiodic_charpoly", "periodic_multiset", "antiperiodic_multiset", "mobius_graph_multiset"],
+  "sha256": {
+    "positive.log": "cb4d2c950aeb6be242774ba89abb78b94e711fb8efd8ad828e59d529771ae55f",
+    "negative-phase.log": "06de0f95aa8b70fee873603c1aec599a6ac9f687f2edd22366b6893e2f310750",
+    "negative-axiom.log": "ce49468a61bea9bc4f7bbbb16b8640c48e61ed2a87ac6806541cc3eb0b2172f7",
+    "versions.txt": "3b16a9ed03e2967f528f3407b21a761b5dfcfcbe013541c8eaf33423991e1ee6"
+  }
+}
