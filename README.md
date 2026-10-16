@@ -114,7 +114,7 @@ that every requested theorem actually appear in the Lean audit output.
 
 **2. Independent re-checking.** The seven end theorems were re-verified with
 `leanprover/comparator` (unmodified): statement equality against an
-independently transcribed challenge, a transitive axiom audit, and a full
+challenge transcribed by a fresh agent without access to the existing challenge file (statements copied from the Lean sources and checked against the paper), a transitive axiom audit, and a full
 kernel replay of the exported proof terms — 1.32M export lines, 10,324
 theorems. The authoritative run executed under a real landlock sandbox
 (landrun on WSL2) with the nanoda external kernel accepting alongside Lean's
