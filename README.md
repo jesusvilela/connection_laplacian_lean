@@ -119,8 +119,9 @@ audit, and a full kernel replay of the exported proof terms — 1.32M
 export lines, 10,324 theorems. Separately, a fresh agent re-transcribed
 the seven statements from the Lean sources without seeing the historical
 challenge. The two statement sets were token-identical after expanding
-the section variable. This was a cross-check of the challenge, **not**
-the file against which comparator ran. The authoritative run executed under a real landlock sandbox
+the section variable. The fresh transcription cross-checked the
+historical challenge; **it was not the comparator's input**.
+The authoritative run executed under a real landlock sandbox
 (landrun on WSL2) with the nanoda external kernel accepting alongside Lean's
 own; two deliberately broken controls (a one-token statement tamper, a
 smuggled axiom) are rejected as expected. See
