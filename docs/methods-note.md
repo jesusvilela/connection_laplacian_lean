@@ -133,8 +133,8 @@ challenge and the separate fresh-agent transcription agree at the statement
 level after section-variable expansion, but their correspondence to the
 paper's intended claims remains subject to shared interpretive assumptions;
 the numerical checks share an eigen-solver with themselves; exhaustive
-strength stops where compute does. The evidence map
-publishes that ledger next to the results, because a trust boundary you
+strength stops where compute does. The evidence map publishes that
+ledger next to the results, because a trust boundary you
 can't see is a trust boundary you can't check.
 
 ## What transfers
