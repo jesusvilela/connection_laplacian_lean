@@ -25,7 +25,8 @@ Each row follows the chain
 - **Axiom audit** — `#print axioms` (CI) and, stronger, comparator's
   transitive `checkAxioms` walk over the exported proof terms.
 - **Comparator** — `leanprover/comparator` @ master `e3dcf30` (v4.35.0):
-  statement-equality against a challenge transcribed by a fresh agent without access to the existing challenge file (statements copied from the Lean sources and checked against the paper),
+  statement equality against the existing historical
+  `Hardening/Challenge.lean` input (not the fresh-agent transcription),
   axiom hygiene, and full kernel replay of the exported transitive closure,
   run under a real landlock sandbox with Lean + nanoda dual kernels
   (see `Hardening/REPORT.md`).
@@ -107,15 +108,19 @@ This replay does not discharge either graph-identification hypothesis.
 1. **Kernel correctness** — Lean 4.11.0 kernel accepted the spine; CI forbids
    `sorry`/`native_decide`/project axioms (`scripts/audit_trust.py`).
 2. **Semantic correspondence** — comparator (Lean FRO, unmodified binary)
-   verified: the spine's seven end theorems prove *exactly* the
-   challenge statements transcribed by a fresh agent without access to the existing challenge file (statements copied from the Lean sources and checked against the paper), depend on *only*
-   `propext, Quot.sound, Classical.choice`, and every constant of the
-   exported transitive closure (1,320,201 NDJSON lines: 10,324 theorems,
-   4,363 definitions, 469 inductives, 3 axioms, 4 quot, 16 opaques)
-   re-passes the Lean kernel in comparator's replay. The authoritative run
-   (2026-10-14, WSL2) executed under a real landlock sandbox (landrun) and
-   **both** kernels accepted — Lean's own kernel replay and the independent
-   nanoda external kernel (16,163 declarations, zero typechecker errors).
+   verified that the seven historical end-theorem statements match the
+   *existing* `Hardening/Challenge.lean` file, that the proofs depend on
+   *only* `propext, Quot.sound, Classical.choice`, and that every constant
+   of the exported transitive closure (1,320,201 NDJSON lines: 10,324
+   theorems, 4,363 definitions, 469 inductives, 3 axioms, 4 quot,
+   16 opaques) re-passes the Lean kernel in comparator's replay.
+   Separately, a fresh agent re-transcribed the seven Lean statements
+   without seeing the historical challenge; the two were token-identical
+   after section-variable expansion. **That fresh transcription was not
+   the comparator's challenge input.** The authoritative run (2026-10-14,
+   WSL2) executed under a real landlock sandbox (landrun), and **both**
+   kernels accepted — Lean's own replay and the independent nanoda
+   external kernel (16,163 declarations, zero typechecker errors).
 3. **Empirical falsification pressure** — `findings/round2–6`: exhaustive
    n≤5 (and n≤6 for spectra) enumeration over *all* graphs × *all* wraps,
    adversarial negators, n=7 randomized gap-checks; round 8: n=8
