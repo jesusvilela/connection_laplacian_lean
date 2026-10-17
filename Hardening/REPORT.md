@@ -3,12 +3,20 @@
 **Date:** 2026-10-13/14. **Verdict: PASS** — `"Your solution is okay!"`
 
 The seven representative end theorems of the verified spine were
-independently re-verified with `leanprover/comparator`
-("a trustworthy judge for Lean proofs"): their compiled proof terms match an
-statement set transcribed by a fresh agent without access to the existing challenge file (copied from the Lean sources and checked against the paper), depend only on Lean's three
-standard axioms, and every constant in the exported transitive closure
+re-verified with `leanprover/comparator`
+("a trustworthy judge for Lean proofs"): their elaborated statements match
+the existing historical `Hardening/Challenge.lean` file actually configured
+as comparator input, their proofs depend only on Lean's three standard
+axioms, and every constant in the exported transitive closure
 kernel-replays from scratch — **under a real landlock sandbox, with two
 independent kernels** (Lean's own and nanoda) both accepting.
+
+Separately, a fresh agent re-transcribed the seven statements from the
+Lean sources without seeing the existing challenge file. The two sets
+were token-identical after expanding the section variable (see
+`independent-transcription/TRANSCRIPTION.md`). This corroborates the
+historical challenge; **the comparator did not run against the fresh
+transcription**.
 
 Two runs were performed:
 
