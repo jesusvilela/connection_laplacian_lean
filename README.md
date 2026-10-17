@@ -113,10 +113,14 @@ statements against the explicit allowlist above. The audit also requires
 that every requested theorem actually appear in the Lean audit output.
 
 **2. Independent re-checking.** The seven end theorems were re-verified with
-`leanprover/comparator` (unmodified): statement equality against an
-challenge transcribed by a fresh agent without access to the existing challenge file (statements copied from the Lean sources and checked against the paper), a transitive axiom audit, and a full
-kernel replay of the exported proof terms — 1.32M export lines, 10,324
-theorems. The authoritative run executed under a real landlock sandbox
+`leanprover/comparator` (unmodified): statement equality against the
+existing historical `Hardening/Challenge.lean` file, a transitive axiom
+audit, and a full kernel replay of the exported proof terms — 1.32M
+export lines, 10,324 theorems. Separately, a fresh agent re-transcribed
+the seven statements from the Lean sources without seeing the historical
+challenge. The two statement sets were token-identical after expanding
+the section variable. This was a cross-check of the challenge, **not**
+the file against which comparator ran. The authoritative run executed under a real landlock sandbox
 (landrun on WSL2) with the nanoda external kernel accepting alongside Lean's
 own; two deliberately broken controls (a one-token statement tamper, a
 smuggled axiom) are rejected as expected. See
