@@ -13,8 +13,9 @@ independent kernels** (Lean's own and nanoda) both accepting.
 
 Separately, a fresh agent re-transcribed the seven statements from the
 Lean sources without seeing the existing challenge file. The two sets
-were token-identical after expanding the section variable (see
-`independent-transcription/TRANSCRIPTION.md`). This corroborates the
+were reported token-identical after expanding the section variable:
+`independent-transcription/TRANSCRIPTION.md` contains the fresh transcript,
+and `EVIDENCE-MAP.md` records the comparison. This corroborates the
 historical challenge; **the comparator did not run against the fresh
 transcription**.
 
