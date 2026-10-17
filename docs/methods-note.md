@@ -99,8 +99,8 @@ seven historical end-theorem statements match the *existing*
 `Hardening/Challenge.lean` file actually supplied to comparator, that
 their proofs depend on *only* the three standard axioms, and that every
 constant in the exported transitive closure — 10,324 theorems' worth —
-re-passes a kernel replay. Running it demanded the same discipline it enforces: the exporter
-had to be back-ported to the project's pinned Lean version (safe, because
+re-passes a kernel replay. Running it demanded the same discipline it
+enforces: the exporter had to be back-ported to the project's pinned Lean version (safe, because
 the exporter is untrusted by design — anything it gets wrong dies in the
 replay), the judge itself stayed byte-unmodified, and the run executed
 under a real landlock sandbox with a second, independent kernel (nanoda)
