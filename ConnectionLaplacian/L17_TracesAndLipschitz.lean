@@ -13,6 +13,8 @@ Landed in this file (Tier A):
 3. `frobenius_laplacian_decomposes` (S4) — Frobenius-² splits.
 4. `trace_mul_scalar_signed_eq` (S2, polarisation form) — mixed trace.
 5. `trace_laplacian_mobius` (S5) — `tr(L_möb) = 4·|E|`.
+6. `trace_laplacian_flat` — `tr(L_flat) = 4·|E|` (the flat case of
+   the manuscript's trace proposition, added 2026-10-18).
 
 Tier B (Lipschitz bundle, S6–S9) is deferred to R7. The β-Lipschitz
 machinery requires Weyl interlacing at the level of `finrank` across
@@ -92,6 +94,36 @@ theorem trace_laplacian_mobius :
     fin_cases i <;> simp [I₂]
   simp only [hdiag]
   -- sum over V × Fin 2 = 2 · sum over V, via Fintype.sum_prod_type.
+  have hsum : (∑ p : G.V × Fin 2, (G.graph.degree p.1 : ℝ))
+              = 2 * ∑ v : G.V, (G.graph.degree v : ℝ) := by
+    rw [Fintype.sum_prod_type]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+               nsmul_eq_mul]
+    rw [← Finset.mul_sum]
+    norm_num
+  rw [hsum]
+  have h := G.graph.sum_degrees_eq_twice_card_edges
+  rw [show (∑ v, (G.graph.degree v : ℝ)) = ((∑ v, G.graph.degree v : ℕ) : ℝ) by push_cast; rfl, h]
+  push_cast; ring
+
+/-- **`tr(L_flat) = 4·|E|`.** Same computation as `trace_laplacian_mobius`:
+the diagonal of the flat connection Laplacian at `(v, i)` is `deg v`,
+because the wrap data only affects off-diagonal blocks. -/
+theorem trace_laplacian_flat :
+    (G.laplacian false).trace = (4 * G.graph.edgeFinset.card : ℝ) := by
+  unfold Matrix.trace
+  have hdiag : ∀ (p : G.V × Fin 2),
+      Matrix.diag (G.laplacian false) p = (G.graph.degree p.1 : ℝ) := by
+    rintro ⟨v, i⟩
+    show G.laplacian false (v, i) (v, i) = _
+    simp only [laplacian, laplacianBlock, degreeBlockMatrix,
+               adjacencyMatrix, Matrix.sub_apply, if_true]
+    have hna : ¬ G.graph.Adj v v := SimpleGraph.irrefl _
+    rw [dif_neg hna]
+    simp only [Matrix.zero_apply, sub_zero]
+    unfold degree SimpleGraph.degree
+    fin_cases i <;> simp [I₂]
+  simp only [hdiag]
   have hsum : (∑ p : G.V × Fin 2, (G.graph.degree p.1 : ℝ))
               = 2 * ∑ v : G.V, (G.graph.degree v : ℝ) := by
     rw [Fintype.sum_prod_type]
