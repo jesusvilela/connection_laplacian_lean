@@ -23,10 +23,13 @@ in [`Hardening/EVIDENCE-MAP.md`](Hardening/EVIDENCE-MAP.md).
 The accompanying paper lives under `paper/` and has been submitted as a
 candidate to the upcoming FLoC Lisbon cycle.
 
-> **DOI:** <https://doi.org/10.5281/zenodo.19695396>. Checked 2026-10-16:
-> this resolves to **v.0.0.5 (2026-10-15)**, version DOI
-> [10.5281/zenodo.23401896](https://doi.org/10.5281/zenodo.23401896).
-> Current main contains later changes; the archived DOI does not certify them.
+> **DOI:** <https://doi.org/10.5281/zenodo.19695396> (concept DOI). It
+> resolves to the latest archived release; each archived release is a
+> snapshot of this repository at its tag. v.0.0.5 (2026-10-15, version DOI
+> [10.5281/zenodo.23401896](https://doi.org/10.5281/zenodo.23401896))
+> predates the complete cycle-spectrum proofs and the corrections made
+> after 15 October; [`.github/release-notes/`](.github/release-notes/)
+> lists what each later release adds.
 
 ## What is where
 
@@ -219,7 +222,8 @@ Machine-readable metadata is in `CITATION.cff` (used by GitHub's **Cite this
 repository** panel).
 
 > Vilela Jato, J. *Connection Laplacian — verified spectral/balance stack
-> (Lean 4 / Mathlib v4.11.0)*, v.0.0.5, 2026.  
+> (Lean 4 / Mathlib v4.11.0)*, 2026 (cite the release version given in
+> `CITATION.cff`).  
 > DOI: 10.5281/zenodo.19695396  
 > https://github.com/jesusvilela/connection_laplacian_lean
 

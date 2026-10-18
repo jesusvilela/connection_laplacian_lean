@@ -1,5 +1,10 @@
 name: Create release
 
+# Release notes come from .github/release-notes/<tag>.md, and CITATION.cff
+# must already carry the tag as its version. The release attaches the
+# reviewed, committed paper/paper.pdf; the LaTeX run below is a compile
+# check only and never replaces that file.
+
 on:
   push:
     tags:
@@ -7,70 +12,62 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag (e.g. v.0.0.3)'
+        description: 'Release tag (e.g. v.0.0.6); notes are read from .github/release-notes/<tag>.md'
         required: true
-        default: 'v.0.0.3'
-      name:
-        description: 'Release name'
-        required: true
-        default: 'v.0.0.3 — Post-corrections paper rebuild'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check release metadata
+        run: |
+          set -euo pipefail
+          notes=".github/release-notes/${TAG}.md"
+          if [ ! -s "$notes" ]; then
+            echo "::error::Missing release notes: $notes"
+            exit 1
+          fi
+          cff_version=$(sed -n 's/^version: *"\(.*\)" *$/\1/p' CITATION.cff)
+          if [ "$cff_version" != "$TAG" ]; then
+            echo "::error::CITATION.cff version '$cff_version' does not match tag '$TAG'"
+            exit 1
+          fi
+          test -s paper/paper.pdf
+
       - name: Install LaTeX
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y texlive-latex-base texlive-latex-recommended \
-            texlive-latex-extra texlive-fonts-recommended texlive-science \
-            texlive-fonts-extra
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-science texlive-fonts-extra \
+            cm-super
 
-      - name: Build paper PDF
+      - name: Check that the manuscript compiles
         run: |
+          set -euo pipefail
           mkdir -p /tmp/paperbuild
           for i in 1 2 3; do
-            pdflatex -interaction=nonstopmode -output-directory=/tmp/paperbuild paper/paper.tex
+            pdflatex -halt-on-error -interaction=nonstopmode \
+              -output-directory=/tmp/paperbuild paper/paper.tex \
+              > /tmp/paperbuild/run-${i}.log 2>&1 || {
+                tail -n 100 /tmp/paperbuild/run-${i}.log
+                exit 1
+              }
           done
-          cp /tmp/paperbuild/paper.pdf paper/paper.pdf
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
-          name: ${{ github.event.inputs.name || github.ref_name }}
-          body: |
-            ## Release: Kernel-Dimension Theory for ℤ/2 Connection Laplacians
-
-            Rebuilt paper PDF after corrections, with the full formalised spine
-            through `L17_TracesAndLipschitz`.
-
-            ### New since v.0.0.2
-
-            - `mobius_charpoly_eq_scalar_times_signed` — charpoly factorisation (M7)
-            - `mobius_charpoly_roots_eq_union` — multiset spectrum union
-            - `shiftedDet_factorises` — shifted determinant factorisation (S1)
-            - `frobenius_laplacian_decomposes` — Frobenius-norm splitting (S4)
-            - `trace_sq_laplacian_decomposes` — quadratic trace splitting (S3)
-            - `trace_mul_scalar_signed_eq` — cross-polarisation trace identity (S2)
-            - `trace_laplacian_mobius` — `tr(L_Möb) = 4|E|` (S5)
-
-            ### Key results (sorry-free, axioms: `propext`, `Classical.choice`, `Quot.sound`)
-
-            - Hadamard–Kronecker decomposition: `laplacian_decomposes`
-            - Cover splitting: `scalarLap_cover_splits`
-            - Kernel dimension: `connectionLaplacian_kernel_dim_general`
-            - Charpoly factorisation: `mobius_charpoly_eq_scalar_times_signed`
-            - Trace/Frobenius bundle: `frobenius_laplacian_decomposes`, `trace_sq_laplacian_decomposes`
-
-            ### Verification
-
-            Fuzzer sweeps across 456,950 configurations at n≤7: zero counterexamples.
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.TAG }}
+          body_path: .github/release-notes/${{ env.TAG }}.md
           files: paper/paper.pdf
           draft: false
           prerelease: false

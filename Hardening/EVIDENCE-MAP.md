@@ -244,6 +244,8 @@ linked by Zenodo to tag `v.0.0.5` at `fce9bcbcc97c104e155839499d1dbf72b59da8c0`.
 Audited main `b92bcb6` is 96 commits beyond that tag; its cycle proofs,
 transfer results and replay are **not claimed as part of that archive**.
 No release/tag or Zenodo record is updated by this documentation pass.
+Releases tagged after this pass, and what each adds, are listed in
+`.github/release-notes/`; each archives the repository only as of its tag.
 
 Still open: construction of both cycle-to-`ConnGraph` matrix identities;
 L14's reverse parity implication without caller-supplied `hrev`; and
