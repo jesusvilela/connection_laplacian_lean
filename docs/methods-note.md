@@ -187,8 +187,9 @@ Every claim above resolves to a file in this repository:
   where the historical counterexample lived).
 - The review adjudication: `Hardening/paper-review-adjudication.md`;
   published corrections through the v.0.0.5 manuscript, followed by
-  later repository corrections. The DOI currently resolves to v.0.0.5,
-  not those later changes.
+  later repository corrections. v.0.0.5 (2026-10-15) does not contain
+  those later corrections; the concept DOI resolves to the latest archived
+  release, and `.github/release-notes/` lists what each later release adds.
 - Artifact-based chronology, exact K₄ cases, and the 2026-10-16 review:
   `Hardening/audit-reconciliation-2026-10-16.md`. Git commit authorship
   does not identify the human/model split.

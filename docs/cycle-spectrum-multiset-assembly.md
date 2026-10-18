@@ -194,7 +194,7 @@ whole research programme. In particular:
 | Out-of-scope graph sizes / malformed-cycle boundary cases `n=0,1` | **OPEN**; cycle theorems explicitly assume `n≥3` |
 | Manuscript LaTeX and tracked PDF | **UPDATED** in [PR #12](https://github.com/jesusvilela/connection_laplacian_lean/pull/12); GitHub Actions rebuilt `paper/paper.pdf` after synchronizing `paper/paper.tex` |
 | External comparator replay of five cycle statements | **PASS**, run 38863604693; logs archived with exact tested commit and tool SHAs |
-| Archived DOI release | **v.0.0.5 only** as checked 2026-10-16; later main changes require a future release/archive |
+| Archived DOI release | v.0.0.5 (2026-10-15) predates these results; later releases and what each adds are listed in `.github/release-notes/` |
 
 **Important convention:** The signed specialised matrix places its
 anti-periodic sign on the closing edge of the cyclic indexing. An arbitrary
