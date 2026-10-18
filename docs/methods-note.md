@@ -124,7 +124,8 @@ original logs and exact tool/source identities are archived in
 `Hardening/runs/38863604693/`. Its real-landrun invocation is recorded,
 but no separate OS denial probe is present in this run. The two runs
 therefore cover seven + five statements; the current Lean axiom audit
-selects 23 declarations (18 before the five graph-transfer declarations).
+selects 25 declarations (18 before the five graph-transfer declarations;
+two more were added on 2026-10-18).
 The conditional cycle result still requires both matrix identifications.
 L14's reverse implication and the combinatorial mixed trace remain open.
 

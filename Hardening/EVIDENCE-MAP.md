@@ -1,12 +1,14 @@
 # Evidence Map — ℤ/2 Connection-Laplacian kernel-dimension theory
 
-**Date:** 2026-10-13, hardened through 2026-10-16.
+**Date:** 2026-10-13, hardened through 2026-10-18.
 **Scope:** this table documents the seven *historically comparator-replayed*
 representative end theorems plus supporting core claims. It is **not** a
 complete list of declarations checked by current CI. `AxiomAudit.lean`
-checks **23 declarations**: nine earlier selected statements, nine full
-cycle-spectrum stages (the earlier total of **18**), and five conditional
-graph-transfer declarations. These are declarations checked against an
+checks **25 declarations**: nine earlier selected statements, nine full
+cycle-spectrum stages (the earlier total of **18**), five conditional
+graph-transfer declarations, and two theorems added on 2026-10-18
+(`numBalancedComponents_monotone_remove_nonbridge`,
+`trace_laplacian_flat`). These are declarations checked against an
 allowlist of **three axioms**. Comparator replay covers **seven historical
 + five newly replayed statements** in two separate runs. The cycle package
 and archived run are specified separately in
@@ -40,7 +42,7 @@ Each row follows the chain
 | 1 | charpoly of the orientation double cover's scalar Laplacian factors as (base scalar charpoly) · (signed Möbius charpoly) | `ConnGraph.cover_charpoly_eq_scalar_times_mobius` (L10) | ✓ standard 3 only | round2 T1/T2 (all 51 graphs n≤5, all wraps, 3456 configs: cover spectrum = scalar ∪ signed); round3 n≤6 multiset spectrum equality; round6 S1 det-product identities at n=7 (300 graphs × all wraps); round8 n=8 sweep (all connected e≤12 × all wraps, independent impl) | ✓ PASS (statement match + kernel replay) | Cover/similarity witness is *existence*; paper's constructive version not separately formalized |
 | 2 | a component is balanced iff every closed walk in it crosses an even number of wrap edges | `ConnGraph.isBalanced_iff_closedWalk_wrap_even` (L12) | ✓ standard 3 only | round2 T3 (n≤5, all wraps); round8 n=8 sweep: fibre-by-both-routes checked on 7.25M configs incl. all graphs e≤7 | ✓ PASS | Exhaustive balance-vs-walk-parity checked only indirectly (via fibre cardinality), not walk-by-walk |
 | 3 | the signed Möbius Laplacian is positive semidefinite | `ConnGraph.signedLaplacianMobius_posSemidef` (L13) | ✓ standard 3 only | round5 PROVER-SIGNED-PSD landing report; implicit in every spectrum check (negative eigenvalues would have failed T1/round3 multiset equality at n≤6) | ✓ PASS | PSD evidenced numerically only through spectrum equality, no dedicated eig-value ≥ 0 sweep |
-| 4 | deleting a non-bridge (non-wrap) edge cannot decrease the number of balanced components | `ConnGraph.numBalancedComponents_monotone_remove_nonwrap_nonbridge` (L15) | ✓ standard 3 only | round5 PROVER-C1-NONBRIDGE n≤5 sanity (all graphs, all wraps, all deletions); hypothesis was *discovered* by R4 fuzzy-negator τ=0.89 failures (all bridges) | ✓ PASS | Lean keeps the (unused) `_hnonwrap` hypothesis to match the scoreboard wording — a cleaner `′` variant exists; no n≥6 exhaustive deletion sweep |
+| 4 | deleting a non-bridge (non-wrap) edge cannot decrease the number of balanced components | `ConnGraph.numBalancedComponents_monotone_remove_nonwrap_nonbridge` (L15) | ✓ standard 3 only | round5 PROVER-C1-NONBRIDGE n≤5 sanity (all graphs, all wraps, all deletions); hypothesis was *discovered* by R4 fuzzy-negator τ=0.89 failures (all bridges) | ✓ PASS | This historical statement keeps the unused `_hnonwrap` hypothesis (it is what the comparator replayed); `numBalancedComponents_monotone_remove_nonbridge` (2026-10-18) drops it and is axiom-audited but not comparator-replayed; no n≥6 exhaustive deletion sweep |
 | 5 | charpoly-roots (multiset) of the Möbius connection Laplacian = scalar roots ⊎ signed roots | `ConnGraph.mobius_charpoly_roots_eq_union` (L16) | ✓ standard 3 only | round2 T1; round3 n≤6 **as multisets** (multiplicity-sensitive, not set equality); round6 S1_a* shifted-det identities n=7; round8 n=8 sweep | ✓ PASS | Multiset identity formalized (stronger than set equality); numerical side relies on same numpy eigen machinery for both sides |
 | 6 | Frobenius norm² of the connection Laplacian splits as scalar part + signed part | `ConnGraph.frobenius_laplacian_decomposes` (L17) | ✓ standard 3 only | round6 S4-class trace identities at n=7 (300 graphs × all wraps, rel diff ≤ 1e-14) | ✓ PASS | Numerical check shares trace-convention assumptions with the formalization |
 | 7 | polarisation: 2·tr(L_s·L_sig) = tr((L_s+L_sig)²) − tr(L_s²) − tr(L_sig²) | `ConnGraph.trace_mul_scalar_signed_eq` (L17) | ✓ standard 3 only | round6 S2-class mixed-trace identities at n=7 | ✓ PASS | Same shared-machinery caveat |
@@ -72,7 +74,7 @@ axiom smuggling. See [the comparator acceptance ledger](CYCLE-COMPARATOR.md).
 | Evidence gate | Earlier 7 | New cycle 5 |
 |---|---|---|
 | Lean kernel accepts claimed theorems | PASS | PASS; specialised spectra and conditional graph transfer compiled |
-| Explicit `#print axioms` allowlist | PASS for historical checks | PASS; current audit requests 23 declarations; only three standard axioms allowed |
+| Explicit `#print axioms` allowlist | PASS for historical checks | PASS; current audit requests 25 declarations; only three standard axioms allowed |
 | Comparator challenge/solution elaboration | PASS in historical run | PASS in run 38863604693 |
 | Comparator full statement matching, transitive axiom walk, kernel replay | PASS (2026-10-14) | **PASS (2026-10-16), five targets**; Lean and nanoda accept |
 | Real landrun invocation + nanoda external kernel | PASS in historical WSL2 run | PASS for invocation and kernel acceptance; **no standalone OS denial probe recorded** |
@@ -80,7 +82,7 @@ axiom smuggling. See [the comparator acceptance ledger](CYCLE-COMPARATOR.md).
 
 Do not reinterpret the older 7-theorem exported closure or nanoda
 evidence as having verified the new cycle statements. In particular,
-"18 declarations axiom-audited" (before graph transfer), the current 23,
+"18 declarations axiom-audited" (before graph transfer), the current 25,
 and "7 + 5 comparator-replayed statements" refer to different coverage.
 The cycle run tested temporary PR merge 380d09507df219a8a04fd7f63feb0a43c610aaff;
 its original four artifact files, tool SHAs and supporting job transcript are
@@ -219,6 +221,24 @@ sources):
    correct universal version, confirmed by numerics (ker L^sg(C_n, {01}) = 0
    for all n = 3..14; ker = 1 iff n even exactly for W = E(C_n)) and by the
    Lean `3 ≤ n` eigenvalue theorems.
+
+Additional items from the 2026-10-18 review adjudication
+(`Hardening/argon4-review-adjudication-2026-10-18.md`; the review read the
+v.0.0.5 manuscript, so several of its points were already stale):
+
+11. **Theorem 11.4's Lean statement carried an unused non-wrap hypothesis**
+   — *resolved 2026-10-18: `numBalancedComponents_monotone_remove_nonbridge`
+   states the theorem exactly; the historical declaration is unchanged.*
+12. **The flat trace `tr L_flat = 4|E|` had no Lean declaration** although
+   the paper listed it as formalised — *resolved 2026-10-18:
+   `trace_laplacian_flat` (L17); Section 9 now names the right files.*
+13. **Theorem 10.1 claimed the forest statement while Lean covers the
+   connected tree** — *resolved 2026-10-18 in the paper: Theorem 10.1 states
+   the connected case; forests are Corollary 10.2, marked unformalised.*
+14. **Exposition and index errors** (Lemma 5.6 witness and deck involution,
+   Remark 6.5 global cancellation, Theorem 7.2 branch cut, Theorem 11.4
+   nested inside Example 11.3, index labels and missing files, Example 11.5
+   contraction convention, typography) — *resolved 2026-10-18.*
 
 ## Methodological lineage note
 

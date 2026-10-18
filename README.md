@@ -75,8 +75,10 @@ Representative end theorems (plain-language gloss in parentheses):
 - `isBalanced_iff_closedWalk_wrap_even` *(balanced ⟺ every closed walk
   crosses an even number of wrap edges)*
 - `signedLaplacianMobius_posSemidef` *(the signed Laplacian is PSD)*
-- `numBalancedComponents_monotone_remove_nonwrap_nonbridge` *(deleting a
-  non-bridge edge cannot destroy balanced components)*
+- `numBalancedComponents_monotone_remove_nonbridge` *(deleting a
+  non-bridge edge cannot destroy balanced components; the historical
+  `numBalancedComponents_monotone_remove_nonwrap_nonbridge`, replayed by
+  the comparator, carries an extra unused non-wrap hypothesis)*
 - `mobius_charpoly_roots_eq_union` *(the Möbius spectrum is the scalar ⊎
   signed multisets)*
 - `frobenius_laplacian_decomposes` *(‖L‖²_F splits as scalar + signed parts)*
@@ -110,9 +112,10 @@ of the mathematical results.
 
 **1. The kernel.** Lean's kernel accepts the spine; CI forbids `sorry`,
 `admit`, `native_decide`, and project-local axioms via a comment-aware source
-audit, and `AxiomAudit.lean` checks nine earlier selected end theorems plus nine
-cycle-spectrum proof declarations and five conditional graph-transfer
-statements against the explicit allowlist above. The audit also requires
+audit, and `AxiomAudit.lean` checks nine earlier selected end theorems, nine
+cycle-spectrum proof declarations, five conditional graph-transfer
+statements and two theorems added on 2026-10-18 against the explicit
+allowlist above. The audit also requires
 that every requested theorem actually appear in the Lean audit output.
 
 **2. Independent re-checking.** The seven end theorems were re-verified with
@@ -134,8 +137,8 @@ challenge **passed** on 2026-10-16 in run 38863604693, including both
 Lean/nanoda acceptance and both negative rejections. The original logs
 and exact tested commit are archived under `Hardening/runs/38863604693/`.
 Thus the two runs cover **seven + five statements**, distinct from the
-**23 declarations** selected for the current Lean axiom audit (18 before
-graph transfer). The cycle run records real landrun invocation but no
+**25 declarations** selected for the current Lean axiom audit (18 before
+graph transfer, 23 before the two theorems added on 2026-10-18). The cycle run records real landrun invocation but no
 standalone OS denial probe. Its scope is documented separately in
 [`Hardening/CYCLE-COMPARATOR.md`](Hardening/CYCLE-COMPARATOR.md).
 
@@ -203,6 +206,9 @@ Additional build guidance: `BUILD.md`.
 - `docs/cycle-spectrum-multiset-assembly.md` — the fully checked Fourier
   diagonalisation, real-root multisets, conditional graph transfer,
   and precise scope limits.
+- `Hardening/argon4-review-adjudication-2026-10-18.md` — point-by-point
+  adjudication of an external review of the v.0.0.5 manuscript, with the
+  resulting fixes.
 - `Hardening/CYCLE-COMPARATOR.md` — comparator challenges, negative
   controls, reproduction and an explicit verified-vs-pending evidence ledger.
 
