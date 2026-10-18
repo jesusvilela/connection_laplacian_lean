@@ -279,6 +279,41 @@ theorem numBalancedComponents_monotone_remove_nonwrap_nonbridge
     exact Subtype.ext hCD'
   exact Fintype.card_le_of_injective inj hinj2
 
+/-- **Bridge-monotone removal without the non-wrap hypothesis.**
+Removing any non-bridge edge, wrap or not, cannot decrease the number of
+balanced components. This is the manuscript's bridge-deletion theorem as
+stated. The historical declaration
+`numBalancedComponents_monotone_remove_nonwrap_nonbridge` above keeps its
+signature and proof unchanged because it is the statement replayed by the
+archived comparator challenge; the proof below is the same argument with
+the unused hypothesis dropped. -/
+theorem numBalancedComponents_monotone_remove_nonbridge
+    (G : ConnGraph) (e : G.graph.edgeSet)
+    (hnonbridge : ¬ G.graph.IsBridge e.val) :
+    G.numBalancedComponents ≤ (G.eraseEdge e).numBalancedComponents := by
+  classical
+  have hinj := G.eraseEdge_componentMap_injective e hnonbridge
+  have hsur := G.eraseEdge_componentMap_surjective e
+  let πEquiv : (G.eraseEdge e).graph.ConnectedComponent ≃
+               G.graph.ConnectedComponent :=
+    Equiv.ofBijective (G.eraseEdge_componentMap e) ⟨hinj, hsur⟩
+  let inj :
+      { C : G.graph.ConnectedComponent // G.isBalanced C } →
+        { C' : (G.eraseEdge e).graph.ConnectedComponent //
+          (G.eraseEdge e).isBalanced C' } := fun ⟨C, hC⟩ =>
+    ⟨πEquiv.symm C, by
+      apply G.isBalanced_eraseEdge_of_isBalanced
+      have hπ : G.eraseEdge_componentMap e (πEquiv.symm C) = C :=
+        πEquiv.apply_symm_apply C
+      rw [hπ]
+      exact hC⟩
+  have hinj2 : Function.Injective inj := by
+    rintro ⟨C, hC⟩ ⟨D, hD⟩ hCD
+    have hval : πEquiv.symm C = πEquiv.symm D := congrArg Subtype.val hCD
+    have hCD' : C = D := πEquiv.symm.injective hval
+    exact Subtype.ext hCD'
+  exact Fintype.card_le_of_injective inj hinj2
+
 /-- **Variant restated for the caller's preferred signature.** -/
 theorem numBalancedComponents_monotone_remove_nonwrap_nonbridge'
     (G : ConnGraph) (e : Sym2 G.V) (he : e ∈ G.graph.edgeSet)

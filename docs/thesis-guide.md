@@ -45,7 +45,7 @@ components:
 | Cover and decomposition | `cover_charpoly_eq_scalar_times_mobius` | Relates the double-cover characteristic polynomial to scalar and Möbius factors. |
 | Balance recognition | `isBalanced_iff_closedWalk_wrap_even` | Converts balance into an even-wrap closed-walk condition. |
 | Positive semidefinite signed branch | `signedLaplacianMobius_posSemidef` | Supplies the signed Laplacian PSD statement. |
-| Bridge monotonicity | `numBalancedComponents_monotone_remove_nonwrap_nonbridge` | Tracks balanced components under a non-wrap non-bridge removal. |
+| Bridge monotonicity | `numBalancedComponents_monotone_remove_nonbridge` | Removing a non-bridge edge cannot decrease the number of balanced components (the historical `numBalancedComponents_monotone_remove_nonwrap_nonbridge` adds an unused non-wrap hypothesis). |
 | Spectrum union | `mobius_charpoly_roots_eq_union` | Packages the Möbius spectrum as scalar plus signed branches. |
 | Frobenius decomposition | `frobenius_laplacian_decomposes` | Gives the block decomposition behind the main matrix identities. |
 | Trace identity | `trace_mul_scalar_signed_eq` | Connects scalar/signed trace expressions. |

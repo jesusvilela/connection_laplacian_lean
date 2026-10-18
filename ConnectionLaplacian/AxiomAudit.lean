@@ -40,3 +40,8 @@ the workflow fail.
 #print axioms ConnectionLaplacian.Cycle.scalarCycle_roots_of_graph_reindex
 #print axioms ConnectionLaplacian.Cycle.signedCycle_roots_of_graph_reindex
 #print axioms ConnectionLaplacian.Cycle.mobius_connection_roots_of_cycle_reindex
+
+/-! Added with the 2026-10-18 review adjudication: the bridge-deletion
+     theorem without the unused non-wrap hypothesis, and the flat trace. -/
+#print axioms ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonbridge
+#print axioms ConnectionLaplacian.ConnGraph.trace_laplacian_flat

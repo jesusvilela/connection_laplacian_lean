@@ -104,8 +104,10 @@ axioms (\texttt{propext}, \texttt{Classical.choice},
     of balanced components; the full $\ZZ/2$-connection Laplacian has
     kernel dimension $\# \comp(G) + \#\{\text{balanced components}\}$
     (Möbius) and $2\,\#\comp(G)$ (flat).
-  \item On the $n$-cycle the Fourier basis diagonalises both modes
-    explicitly.
+  \item On the $n$-cycle ($n\ge 3$) the scalar and the one-wrap signed
+    Laplacians have explicit cosine spectra: their characteristic
+    polynomials and eigenvalue multisets, with multiplicities, are
+    proved for the explicit cycle matrices.
 \end{enumerate}
 
 The bespoke arguments are the Hadamard rotation of part~(i)--(ii)
@@ -153,8 +155,9 @@ $V\times V$ block matrix with $2\times 2$ blocks
     \end{cases}
 \end{equation}
 Equivalently, $L_{\operatorname{Mob}} = D\otimes \II_2 -
-\sum_{e\in E} \mathbf{1}_e\otimes \Phi(e)$, where $\mathbf{1}_e$ is
-the $V\times V$ edge-indicator of~$e$ (both Kronecker factors ordered
+\sum_{e\in E} \mathbf{1}_e\otimes \Phi(e)$, where, for $e=\{u,v\}$,
+$\mathbf{1}_e$ is the symmetric $V\times V$ edge-indicator with entries
+$1$ at $(u,v)$ and at $(v,u)$ and $0$ elsewhere (both Kronecker factors ordered
 vertex-major, matching the $V\times \operatorname{Fin}\,2$ index set of
 Equation~(1)).
 The \emph{flat} Laplacian $L_{\operatorname{flat}}$ is obtained by
@@ -180,7 +183,7 @@ cycle in that component is trivial; this is the condition of
 \subsection*{Contribution and prior work}
 
 The contribution is a Lean formalisation and a documented verification
-process for classical spectral graph theory. We do not claim new
+process for classical spectral graph theory~\cite{Chung}. We do not claim new
 mathematical discovery of the balance--nullity or lift-splitting formulas.
 For the signed Laplacian $D-A_{\mathrm{sg}}$, the standard nullity
 formula is stated explicitly in Zaslavsky's survey
@@ -191,6 +194,21 @@ base and signed spectra with multiplicities
 the same sheet-symmetric and sheet-antisymmetric subspaces: the
 degree block acts as $D$ in both. This also works for irregular
 finite simple graphs; it does not require replacing $D$ by a scalar.
+The orientation double cover of Definition~\ref{def:cover} is the
+\emph{Gremban expansion} of the signed graph whose negative edges
+are~$W$; Diaz-Diaz, Devriendt and Lambiotte prove that its Laplacian is
+similar to the direct sum of the unsigned and signed Laplacians
+\cite[Def.~2.1, Cor.~3.8]{DiazDevriendtLambiotte}, which is the content
+of Theorem~\ref{thm:cover-splits}. The doubling goes back to Gremban's
+reduction of symmetric diagonally dominant systems to systems of twice
+the dimension with non-positive off-diagonal entries~\cite{Gremban},
+recalled in \cite[\S2.2]{SpielmanTeng}.
+On the formal side, Mathlib's \texttt{SimpleGraph} library at the pinned
+revision provides the scalar Laplacian \texttt{lapMatrix}, its positive
+semidefiniteness, and the identification of its kernel dimension with
+the number of connected components~\cite{Mathlib}. It has no signed or
+connection Laplacian and no orientation double cover; those, and the
+results above, are developed here in Lean~4~\cite{Lean4}.
 The repository certifies the resulting identities and records the
 remaining specification and formalisation obligations.
 The numerical work is a cross-check, not an ML application or a
@@ -410,7 +428,7 @@ $\tV \defeq V\times \operatorname{Bool}$, with adjacency
     \{u,v\}\in E \;\text{and}\; \bigl(\{u,v\}\in W \Leftrightarrow b\ne c\bigr).
 \]
 We view $\tG$ as a connection graph with $\widetilde W=\emptyset$:
-every edge of $\tG$ is "interior", the cover has \emph{trivial}
+every edge of $\tG$ is ``interior'', the cover has \emph{trivial}
 connection.
 \end{definition}
 
@@ -433,7 +451,7 @@ adjacency $(\delta x)\sim_{\tG}(\delta y)\Leftrightarrow x\sim_{\tG}y$
 follows from the identity
 $(\neg b)\ne (\neg c) \Leftrightarrow b\ne c$ and fixity of the
 underlying edge $\{u,v\}$. Absence of fixed points is trivial:
-$(v,b)\ne (v,\neg b)$. \qed
+$(v,b)\ne (v,\neg b)$.
 \end{proof}
 
 \begin{lemma}\label{lem:cover-degree}
@@ -515,7 +533,7 @@ Split $B_{u,v}$ into four structural cases:
   $\tL[u,v]$ has $-1$ off the diagonal (sheets flip) and $0$ on
   the diagonal: $\tL[u,v] = -\sigma_x$. So
   $\widehat R(-\sigma_x)\widehat R = -2\diag(1,-1)$, i.e.\
-  $B_{u,v}[i,j] = -2\delta_{ij}\,(-1)^i$.
+  $B_{u,v}[i,j] = -2\delta_{ij}\,(-1)^{\mathbf{1}_{i=\top}}$.
   \item \textit{Non-adjacent.} If $\{u,v\}\notin E$, then
   $\tL[u,v]=0$ and $B_{u,v}=0$.
 \end{enumerate}
@@ -696,26 +714,49 @@ $\#\pi^{-1}(C)=1$.
 \end{lemma}
 
 \begin{proof}
-Unbalance means: for every candidate
-$\varepsilon:V\to\operatorname{Bool}$ there is an edge
-$\{u,u'\}\in E$ with $[u]=C$ on which
-$\mathbf{1}_{\{u,u'\}\in W}\ne \varepsilon(u)\oplus \varepsilon(u')$.
-Take the candidate
-$\varepsilon_0(v)\defeq \mathbf{1}_{(v,\bot)\sim^*_{\tG}(v_0,\bot)}$
-(i.e.\ the characteristic function of the $D_\bot$-fibre
-projected to the base). If $D_\bot\ne D_\top$, then $\chi$
-constructed from $\varepsilon_0$ as in Lemma~\ref{lem:sep-if-balanced}
-would witness balance of~$C$, a contradiction. Hence
-$D_\bot = D_\top$, and $\pi^{-1}(C)$ is a singleton.
+We prove the contrapositive: if $D_\bot\ne D_\top$, then $C$ is
+balanced. Define
+\[
+  \varepsilon_0(v)\defeq \mathbf{1}_{(v,\bot)\in D_\bot}
+  \qquad (v\in V),
+\]
+read in $\operatorname{Bool}$ via $0\mapsto\bot$, $1\mapsto\top$. We
+show that $\varepsilon_0$ itself witnesses balance of~$C$
+(Definition~\ref{def:balanced}). Two facts are used, for every $u$
+with $[u]=C$.
+First, some sheet over~$u$ lies in~$D_\bot$: lifting a walk
+$v_0\to u$ in~$C$ edge by edge from $(v_0,\bot)$, as in the proof of
+Lemma~\ref{lem:fiber-subset}, ends at $(u,b)$ for some~$b$.
+Second, not both sheets over~$u$ lie in~$D_\bot$: the deck involution
+$\delta$ is a graph automorphism (Lemma~\ref{lem:deck}), so it maps
+components to components, and $\delta(v_0,\bot)=(v_0,\top)$ gives
+$\delta(D_\bot)=D_\top$. If $(u,\bot)$ and $(u,\top)$ both lay
+in~$D_\bot$, then $(u,\top)=\delta(u,\bot)$ would also lie in~$D_\top$,
+so $D_\bot\cap D_\top\ne\emptyset$ and $D_\bot=D_\top$, contrary to
+assumption. Together,
+\[
+  (u,\top)\in D_\bot \iff (u,\bot)\notin D_\bot
+  \qquad\text{whenever } [u]=C. \tag{$\dagger$}
+\]
+Now let $\{u,u'\}\in E$ with $[u]=C$. If $\{u,u'\}\notin W$, then
+$(u,\bot)\sim_{\tG}(u',\bot)$, so $(u,\bot)$ and $(u',\bot)$ lie in the
+same component and $\varepsilon_0(u)=\varepsilon_0(u')$. If
+$\{u,u'\}\in W$, then $(u,\bot)\sim_{\tG}(u',\top)$, so
+$(u,\bot)\in D_\bot\iff(u',\top)\in D_\bot\iff(u',\bot)\notin D_\bot$
+by~($\dagger$), that is, $\varepsilon_0(u)\ne\varepsilon_0(u')$. Hence
+$\{u,u'\}\in W\iff\varepsilon_0(u)\ne\varepsilon_0(u')$ on every edge
+of~$C$, and $C$ is balanced, contradicting the hypothesis. Therefore
+$D_\bot = D_\top$, and $\pi^{-1}(C)=\{D_\bot\}$ by
+Lemma~\ref{lem:fiber-subset}.
 
-The Lean formalisation uses the deck transformation~$\delta(v,b)=
-(v,\neg b)$ in place of the \emph{ad hoc} $\varepsilon_0$ above: if
-$D_\bot=D_\top$ fails then $\delta$ acts freely on $\pi^{-1}(C)$ with
-every orbit of size~$2$, forcing $\#\pi^{-1}(C)$ even and the XOR
-invariant of Lemma~\ref{lem:sep-if-balanced} becomes a well-defined
-$\varepsilon$ witnessing balance of~$C$. Both routes close the same
-theorem; the argument is recorded as
-\texttt{componentProj\_fiber\_card} in \texttt{L6\_Cohomology.lean}.
+The Lean proof follows the same route.
+\path{balanced_of_sheets_separated} (\path{L6_Cohomology.lean})
+takes as witness the unique sheet $b(u)$ with $(u,b(u))\in D_\bot$,
+which equals $\neg\varepsilon_0(u)$ and witnesses balance equally well;
+its uniqueness, \path{unique_sheet_above}, is the
+deck-involution argument above. \path{componentProj_fiber_card}
+combines it with Lemmas~\ref{lem:fiber-subset}
+and~\ref{lem:sep-if-balanced}.
 \end{proof}
 
 Lemmas~\ref{lem:fiber-subset}--\ref{lem:merge-if-unbalanced} together
@@ -806,6 +847,7 @@ Definition~\ref{def:balanced}.
 \end{proof}
 
 \begin{remark}[Initial written plan vs.\ correct statement]
+\label{rem:initial-plan}
 Our initial written plan contained the assertion
 \[
   \dim\Ker\Lsigned(G) \;\overset{?}{=}\; \#\comp(G) -
@@ -829,6 +871,10 @@ $(\star)$ is correct on a component $C$ iff
   \text{$C$ is balanced (Definition~\ref{def:balanced})}\;\Longleftrightarrow\;
   |W\cap E(C)| \text{ is even.}
 \]
+This characterises agreement component by component. On a disconnected
+graph the global identity~$(\star)$ can also hold by cancellation: it
+holds exactly when the number of balanced components with odd wrap
+count equals the number of unbalanced components with even wrap count.
 A useful \emph{sufficient} condition --- which is \emph{not} necessary ---
 is: $\dim H^1(C;\ZZ/2)\le 1$ (i.e., by the Euler relation
 $\dim H^1(C)=|E(C)|-|V(C)|+1$ on a connected component, $C$ is at most
@@ -868,7 +914,9 @@ so those two indices contribute only a single real eigenvector
 each).
 
 \begin{theorem}[Flat cycle spectrum]\label{thm:flat-cycle}
-Let $n\ge 3$. The scalar Laplacian $\Lscalar(C_n)$ has spectrum
+Let $n\ge 3$. As a multiset indexed by $k\in\ZZ/n$ (repeated values
+counted with multiplicity), the scalar Laplacian $\Lscalar(C_n)$ has
+spectrum
 \[
   \operatorname{Spec}\Lscalar(C_n)
   = \bigl\{\, 2 - 2\cos(2\pi k/n) \,:\, k\in\ZZ/n\,\bigr\},
@@ -878,8 +926,8 @@ $2-2\cos(2\pi k/n)$.
 \end{theorem}
 
 \begin{theorem}[Möbius cycle spectrum]\label{thm:mobius-cycle}
-Let $n\ge 3$ and $W=\{\{0,1\}\}$ (one wrap edge). Then $\Lsigned(C_n)$ has
-spectrum
+Let $n\ge 3$ and $W=\{\{0,1\}\}$ (one wrap edge). Then, as a multiset
+indexed by $k\in\ZZ/n$, $\Lsigned(C_n)$ has spectrum
 \[
   \operatorname{Spec}\Lsigned(C_n)
   = \bigl\{\, 2 - 2\cos((2k+1)\pi/n) \,:\, k\in\ZZ/n\,\bigr\}.
@@ -893,11 +941,16 @@ and is diagonalised by the Fourier basis with shift weight $+1$,
 giving eigenvalues $2 - (e^{2\pi i k/n}+e^{-2\pi ik/n})$. The signed
 Laplacian with a single wrap edge is \emph{not} circulant before
 gauging; it commutes with the twisted shift $S_{\mathrm{sg}}$
-satisfying $S_{\mathrm{sg}}^n=-\II$. The entrywise gauge
-transformation $v_j \mapsto \alpha^j v_j$ with $\alpha=e^{i\pi/n}$
-(relabelled so the branch cut lies on the wrap edge $\{0,1\}$)
-converts it into the circulant $2\II-(\alpha S+\alpha^{-1}S^{-1})$,
-giving eigenvalues $2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$.
+satisfying $S_{\mathrm{sg}}^n=-\II$. Relabel cyclically so that the
+wrap edge is the closing edge $\{n-1,0\}$, which is the convention of
+the Lean matrix. Conjugation by $U=\diag(\alpha^j)_{0\le j<n}$ with
+$\alpha=e^{i\pi/n}$ multiplies the interior off-diagonal entries by
+$\alpha^{\pm1}$ and the closing-edge entries by
+$\alpha^{\mp(n-1)}=-\alpha^{\pm1}$; since $\alpha^n=-1$, this cancels
+the wrap sign, and $U^{-1}\Lsigned U = 2\II-(\alpha S+\alpha^{-1}S^{-1})$
+is circulant, with eigenvalues
+$2 - (e^{(2k+1)\pi i/n}+e^{-(2k+1)\pi i/n})$. (For the wrap edge
+$\{0,1\}$ itself, use the exponents $(j-1)\bmod n$.)
 The Lean proof in \texttt{CycleMultiset.lean} checks the complete
 periodic and anti-periodic complex Fourier eigen-equations on the
 explicit cycle matrices, including the signed closing-edge sign.
@@ -1085,10 +1138,13 @@ theorems. We collect the ones that admit a one-paragraph proof and
 are stated at the level of generality on which the formalised
 library already operates. Together they close the
 ``trace-and-inequality gap'' left open in earlier versions of this
-manuscript. All are formalised in
-\path{ConnectionLaplacian/L9_Bounds.lean}, and the
-multiplicative spectral partition
-(Theorem~\ref{thm:cover-charpoly}) is formalised in
+manuscript. The scalar and signed trace formulas and the kernel
+inequalities are formalised in \path{ConnectionLaplacian/L9_Bounds.lean};
+the flat and Möbius traces and the quadratic-trace and Frobenius
+identities in \path{ConnectionLaplacian/L17_TracesAndLipschitz.lean};
+positive semidefiniteness in \path{ConnectionLaplacian/L13_PSD.lean};
+and the multiplicative spectral partition
+(Theorem~\ref{thm:cover-charpoly}) in
 \path{ConnectionLaplacian/L10_CoverCharpoly.lean}.
 
 \begin{proposition}[Trace formulas]\label{prop:traces}
@@ -1112,7 +1168,10 @@ degree-sum identity
 $\sum_v \deg(v) = 2\,\#E$
 (Mathlib's
 \path{SimpleGraph.sum_degrees_eq_twice_card_edges}) proves
-all four equalities.
+all four equalities. The Lean names are
+\path{trace_scalarLaplacian} and \path{trace_signedLaplacianMobius}
+(\path{L9_Bounds.lean}), and \path{trace_laplacian_flat} and
+\path{trace_laplacian_mobius} (\path{L17_TracesAndLipschitz.lean}).
 \end{proof}
 
 \begin{proposition}[Quadratic trace and Frobenius
@@ -1154,7 +1213,7 @@ $\tr(\Lscalar\Lsigned)=\tr(\Lsigned\Lscalar)$. The Lean names are
 The cross-term identity above is stated in \emph{polarisation form}
 and is pure matrix algebra. For these graph Laplacians the additional
 combinatorial identity
-$\tr(\Lscalar\cdot\Lsigned)=\tr({\Lscalar}^{2})-4\,\#W$, which can be
+$\tr(\Lscalar\cdot\Lsigned)=\tr\bigl((\Lscalar)^{2}\bigr)-4\,\#W$, which can be
 read off the entrywise formula for $\Lscalar\cdot\Lsigned$ by
 summing contributions at diagonal and off-diagonal positions, is
 confirmed numerically by the R6 Stage-6 fuzzer (zero deviation
@@ -1240,14 +1299,15 @@ Composing Theorem~\ref{thm:cover-charpoly} with the similarity of
 Theorem~\ref{thm:decomp} gives the same factorisation directly for
 $L_{\mathrm{Mob}}$ without invoking the cover:
 \[
-  \det\bigl(\lambda\,\II - L_{\mathrm{Mob}}(G)\bigr)
+  \det\bigl(\lambda\,\II_{V\times\operatorname{Fin}2} - L_{\mathrm{Mob}}(G)\bigr)
   \;=\;
-  \det\bigl(\lambda\,\II - \Lscalar(G)\bigr)\cdot
-  \det\bigl(\lambda\,\II - \Lsigned(G)\bigr),
+  \det\bigl(\lambda\,\II_V - \Lscalar(G)\bigr)\cdot
+  \det\bigl(\lambda\,\II_V - \Lsigned(G)\bigr),
 \]
 and for every $\alpha\in\RR$,
-$\det(L_{\mathrm{Mob}}+\alpha\II)=\det(\Lscalar+\alpha\II)\cdot
-\det(\Lsigned+\alpha\II)$. As multisets,
+$\det(L_{\mathrm{Mob}}+\alpha\II_{V\times\operatorname{Fin}2})
+=\det(\Lscalar+\alpha\II_V)\cdot
+\det(\Lsigned+\alpha\II_V)$. As multisets,
 $\operatorname{Spec}(L_{\mathrm{Mob}}) = \operatorname{Spec}(\Lscalar)
 \uplus \operatorname{Spec}(\Lsigned)$. These are Lean theorems
 \path{mobius_charpoly_eq_scalar_times_signed},
@@ -1303,54 +1363,53 @@ graphs where $H^1$ is understood, the content of
 Theorem~\ref{thm:signed-kernel} becomes explicit.
 
 \begin{theorem}[Tree balance]\label{thm:tree-balanced}
-If the underlying simple graph of~$G$ is a tree, then
-every component of~$G$ is balanced, for \emph{every} choice of wrap
-set~$W\subseteq E(G)$. Consequently
+If the underlying simple graph of~$G$ is a tree (connected and
+acyclic), then its unique component is balanced for \emph{every}
+choice of wrap set~$W\subseteq E(G)$. Consequently
 \[
-  \beta(G) = \#\comp(G), \qquad
-  \dim\Ker \Lsigned(G) = \#\comp(G), \qquad
-  \dim\Ker L_{\mathrm{Mob}}(G) = 2\,\#\comp(G),
+  \beta(G) = 1, \qquad
+  \dim\Ker \Lsigned(G) = 1, \qquad
+  \dim\Ker L_{\mathrm{Mob}}(G) = \dim\Ker L_{\mathrm{flat}}(G) = 2,
 \]
 and the strict inequality of Theorem~\ref{thm:strict} fails.
 \end{theorem}
 
 \begin{proof}
-Fix a root $r$ of each tree component. For $v$ in that component,
-let $p_{r\to v}$ be the unique simple $r\to v$ path (Mathlib's
-\path{SimpleGraph.IsAcyclic.path_unique}). Define
+Fix a root~$r$. Because the tree is connected and acyclic, for every
+vertex~$v$ there is exactly one path $p_{r\to v}$: any walk $r\to v$
+shortens to a path, and two paths with the same endpoints coincide
+(Mathlib's \path{SimpleGraph.IsAcyclic.path_unique}). Define
 $\varepsilon(v)\defeq \sum_{e\in p_{r\to v}} \mathbf{1}_{e\in W}
-  \pmod 2$, with $\varepsilon(r)=\bot$ by the empty sum. We show
-$\varepsilon(u)\oplus \varepsilon(v) = \mathbf{1}_{\{u,v\}\in W}$
-for every edge $\{u,v\}\in E$ in the component.
-
-Consider the closed walk $w \defeq p_{r\to u} \cdot \{u,v\} \cdot
-p_{v\to r}$. Because the underlying graph is acyclic, the only
-closed walks at~$r$ are back-tracking compositions of simple edges,
-so $\sum_{e\in w}\mathbf{1}_{e\in W}\equiv 0\pmod 2$ (every
-traversed edge is traversed an even number of times). Splitting
-the sum into the $p_{r\to u}$-part, the single edge $\{u,v\}$, and
-the $p_{v\to r}$-part (the latter summing to $\varepsilon(v)$ by
-symmetry of $\mathbf{1}_{\cdot\in W}$) gives
-\[
-  0 \;\equiv\; \varepsilon(u) + \mathbf{1}_{\{u,v\}\in W}
-  + \varepsilon(v) \pmod 2,
-\]
-hence $\varepsilon(u)\oplus\varepsilon(v)=\mathbf{1}_{\{u,v\}\in W}$.
-Thus $\varepsilon$ witnesses balance
-(Definition~\ref{def:balanced}), and every tree component is
-balanced. The kernel-dimension consequences are immediate from
+  \pmod 2$, with $\varepsilon(r)=\bot$ by the empty sum. Let
+$\{u,v\}\in E$. If $v$ does not lie on $p_{r\to u}$, then $p_{r\to u}$
+followed by the edge $\{u,v\}$ is a path $r\to v$, so it is
+$p_{r\to v}$. Otherwise the part of $p_{r\to u}$ up to~$v$ is a path
+$r\to v$, so it is $p_{r\to v}$, and the remaining part is a path
+$v\to u$, so it is the single edge $\{v,u\}$. In both cases
+$\varepsilon(u)\oplus\varepsilon(v)=\mathbf{1}_{\{u,v\}\in W}$, so
+$\varepsilon$ witnesses balance (Definition~\ref{def:balanced}). With
+$\#\comp(G)=1$, the kernel dimensions follow from
 Theorems~\ref{thm:signed-kernel} and~\ref{thm:connection-ker}.
+
+The Lean proof (\path{L11_Trees.lean}) takes a different route: on
+an acyclic graph the wrap parity of a walk depends only on its
+endpoints (\path{walkWrapParity_acyclic_endpoints}), so the two sheets
+over a vertex lie in different components of the double cover
+(\path{candidateLift_ne_of_isTree}), and balance follows from
+\path{balanced_of_sheets_separated} of Section~\ref{sec:coho}.
 \end{proof}
 
 \begin{corollary}\label{cor:forest-star-path}
-If the underlying graph is a connected tree, then
-$\dim\Ker L_{\mathrm{Mob}}(G) = 2$ for every~$W$. In
-particular paths $P_n$ and stars $K_{1,n}$ have kernel dimension
-$2$ independently of~$W$. The statement generalises to disconnected
-forests with $\dim\Ker L_{\mathrm{Mob}}(G)=2\,\#\comp(G)$ by applying
-the connected case per-component, but this lift is not presently a
-separately named Lean theorem --- only the \texttt{IsTree}
-(connected-acyclic) case is formalised.
+Paths $P_n$ and stars $K_{1,n}$ have
+$\dim\Ker L_{\mathrm{Mob}}(G)=2$ independently of~$W$. If the
+underlying graph is a forest (acyclic, possibly disconnected), each
+component is a tree; running the proof of
+Theorem~\ref{thm:tree-balanced} inside each component (balance is
+component-local, Remark~\ref{rem:balance-scope}) gives
+$\beta(G)=\#\comp(G)$, $\dim\Ker\Lsigned(G)=\#\comp(G)$ and
+$\dim\Ker L_{\mathrm{Mob}}(G)=2\,\#\comp(G)$. The forest statement is
+not a separately named Lean theorem; only the connected
+\texttt{IsTree} case is formalised.
 \end{corollary}
 
 \begin{theorem}[Walk-sum detector for balance]\label{thm:walk-sum}
@@ -1362,12 +1421,14 @@ $\sum_{e\in w} \mathbf{1}_{e\in W} \equiv 0 \pmod 2$.
 \begin{proof}
 $(\Rightarrow)$ If $\varepsilon$ witnesses balance then for each
 edge $e=\{u,u'\}$ in~$C$, $\varepsilon(u)\oplus \varepsilon(u') =
-\mathbf{1}_{e\in W}$. Summing along a closed walk $v\to v$ the
-$\varepsilon$-telescopes, leaving
+\mathbf{1}_{e\in W}$. Summing along a closed walk $v\to v$, the
+$\varepsilon$-terms telescope, leaving
 $\sum_e \mathbf{1}_{e\in W}\equiv 0$.
 $(\Leftarrow)$ Pick $v_0\in C$ and define
 $\varepsilon(v)\defeq \sum_{e\in w} \mathbf{1}_{e\in W}\pmod 2$
-for any walk $w:v_0\to v$; the closed-walk-even hypothesis makes
+for any walk $w:v_0\to v$, and $\varepsilon(u)\defeq\bot$ for
+$u\notin C$ (Definition~\ref{def:balanced} leaves those values
+unconstrained); the closed-walk-even hypothesis makes
 $\varepsilon$ walk-independent. By construction
 $\varepsilon(u)\oplus \varepsilon(v)\equiv \mathbf{1}_{e\in W}$ on
 every edge $e=\{u,v\}$ of~$C$, so $\varepsilon$ witnesses balance.
@@ -1386,9 +1447,11 @@ In particular the initial plan's formula
 $\dim\Ker\Lsigned = \#\comp(G) - \#\{\text{odd-wrap components}\}$
 holds for \emph{every wrap assignment} on a connected cycle graph.
 It is not a valid formula for arbitrary graphs. For a \emph{particular}
-wrap assignment, however, it can also hold on non-cycle graphs.
-as discussed in the corrected Remark above; thus this is not a
-pointwise characterisation of cycles.
+wrap assignment, however, it can also hold on non-cycle graphs,
+as discussed in Remark~\ref{rem:initial-plan}; thus this is not a
+pointwise characterisation of cycles. The Lean certificate for this
+corollary is the weak, conditional form described in
+Remark~\ref{rem:cycle-ew-lean}.
 \end{corollary}
 
 \begin{proof}
@@ -1404,10 +1467,10 @@ of~$\#W$ and Theorem~\ref{thm:signed-kernel} converts
 $\beta\in\{0,1\}$ to $\dim\Ker\Lsigned\in\{0,1\}$.
 \end{proof}
 
-\begin{remark}
+\begin{remark}\label{rem:cycle-ew-lean}
 The Lean certificate
 \path{cycle_isBalanced_iff_even_wrap_weak}
-(\texttt{L14\_CycleEw.lean}) names this a \emph{weak} form: it
+(\path{L14_CycleEw.lean}) names this a \emph{weak} form: it
 takes an Eulerian closed walk and the reverse implication as explicit
 inputs. Its signature quantifies over a general \texttt{ConnGraph};
 a cycle-graph identification is not constructed there.
@@ -1431,13 +1494,14 @@ survive.
 \begin{example}[Naive equality of M\"obius and scalar kernels is
 false]\label{ex:naive-eq}
 A tempting but wrong reformulation of Theorem~\ref{thm:strict} is:
-``$\dim\Ker L_{\mathrm{Mob}} = \dim\Ker L_{\mathrm{scalar}}$ iff
+``$\dim\Ker L_{\mathrm{Mob}} = \dim\Ker \Lscalar$ iff
 every component of~$G$ is balanced.'' This fails already on the
 empty graph on $n=3$ vertices with $W=\emptyset$: every
 component is trivially balanced (vacuously so, cf.\
 Remark~\ref{rem:balance-scope}), yet
-$\dim\Ker L_{\mathrm{Mob}} = 6$ (a kernel inside $\CC^{2V}$) while
-$\dim\Ker L_{\mathrm{scalar}} = 3$ (a kernel inside $\CC^{V}$): the
+$\dim\Ker L_{\mathrm{Mob}} = 6$ (a kernel inside
+$\RR^{V\times\operatorname{Fin}2}$) while
+$\dim\Ker \Lscalar = 3$ (a kernel inside $\RR^{V}$): the
 two kernels sit in different ambient spaces, so the attempted
 identity already fails on dimensional grounds. The correct
 equivalence uses
@@ -1480,7 +1544,11 @@ least one} endpoint lies in a balanced component and $0$ when both
 endpoints lie in unbalanced components. (In the mixed
 balanced-plus-unbalanced case, the merged component is unbalanced,
 so the pre-existing balanced component is lost and $\beta$ drops
-by~$1$.).
+by~$1$.)
+\end{example}
+
+The correct monotonicity law concerns \emph{deleting} edges, and it is
+sensitive to bridges rather than to wrap status.
 
 \begin{theorem}[Bridge-deletion monotonicity]\label{thm:bridge-monotone}
 Deleting a non-bridge edge cannot decrease $\beta$: for any edge
@@ -1491,18 +1559,18 @@ $e\in E(G)$ that is not a bridge of the underlying graph,
 \end{theorem}
 
 \begin{proof}[Proof (formalised)]
-The Lean proof (\texttt{L15\_BridgeMonotone.lean},
-\path{numBalancedComponents_monotone_remove_nonwrap_nonbridge})
-constructs an injection from the balanced components of $G$ into the
-balanced components of $G-e$: deleting a non-bridge edge leaves every
-component connected, and each balanced component of $G$ yields a
-balanced component of $G-e$ because its balancing closed walks
-survive the deletion. A non-wrap hypothesis is accepted by the Lean
-statement for continuity with the discovery sweep that produced it,
-but the proof does not use it: the law is bridge-sensitive, not
-wrap-sensitive.
+The Lean theorem \path{numBalancedComponents_monotone_remove_nonbridge}
+(\path{L15_BridgeMonotone.lean}) has exactly this statement. Deleting a
+non-bridge edge preserves reachability, so the components of $G$ and
+of $G-e$ correspond bijectively. A balanced component of~$G$ stays
+balanced in $G-e$, because the same~$\varepsilon$ witnesses balance:
+every edge of $G-e$ is an edge of~$G$. This injects the balanced
+components of~$G$ into those of $G-e$. The earlier declaration
+\path{numBalancedComponents_monotone_remove_nonwrap_nonbridge} carries
+an additional, unused non-wrap hypothesis inherited from the discovery
+sweep; it is kept unchanged because the archived comparator challenge
+replays it.
 \end{proof}
-\end{example}
 
 \begin{example}[Non-wrap edge contraction is not kernel-stable]
 \label{ex:contraction}
@@ -1511,7 +1579,13 @@ kernel dimension~$0$. Contracting the non-wrap edge $\{v_0,v_2\}$
 identifies $v_0$ and $v_2$, leaving the single wrap edge
 $\{v_0,v_1\}$, a tree on $2$ vertices: the signed Laplacian
 now has kernel dimension~$1$. So non-wrap edge contraction does
-\emph{not} preserve $\dim\Ker\Lsigned$ in general.
+\emph{not} preserve $\dim\Ker\Lsigned$ in general. Contraction is taken
+here in the category of simple graphs: the two parallel edges between
+the merged vertex and~$v_1$ (one wrap, one non-wrap) collapse to a
+single edge, and the resulting two-vertex tree is balanced whichever
+wrap status the surviving edge carries. In a signed multigraph the two
+parallel edges would instead form an unbalanced $2$-cycle, and $\beta$
+would stay~$0$.
 \end{example}
 
 %=============================================================
@@ -1532,8 +1606,11 @@ the proofs of theorems listed below and are not tabulated
 separately.) The table below
 pairs them explicitly. The production source audit forbids
 \texttt{sorry}, \texttt{admit}, \texttt{native\_decide} and local axiom
-declarations. The separate CI axiom audit selects $23$ declarations
-($18$ before the five conditional graph-transfer results), requiring
+declarations. The separate CI axiom audit selects $25$ declarations
+($18$ before the five conditional graph-transfer results; the two
+latest, added on 2026-10-18, are
+\path{numBalancedComponents_monotone_remove_nonbridge} and
+\path{trace_laplacian_flat}), requiring
 each requested output to contain no axioms outside
 $\{\texttt{propext},\, \texttt{Classical.choice},\, \texttt{Quot.sound}\}$.
 This selected audit does not print every helper or every table row.
@@ -1548,13 +1625,15 @@ paths are relative to
 \toprule
 Paper statement & Lean name & File \\
 \midrule
+Eq.~\eqref{eq:connection-laplacian}, \S\ref{sec:prelim} (data) &
+  \texttt{ConnGraph}, \texttt{laplacian} & \texttt{Basic.lean} \\
 Thm.~\ref{thm:scalar-ker} &
   \texttt{scalarLaplacian\_kernel\_dim} & \texttt{KernelDim.lean} \\
 Thm.~\ref{thm:decomp} (direct sum) &
   \texttt{laplacian\_decomposes} & \texttt{KernelDim.lean} \\
 Thm.~\ref{thm:decomp} (ker dim) &
   \path{laplacian_kernel_dim_decomposes} & \texttt{L8\_Recognition.lean} \\
-\S\ref{sec:cover} &
+Thm.~\ref{thm:cover-splits} &
   \texttt{scalarLap\_cover\_splits} & \texttt{L5\_Cover.lean} \\
 Def.~\ref{def:balanced} &
   \texttt{isBalanced} & \texttt{L6\_Cohomology.lean} \\
@@ -1572,7 +1651,7 @@ Prop.~\ref{prop:traces} (sg) &
   \texttt{trace\_signedLaplacianMobius} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (mono) &
   \path{signed_kernel_le_scalar_kernel} & \texttt{L9\_Bounds.lean} \\
-Prop.~\ref{prop:kernel-ineq} (drop~$=\beta$) &
+Prop.~\ref{prop:kernel-ineq} (drop~$=\#\comp-\beta$) &
   \texttt{kernel\_drop\_eq\_unbalanced} & \texttt{L9\_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$\le\#\comp$) &
   \path{kernel_drop_le_numComponents} & \texttt{L9\_Bounds.lean} \\
@@ -1581,17 +1660,23 @@ Lem.~\ref{lem:signed-psd} &
 Thm.~\ref{thm:cover-charpoly} &
   \path{cover_charpoly_eq_scalar_times_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
 Cor.~\ref{cor:mult-pointwise} &
-  \multicolumn{2}{l}{\emph{corollary of \path{cover_charpoly_eq_scalar_times_mobius}}} \\
-Thm.~\ref{thm:tree-balanced} &
+  \multicolumn{2}{l}{\emph{corollary of} \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius}} \\
+Thm.~\ref{thm:tree-balanced} (balance) &
   \texttt{tree\_isBalanced\_of\_isTree} & \texttt{L11\_Trees.lean} \\
+\quad ($\beta=1$) &
+  \path{numBalancedComponents_of_isTree} & \texttt{L11\_Trees.lean} \\
 \quad (ker dim) &
   \path{connectionLaplacian_kernel_dim_tree_mobius} & \texttt{L11\_Trees.lean} \\
 \quad (gap zero) &
   \texttt{tree\_kernel\_gap\_zero} & \texttt{L11\_Trees.lean} \\
 Cor.~\ref{cor:forest-star-path} &
-  \multicolumn{2}{l}{\emph{specialisation of the tree ker-dim theorem}} \\
+  \multicolumn{2}{p{10.6cm}}{\emph{paths and stars specialise the tree theorem; the forest case is not a named Lean theorem}} \\
 Thm.~\ref{thm:walk-sum} &
   \path{isBalanced_iff_closedWalk_wrap_even} & \texttt{L12\_WalkH1.lean} \\
+Rem.~\ref{rem:cycle-spectrum-lean} (per-mode, flat) &
+  \texttt{scalarCycle\_eigenvalue} & \texttt{CycleSpectrum.lean} \\
+Rem.~\ref{rem:cycle-spectrum-lean} (per-mode, signed) &
+  \texttt{signedCycle\_eigenvalue} & \texttt{CycleSpectrum.lean} \\
 Thm.~\ref{thm:flat-cycle} (charpoly) &
   \texttt{scalarCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
 Thm.~\ref{thm:flat-cycle} (root multiset) &
@@ -1602,9 +1687,11 @@ Thm.~\ref{thm:mobius-cycle} (root multiset) &
   \texttt{signedCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
 \quad (graph-conditional transfer) &
   \shortstack[l]{\texttt{mobius\_connection\_roots}\\\texttt{\_of\_cycle\_reindex}} & \texttt{CycleGraphTransfer.lean} \\
-Cor.~\ref{cor:cycle-ew} &
+Cor.~\ref{cor:cycle-ew} (weak, conditional; Rem.~\ref{rem:cycle-ew-lean}) &
   \path{cycle_isBalanced_iff_even_wrap_weak} & \texttt{L14\_CycleEw.lean} \\
-Ex.~\ref{ex:cross-merge} (R5 refinement, C1 $\tau=1$) &
+Thm.~\ref{thm:bridge-monotone} &
+  \path{numBalancedComponents_monotone_remove_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
+\quad (historical, unused non-wrap hypothesis) &
   \path{numBalancedComponents_monotone_remove_nonwrap_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (direct charpoly) &
   \path{mobius_charpoly_eq_scalar_times_signed} & \texttt{L16\_SpectrumUnion.lean} \\
@@ -1612,6 +1699,8 @@ Rem.~\ref{rem:direct-bundle-charpoly} (spec union) &
   \path{mobius_charpoly_roots_eq_union} & \texttt{L16\_SpectrumUnion.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (shifted det) &
   \texttt{shiftedDet\_factorises} & \texttt{L17\_TracesAndLipschitz.lean} \\
+Prop.~\ref{prop:traces} ($\tr L_{\mathrm{flat}}$) &
+  \texttt{trace\_laplacian\_flat} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces} ($\tr L_{\mathrm{Mob}}$) &
   \texttt{trace\_laplacian\_mobius} & \texttt{L17\_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} ($\tr(\cdot^2)$) &
@@ -1677,7 +1766,7 @@ of the discovery swarm; the generating Python scripts live under
 $n\le 5$ (and $n=6$ with a wrap-subset cap) to regenerate the
 counter-witnesses from scratch.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 
 \bibitem{HararyCartwright}
 F.~Harary.
@@ -1708,6 +1797,25 @@ Combinatorica \textbf{26} (2006), 495--519.
 Preprint: \emph{Constructing expander graphs by 2-lifts and discrepancy
 vs.\ spectral gap},
 \href{https://arxiv.org/abs/math/0312022}{arXiv:math/0312022}.
+
+\bibitem{DiazDevriendtLambiotte}
+F.~Diaz-Diaz, K.~Devriendt and R.~Lambiotte.
+\emph{Gremban expansion for signed networks: algebraic and combinatorial
+foundations for community--faction detection}.
+\href{https://arxiv.org/abs/2509.14193}{arXiv:2509.14193}, 2025.
+
+\bibitem{Gremban}
+K.~D.~Gremban.
+\emph{Combinatorial Preconditioners for Sparse, Symmetric, Diagonally
+Dominant Linear Systems}.
+PhD thesis, Carnegie Mellon University, 1996.
+Technical report CMU-CS-96-123.
+
+\bibitem{SpielmanTeng}
+D.~A.~Spielman and S.-H.~Teng.
+\emph{Nearly-linear time algorithms for preconditioning and solving
+symmetric, diagonally dominant linear systems}.
+\href{https://arxiv.org/abs/cs/0607105}{arXiv:cs/0607105}.
 
 \bibitem{Mathlib}
 The Mathlib Community.

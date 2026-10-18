@@ -38,6 +38,30 @@ archived unchanged; this release supersedes it under the same concept DOI,
   `CITATION.cff` carries the tag, and the attached PDF is the committed
   `paper/paper.pdf`.
 
+### Review of the v.0.0.5 manuscript (2026-10-18)
+
+An external AI review of the v.0.0.5 manuscript was adjudicated point by
+point in `Hardening/argon4-review-adjudication-2026-10-18.md`. Resulting
+changes:
+
+- Two new Lean theorems, both axiom-audited:
+  - `numBalancedComponents_monotone_remove_nonbridge` states the
+    bridge-deletion theorem without the unused non-wrap hypothesis. The
+    historical declaration that the comparator replayed is unchanged.
+  - `trace_laplacian_flat` proves `tr(L_flat) = 4|E|`, which the paper had
+    listed as formalised although no Lean declaration existed.
+- Theorem 10.1 now states the connected-tree case that Lean formalises.
+  Forests move to Corollary 10.2, marked as not formalised.
+- Lemma 5.6's proof is rewritten with the deck involution made explicit.
+- Remark 6.5 gives the exact global cancellation condition for (★).
+- The Theorem 7.2 sketch places the gauge branch cut correctly.
+- Theorem 11.4 is no longer typeset inside Example 11.3.
+- The formalisation index is corrected and completed.
+- Prior work now cites the Gremban expansion (Diaz-Diaz–Devriendt–Lambiotte,
+  arXiv:2509.14193) and Gremban's doubling reduction. A suggested Li–Hou
+  reference could not be located and is not cited.
+- Typographical fixes.
+
 ### New Lean results
 
 - `CycleMultiset.lean`: complete real characteristic polynomials and exact
@@ -57,8 +81,9 @@ archived unchanged; this release supersedes it under the same concept DOI,
   and nanoda kernels both accept; the phase-tamper and smuggled-axiom
   controls are rejected. Logs and the exact tested commit are archived in
   `Hardening/runs/38863604693/`.
-- `AxiomAudit.lean` selects 23 declarations, and the audit fails if any
-  requested declaration is missing from the `#print axioms` output.
+- `AxiomAudit.lean` selects 25 declarations, two of them added on
+  2026-10-18, and the audit fails if any requested declaration is missing
+  from the `#print axioms` output.
 - Round 10: cycle Fourier bases and eigenvalue multisets for
   `n = 3, …, 64` with a wrong-basis control; exact-integer cycle/`ConnGraph`
   matrix identities with wrong-seam controls; exact K₄ checks.
