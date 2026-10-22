@@ -12,9 +12,10 @@ preserve it. On `G̃`, the wrap structure is trivial (the cover
 
 The Z/2 deck transformation `δ : G̃.V → G̃.V, (v, b) ↦ (v, ¬b)` is a
 graph automorphism of `G̃`. Functions on `G̃` split into deck-invariant
-(+1 eigenspace = functions on `G`, the flat connection kernel) and
-deck-antiinvariant (−1 eigenspace = "twisted" sections of `G`, the
-signed connection kernel).
+(+1 eigenspace = all scalar functions on `G`) and deck-antiinvariant
+(−1 eigenspace = all signed sections on `G`). Intersecting these
+subspaces with the cover Laplacian's kernel gives the scalar and
+signed Laplacian kernels, respectively.
 
 The key theorem is `scalarLap_cover_splits`: the ordinary (scalar) graph
 Laplacian of `G̃` is similar to the block-diagonal sum
