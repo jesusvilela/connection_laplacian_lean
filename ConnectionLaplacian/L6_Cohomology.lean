@@ -13,8 +13,9 @@ exists a vertex 2-coloring `ε : V(C) → Bool` with
 `wrap e ↔ ε(u) ≠ ε(v)` for every edge `e = {u, v}` in `C`. Such a
 component is called **balanced** (Zaslavsky / Harary-Kabell). A
 component is balanced iff its orientation double cover preimage has
-two disconnected sheets (equivalently: the deck action restricted to
-that component fixes each sheet as a set).
+two connected components, exchanged by the deck involution. For an
+unbalanced component the preimage is connected and is preserved
+setwise by the deck involution.
 
 The signed-Laplacian kernel dimension is `numBalancedComponents`
 (proved in L8 using the L5 cover split + Mathlib scalar kernel dim).
@@ -22,8 +23,9 @@ The signed-Laplacian kernel dimension is `numBalancedComponents`
 For the initial written plan's scope (n-cycle): `H¹(C_n; Z/2) = ZMod 2`, and
 the class is detected by `(total wrap count in C_n) mod 2`. This is
 why the original `numOddWrapComponents` formula is correct on cycles
-but false in general (non-cycle connected components have
-`H¹ = (ZMod 2)^(|E| − |V| + 1)` with multiple independent classes).
+but false in general. For any connected component,
+`H¹ = (ZMod 2)^(|E| − |V| + 1)`; this cycle rank may be zero, one,
+or larger even when the component is not itself a cycle graph.
 -/
 
 import ConnectionLaplacian.KernelDimension
