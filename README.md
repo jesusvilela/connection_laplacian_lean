@@ -80,6 +80,24 @@ mathematical proof identify a **specific metric-graph heat-trace limit**.
 This is **not a Lean theorem** and does not establish arbitrary hyperbolic
 limits, hypercomplex advantages, or a complexity-theoretic result.
 
+The latest experiment pushes past even that complex rank-two setting.
+[GeneralFiberGauge.lean](ConnectionLaplacian/Experimental/GeneralFiberGauge.lean)
+and [ArbitraryFiberIncidence.lean](ConnectionLaplacian/Experimental/ArbitraryFiberIncidence.lean)
+allow **arbitrary finite fiber rank** and ordered, potentially noncommuting
+matrix transports. We are assembling a genuinely fiber-valued incidence
+operator, not rewriting another scalar cycle in grander notation.
+
+There is a separate, more delicate branch of the geometry:
+[IndefiniteFiber.lean](ConnectionLaplacian/Experimental/IndefiniteFiber.lean)
+uses a split (2,2) form (Q = \\mathrm{diag}(1,1,-1,-1)).
+The intended law is (U^\\mathsf{T} Q U = Q), including ordered compositions.
+Its [numerical controls](research/covariant_observability/test_split22.py)
+compare noncommuting boosts with a commuting null and deliberately corrupt
+form preservation. **No positive energy or Riesz estimate transfers into
+this indefinite regime without a new theorem.** These newly added Lean
+modules need their separate compilation and axiom gate; the verified count
+below refers only to declarations already accepted by CI.
+
 At the same time, the experimental Lean files connect the original
 fiber-valued edge Gram blocks to the actual graph Laplacian. The `dev` CI
 has checked **12 experimental declarations** against the standard Lean
