@@ -59,14 +59,19 @@ theorem difference_gauge_covariant
     (x y : F → ℝ) :
     difference (inGauge P Q U) (P.mulVec x) (Q.mulVec y) =
       P.mulVec (difference U x y) := by
-  have hcancel : Q.transpose.mulVec (Q.mulVec y) = y := by
-    rw [← Matrix.mulVec_mulVec, hQ]
-    simp
   have htransport :
       (inGauge P Q U).mulVec (Q.mulVec y) =
         P.mulVec (U.mulVec y) := by
     unfold inGauge
-    rw [Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hcancel]
+    calc
+      (P * U * Q.transpose).mulVec (Q.mulVec y) =
+          ((P * U * Q.transpose) * Q).mulVec y := by
+            rw [Matrix.mulVec_mulVec]
+      _ = (P * U).mulVec y := by
+            rw [Matrix.mul_assoc, hQ]
+            simp
+      _ = P.mulVec (U.mulVec y) := by
+            rw [Matrix.mulVec_mulVec]
   unfold difference
   rw [htransport, mulVec_sub]
 
