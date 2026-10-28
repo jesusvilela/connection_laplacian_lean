@@ -37,6 +37,11 @@ jobs:
         run: |
           set -euo pipefail
           python research/covariant_observability/test_endpoint.py | tee /tmp/covariant-endpoint.json
+      - name: Verify exact twisted-cycle Riesz kernel across phases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_twisted_endpoint.py | tee /tmp/covariant-twisted-endpoint.json
       - name: Cross-check Z2 Laplacian factorization on exhaustive small graphs
         shell: bash
         run: |
@@ -50,6 +55,7 @@ jobs:
             /tmp/covariant-observability.json
             /tmp/covariant-endpoint.json
             /tmp/z2-exact-oracle.json
+            /tmp/covariant-twisted-endpoint.json
 
   experimental-lean:
     runs-on: ubuntu-latest
@@ -66,18 +72,20 @@ jobs:
         run: |
           lake build ConnectionLaplacian.Experimental.UnitaryEdge
           lake build ConnectionLaplacian.Experimental.IncidenceEnergy
+          lake build ConnectionLaplacian.Experimental.EdgeGram
       - name: Report exact axiom dependency of new declarations
         shell: bash
         run: |
           set -euo pipefail
           cat > ExperimentalAxiomAudit.lean <<'LEAN'
-          import ConnectionLaplacian.Experimental.IncidenceEnergy
+          import ConnectionLaplacian.Experimental.EdgeGram
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_involution
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal
           #print axioms ConnectionLaplacian.ConnGraph.edgeTransport_involution
           #print axioms ConnectionLaplacian.ConnGraph.edgeEnergy_reverse
           #print axioms ConnectionLaplacian.ConnGraph.edgeEnergy_expand
+          #print axioms ConnectionLaplacian.ConnGraph.edgeIncidence_gram
           LEAN
           lake env lean ExperimentalAxiomAudit.lean 2>&1 | tee experimental-axioms.log
           python3 - <<'PY'
@@ -91,6 +99,7 @@ jobs:
               "ConnectionLaplacian.ConnGraph.edgeTransport_involution",
               "ConnectionLaplacian.ConnGraph.edgeEnergy_reverse",
               "ConnectionLaplacian.ConnGraph.edgeEnergy_expand",
+              "ConnectionLaplacian.ConnGraph.edgeIncidence_gram",
           ]
           allowed = {"propext", "Classical.choice", "Quot.sound"}
           for name in names:
@@ -103,5 +112,5 @@ jobs:
                   used = {item.strip() for item in match.group(1).split(",") if item.strip()}
                   if not used.issubset(allowed):
                       raise SystemExit("Unexpected axiom in " + name + ": " + str(used - allowed))
-          print("Experimental declarations: 6/6 checked, no nonstandard axioms")
+          print("Experimental declarations: 7/7 checked, no nonstandard axioms")
           PY
