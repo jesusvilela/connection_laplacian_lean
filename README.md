@@ -103,7 +103,12 @@ fiber-valued edge Gram blocks to the actual graph Laplacian. The `dev` CI
 has checked **12 experimental declarations** against the standard Lean
 axiom allowlist, independently of the original verified import spine.
 The full graph-wide covariant incidence factorization remains a named
-formalization target. We are not going to conceal that gap behind notation.
+**Lean** formalization target. [Its rank-independent finite-dimensional
+theorem](research/covariant_observability/GENERAL_INCIDENCE.md) is now stated
+and derived for arbitrary unitary fibers, including disconnected graphs and
+isolates; 45 complex-rank numerical controls pass. That mathematical result
+does not erase the missing proof that the original Lean objects instantiate
+the same operator. We are not going to conceal that gap behind notation.
 
 **Reconstruct the work:** [covariant-observability research map](research/covariant_observability/README.md)
 · [metric-graph calculation](research/covariant_observability/METRIC_GRAPH_LIMIT.md)
