@@ -1,0 +1,61 @@
+# Temporary one-time housekeeping workflow. Remove after verified completion.
+name: Prune fully-merged stale branches (once)
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/prune-merged-branches-once.yml
+permissions:
+  contents: write
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete only audited, unchanged, merged branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          AUDITED_MAIN: 62c37cc895545c38235d623cd8be0589bf8a30d8
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "Ref must be main"; exit 1
+          fi
+          parent="$(gh api "repos/$GH_REPO/commits/$GITHUB_SHA" --jq '.parents[0].sha')"
+          if [[ "$parent" != "$AUDITED_MAIN" ]]; then
+            echo "Unexpected main parent $parent. Aborting without deletion."; exit 1
+          fi
+          current_main="$(gh api "repos/$GH_REPO/git/ref/heads/main" --jq '.object.sha')"
+          if [[ "$current_main" != "$GITHUB_SHA" ]]; then
+            echo "Main advanced since cleanup started; aborting."; exit 1
+          fi
+          while IFS='|' read -r branch expected; do
+            [[ -n "$branch" ]] || continue
+            [[ "$branch" != "main" ]] || { echo "Refusing to delete main"; exit 1; }
+            actual="$(gh api "repos/$GH_REPO/git/ref/heads/$branch" --jq '.object.sha')"
+            if [[ "$actual" != "$expected" ]]; then
+              echo "Changed branch $branch: expected $expected, got $actual"; exit 1
+            fi
+            relation="$(gh api "repos/$GH_REPO/compare/$actual...$GITHUB_SHA" --jq '.status')"
+            if [[ "$relation" != "ahead" && "$relation" != "identical" ]]; then
+              echo "Not contained in main: $branch ($relation)"; exit 1
+            fi
+            gh api -X DELETE "repos/$GH_REPO/git/refs/heads/$branch"
+            echo "Deleted $branch ($expected; fully contained in main)"
+          done <<'AUDITED_BRANCHES'
+          claude/math-science-review-hpa0rg|cbb0d4562eec68af4323b69c4d85ab96356963e6
+          claude/peer-review-1csp3j|b89174cee696fbd7957d6a2990d580b8fba63453
+          codex/audit-provenance-replay-20261016|e2ce0056d875eb66a2558cd2e476fcf8525bfcf5
+          codex/wording-consistency-20261016|a417aba0b008ac5f9aa7526fc95734f2587b36f1
+          copilot/explain-repository-structure|ac10fc58c78e185791fb6b5a00d0e6a902177bb7
+          copilot/fix-cycle-spectrum-corollary|060e16fcac47d5c7e3a30b3f6565a6ab4733dba3
+          copilot/generate-new-paper|3d7bc4d9e39b7fe1790300c4d04d6b62caf317b9
+          copilot/polish-readme-professional-state|6c3dfca2318c6dfb36086847759e2be1831f63a8
+          copilot/review-corrections-fourier-eigenvectors|15a452de03b62f068389a2fb111b15bbf44cbae7
+          copilot/roll-back-to-commit-cbb0d4562eec68af4323b69c4d85ab|186491a3723bf4b4b11bbced82439043077407d7
+          feat/cycle-spectrum-multiset-assembly|e1728899f027fa90cf2ca84e535b7bba7d55a866
+          fix/comparator-historical-challenge-provenance-20261017|2efa78b19c638667aca3547fc8f52795cbb0a2c3
+          fix/release-v0.0.6-doi-20261018|b7ba71c36f5b73b336a6762bf19dfb675ce767b8
+          work/prove-both-cycle-multisets|0324d82ecd8b358819ed92ffc1c37ddec650a5a7
+          AUDITED_BRANCHES
