@@ -237,11 +237,16 @@ def run(seed: int = 20261028) -> dict:
         flat = Connection(n, edges, [np.eye(2, dtype=complex) for _ in edges])
         twisted = Connection(n, edges, [random_unitary(2, rng) for _ in edges])
         flat_result = verify_case(f"paired flat n={n}", flat, rng, 2)
-        twist_dim, _ = holonomy_fixed_dimension(twisted)
-        twisted_result = verify_case(f"paired U2 n={n}", twisted, rng, twist_dim)
+        # This expected answer is structural, NOT obtained from the holonomy
+        # routine being tested. On a tree every U(2) connection has two
+        # parallel modes; with a cycle, continuously sampled generic U(2)
+        # transport has no fixed vector with probability one.
+        expected_twisted_nullity = 2 if len(edges) == n - 1 else 0
+        twisted_result = verify_case(f"paired U2 n={n}", twisted, rng, expected_twisted_nullity)
         paired.append({"vertices": n, "edges": len(edges),
                        "flat_nullity": flat_result["nullity"],
                        "twisted_nullity": twisted_result["nullity"],
+                       "expected_twisted_nullity": expected_twisted_nullity,
                        "flat_LP_error": flat_result["LP_error"],
                        "twisted_LP_error": twisted_result["LP_error"]})
     # Analytical finite-cycle spectrum and controlled shrinking gap.
