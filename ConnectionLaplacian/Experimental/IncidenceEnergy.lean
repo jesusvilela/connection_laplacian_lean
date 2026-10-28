@@ -16,7 +16,7 @@ variable (G : ConnGraph)
 theorem edgeTransport_involution (mobius : Bool) (e : G.graph.edgeSet)
     (x : Fin 2 → ℝ) :
     G.edgeMatrix mobius e *ᵥ (G.edgeMatrix mobius e *ᵥ x) = x := by
-  rw [← Matrix.mulVec_mulVec, G.edgeMatrix_involution]
+  rw [Matrix.mulVec_mulVec, G.edgeMatrix_involution]
   ext i
   fin_cases i <;> simp [I₂, Matrix.mulVec, Matrix.dotProduct, Fin.sum_univ_two]
 
