@@ -1,3 +1,5 @@
+import ConnectionLaplacian.Basic
+
 /-!
 # Experimental bridge: orthogonality of the manuscript's edge transports
 
@@ -5,7 +7,6 @@ This module is intentionally **not** imported by ConnectionLaplacian.lean:
 the published Z/2 theorem surface is unchanged. It establishes the algebraic
 premise needed to construct a covariant incidence map in a later dev step.
 -/
-import ConnectionLaplacian.Basic
 
 namespace ConnectionLaplacian
 
