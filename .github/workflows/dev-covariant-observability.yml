@@ -5,6 +5,7 @@ on:
     branches: [dev]
     paths:
       - 'research/covariant_observability/**'
+      - 'ConnectionLaplacian/Experimental/**'
       - '.github/workflows/dev-covariant-observability.yml'
   workflow_dispatch:
 
@@ -26,9 +27,56 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python research/covariant_observability/experiment.py --verify | tee "${RUNNER_TEMP}/covariant-observability.json"
+          python research/covariant_observability/experiment.py --verify | tee /tmp/covariant-observability.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
           name: covariant-observability-seed-20261028
-          path: ${{ runner.temp }}/covariant-observability.json
+          path: /tmp/covariant-observability.json
+
+  experimental-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Get pinned Mathlib cache
+        run: lake exe cache get || true
+      - name: Compile standalone experimental bridge
+        run: lake build ConnectionLaplacian.Experimental.UnitaryEdge
+      - name: Report exact axiom dependency of new declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > ExperimentalAxiomAudit.lean <<'LEAN'
+          import ConnectionLaplacian.Experimental.UnitaryEdge
+          #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_involution
+          #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq
+          #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal
+          LEAN
+          lake env lean ExperimentalAxiomAudit.lean 2>&1 | tee experimental-axioms.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          output = Path("experimental-axioms.log").read_text()
+          names = [
+              "ConnectionLaplacian.ConnGraph.edgeMatrix_involution",
+              "ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq",
+              "ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal",
+          ]
+          allowed = {"propext", "Classical.choice", "Quot.sound"}
+          for name in names:
+              n = re.escape(name)
+              match = re.search(r"'" + n + r"' depends on axioms: \[([^\]]*)\]", output)
+              no_axioms = re.search(r"'" + n + r"' does not depend on any axioms", output)
+              if not match and not no_axioms:
+                  raise SystemExit("No axiom report for " + name)
+              if match:
+                  used = {item.strip() for item in match.group(1).split(",") if item.strip()}
+                  if not used.issubset(allowed):
+                      raise SystemExit("Unexpected axiom in " + name + ": " + str(used - allowed))
+          print("Experimental declarations: 3/3 checked, no nonstandard axioms")
+          PY
