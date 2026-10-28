@@ -96,6 +96,31 @@ Run:
 
     python research/covariant_observability/test_polyholonomy.py
 
+## D. Spectral visibility depth under edge refinement
+
+Let s>=1, replace **every** edge of the theta graph by a chain of s unit-weight edges, with the same net transport along the chain. This produces |V|=6s-1, |E|=6s, and girth 4s. Keep the individual holonomy conjugacy classes fixed and change only the relative axis t.
+
+**P (ordinary finite walk-counting argument):** for the matched configurations,
+
+\[
+\operatorname{tr}(L_{s,t}^{k})=
+\operatorname{tr}(L_{s,0}^{k})\quad(0\le k<4s),
+\]
+
+whereas the first distinguishing moment obeys
+
+\[
+\boxed{\operatorname{tr}(L_{s,t}^{4s})-
+\operatorname{tr}(L_{s,0}^{4s})
+=8s\,[\operatorname{tr}(AB_t^\dagger)-\operatorname{tr}(AB_0^\dagger)].}
+\]
+
+**Proof sketch with exact combinatorial content:** Expand tr(L^k) as closed vertex walks with diagonal stays carrying the vertex degree and off-diagonal steps carrying minus the edge transport. For k<4s a closed walk has no nonbacktracking cycle: after canceling immediate reversals, all transports are the identity. Thus its trace is independent of holonomy. At k=4s the three elementary simple cycles become available. Two have individual holonomy A or B (whose traces are unchanged), and the third has AB†. For this third cycle there are 4s choices of base point and two directions; the resulting 8s oriented terms contribute 8s Re tr(AB†) because traces of SU(2) matrices are real. No diagonal stay or backtracking detour fits at that order. Subtracting the matched configurations leaves the displayed formula.
+
+The nonzero signal is deliberately **not** uniform in a fixed observation order k: for every fixed integer k, all sufficiently fine subdivisions (4s>k) are invisible to that spectral-moment probe. A larger-order observer can recover the mixed-cycle signal. This is a concrete mathematical analogue of the **visibility-depth** discipline from the corrected hardness studies, but is not a SAT reduction, information-theoretic hardness theorem, or complexity lower bound.
+
+Instrument: [test_visibility_depth.py](test_visibility_depth.py) tests s=1,2,3 and relative angles pi/3,pi/2. The first contrasting orders are 4,8,12; the closed-walk formula is checked numerically with absolute tolerance 1e-5 because high matrix powers entail cancellation. A sixth-order observer distinguishes the s=1 graph but not s=2 or s=3. No claim about continuous, rescaled, hyperbolic, hypercomplex, or renormalization limits is made.
+
 ## Interpretation and relation to the hardness studies
 
 - **P:** scalar-cycle Riesz formulas remain correct within their specified fixed-fiber, fixed-topology family. They cannot be promoted to a general no-go theorem for richer bundle geometries.
@@ -118,3 +143,5 @@ This study is a controlled computational teaching example in established mathema
 - Faraji et al., *Foundations of Wilson Lines and Loops From Basic Concepts to Gauge Field Reconstruction* (2026): https://onlinelibrary.wiley.com/doi/10.1002/prop.70156
 
 The next proof bridge is still the **global** graph identity D*D=L for the paper's actual Z/2 model, including isolates. The SU(2) test is an independent expansion of the observability programme, not a retroactive change to that theorem or to the HAL submission.
+
+- Fabila-Carrasco, Lledó and Post, *A geometric construction of isospectral magnetic graphs* (2023): https://link.springer.com/article/10.1007/s13324-023-00823-9 (context for prior isospectral examples; not our construction)
