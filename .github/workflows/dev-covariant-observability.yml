@@ -37,6 +37,11 @@ jobs:
         run: |
           set -euo pipefail
           python research/covariant_observability/test_endpoint.py | tee /tmp/covariant-endpoint.json
+      - name: Cross-check Z2 Laplacian factorization on exhaustive small graphs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_z2_exact.py | tee /tmp/z2-exact-oracle.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
@@ -44,6 +49,7 @@ jobs:
           path: |
             /tmp/covariant-observability.json
             /tmp/covariant-endpoint.json
+            /tmp/z2-exact-oracle.json
 
   experimental-lean:
     runs-on: ubuntu-latest
@@ -57,16 +63,21 @@ jobs:
       - name: Get pinned Mathlib cache
         run: lake exe cache get || true
       - name: Compile standalone experimental bridge
-        run: lake build ConnectionLaplacian.Experimental.UnitaryEdge
+        run: |
+          lake build ConnectionLaplacian.Experimental.UnitaryEdge
+          lake build ConnectionLaplacian.Experimental.IncidenceEnergy
       - name: Report exact axiom dependency of new declarations
         shell: bash
         run: |
           set -euo pipefail
           cat > ExperimentalAxiomAudit.lean <<'LEAN'
-          import ConnectionLaplacian.Experimental.UnitaryEdge
+          import ConnectionLaplacian.Experimental.IncidenceEnergy
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_involution
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal
+          #print axioms ConnectionLaplacian.ConnGraph.edgeTransport_involution
+          #print axioms ConnectionLaplacian.ConnGraph.edgeEnergy_reverse
+          #print axioms ConnectionLaplacian.ConnGraph.edgeEnergy_expand
           LEAN
           lake env lean ExperimentalAxiomAudit.lean 2>&1 | tee experimental-axioms.log
           python3 - <<'PY'
@@ -77,6 +88,9 @@ jobs:
               "ConnectionLaplacian.ConnGraph.edgeMatrix_involution",
               "ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq",
               "ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal",
+              "ConnectionLaplacian.ConnGraph.edgeTransport_involution",
+              "ConnectionLaplacian.ConnGraph.edgeEnergy_reverse",
+              "ConnectionLaplacian.ConnGraph.edgeEnergy_expand",
           ]
           allowed = {"propext", "Classical.choice", "Quot.sound"}
           for name in names:
@@ -89,5 +103,5 @@ jobs:
                   used = {item.strip() for item in match.group(1).split(",") if item.strip()}
                   if not used.issubset(allowed):
                       raise SystemExit("Unexpected axiom in " + name + ": " + str(used - allowed))
-          print("Experimental declarations: 3/3 checked, no nonstandard axioms")
+          print("Experimental declarations: 6/6 checked, no nonstandard axioms")
           PY
