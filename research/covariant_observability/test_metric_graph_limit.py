@@ -51,6 +51,21 @@ def continuum_roots(a: np.ndarray, b: np.ndarray, repetitions: int = 6) -> list[
     return [ev for ev in eigenvalues for _ in range(2)]
 
 
+def continuum_heat_trace(a: np.ndarray, b: np.ndarray, t: float) -> float:
+    """Analytic Kirchhoff metric-theta heat trace, chi strictly between 0 and 9."""
+    chi = 3.0 + float(np.trace(a).real) + float(np.trace(b).real) + (
+        float(np.trace(a @ b.conj().T).real)
+    )
+    assert 0 < chi < 9
+    alpha = math.acos(math.sqrt(chi) / 3.0)
+    # m>=20 terms are beyond machine precision for t=3.
+    mixed = 2 * sum(math.exp(-t * ((m * math.pi + alpha) / 2) ** 2)
+                    for m in range(-20, 21))
+    dirichlet = 2 * sum(math.exp(-t * (m * math.pi / 2) ** 2)
+                        for m in range(1, 21))
+    return float(mixed + dirichlet)
+
+
 def test():
     cases = []
     max_logdet_error = 0.0
@@ -80,12 +95,51 @@ def test():
         convergence.append({"subdivision": s, "vertices": n, "first_10_max_abs_error": err,
                             "first_10_scaled_eigenvalues": observed[:10].tolist(),
                             "candidate_continuum_eigenvalues": expected.tolist()})
-    # Open-ended report of convergence; intentionally no posthoc threshold used.
+    # A uniform spectral-tail bound from interlacing. Delete the four
+    # pole-fiber coordinates: six identical Dirichlet path blocks remain.
+    # For the i-th ascending eigenvalue, i>=5, the comparison gives
+    # lambda_i(H_s) >= ceil((i-4)/6)^2, independently of A and B.
+    interlacing_max_violation = 0.0
+    for s in [1, 2, 4, 8, 16]:
+        a, b = matrices(math.pi / 2)
+        n, edges = subdivide(base_edges("theta", a, b), s)
+        eig = s * s * np.linalg.eigvalsh(block_laplacian(n, edges))
+        lower_bounds = np.array([0.0 if i < 4 else
+                                 float(math.ceil((i - 3) / 6) ** 2)
+                                 for i in range(len(eig))])
+        violation = float(np.max(lower_bounds - eig))
+        assert violation < 1e-8, (s, violation)
+        interlacing_max_violation = max(violation, interlacing_max_violation)
+
+    # Continuum heat trace is an analytic series computed separately
+    # from the matrix eigenvalue method (not a numerical fit).
+    a, b0 = matrices(0.)
+    _, b1 = matrices(math.pi / 2)
+    t = 3.0
+    continuum_contrast = (continuum_heat_trace(a, b1, t)
+                          - continuum_heat_trace(a, b0, t))
+    heat_comparison = []
+    for s in [4, 8, 16, 24]:
+        n, e0 = subdivide(base_edges("theta", a, b0), s)
+        _, e1 = subdivide(base_edges("theta", a, b1), s)
+        lam0 = s * s * np.linalg.eigvalsh(block_laplacian(n, e0))
+        lam1 = s * s * np.linalg.eigvalsh(block_laplacian(n, e1))
+        measured = float(np.exp(-t * lam1).sum()-np.exp(-t * lam0).sum())
+        heat_comparison.append({"s": s, "observed": measured,
+                                "analytic_limit": continuum_contrast,
+                                "absolute_error": abs(measured-continuum_contrast)})
+    assert all(b["absolute_error"] < a["absolute_error"]
+               for a, b in zip(heat_comparison, heat_comparison[1:]))
+    assert heat_comparison[-1]["absolute_error"] < 0.005
+    # Open-ended report of convergence; no claim of Lean verification.
     return {"status": "pass", "characteristic_polynomial_cases": len(cases),
             "determinant_evaluations": len(cases) * 6,
             "max_logdet_error": max_logdet_error,
             "continuum_spectral_comparison": convergence,
-            "claim": "finite exact polynomial proven on paper; metric-graph spectrum is a candidate supported by secular-limit algebra",
+            "uniform_interlacing_max_violation": interlacing_max_violation,
+            "heat_trace_limit_contrast_t3": continuum_contrast,
+            "heat_trace_continuum_comparison": heat_comparison,
+            "claim": "finite polynomial and metric-graph heat trace convergence derived via compact spectral determinant and uniform interlacing tail bound, not Lean-proved",
             "scope": "theta graph, complex fundamental SU(2), edge lengths 1, Kirchhoff coupling"}
 
 
