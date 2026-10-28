@@ -52,6 +52,11 @@ jobs:
         run: |
           set -euo pipefail
           python research/covariant_observability/test_polyholonomy.py | tee /tmp/polyholonomy.json
+      - name: Verify finite mixed-holonomy moment visibility depth
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_visibility_depth.py | tee /tmp/visibility-depth.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
@@ -62,6 +67,7 @@ jobs:
             /tmp/z2-exact-oracle.json
             /tmp/covariant-twisted-endpoint.json
             /tmp/polyholonomy.json
+            /tmp/visibility-depth.json
 
   experimental-lean:
     runs-on: ubuntu-latest
