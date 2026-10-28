@@ -1,6 +1,6 @@
 # Operator-sensitive scale: finite heat trace versus fixed-depth moments
 
-**2026-10-28 — experimental, post-HAL-submission; dev branch only.** The main paper is not amended. This note is a bounded numerical scaling test, not a continuum theorem.
+**2026-10-28 — post-HAL-submission; dev branch only.** The main paper is not amended. This note preserves the original finite-sweep preregistration, which was M. **Correction:** [HEAT_TRACE_THEOREM.md](HEAT_TRACE_THEOREM.md) subsequently proves heat-trace convergence for precisely this theta family using an exact characteristic polynomial and a uniform Cauchy-interlacing spectral-tail bound (P, ordinary mathematics, not Lean). Generalized metric/hyperbolic limits and norm-resolvent convergence remain open.
 
 ## What was found and what is now preregistered
 
@@ -13,7 +13,7 @@ H_s(u,t):=\operatorname{tr}\exp(-u s^2 L_{s,t}),\qquad
 \Delta H_s(u):=H_s(u,\pi/2)-H_s(u,0).
 \]
 
-The factor \(s^2\) follows the usual diffusive scaling for an edge of effective length \(1/s\). However, **we have not proved metric-graph convergence**, a particular boundary condition at the vertices, convergence of measures, or anything about a hyperbolic ambient geometry. The only implemented operator is the finite graph Laplacian.
+The factor \(s^2\) follows the usual diffusive scaling for an edge of effective length \(1/s\). **Subsequent correction:** we have now proved convergence of this family's heat trace to that of a **specific rank-two Kirchhoff metric theta graph**, with exact vertex conditions and eigenvalue multiplicities, using the finite secular polynomial and interlacing ([HEAT_TRACE_THEOREM.md](HEAT_TRACE_THEOREM.md)). The stronger operator-norm/resolvent comparison, convergence of full interpolation maps and any hyperbolic ambient geometry remain open.
 
 ### Exploratory sweep, not preregistered evidence of a limit
 
@@ -50,3 +50,5 @@ The analogy is narrow: **different computational observers expose different stru
 - **R:** the idea that fixed low polynomial moment blindness implies loss of all higher-observer information.
 
 A stronger next analysis should compare the scaled trace with the corresponding metric-graph covariant Laplacian and its boundary conditions rather than inferring a continuum object from a logarithmic trend.
+
+**Evidence supersession:** the former H label for a theta heat-trace limit has been retired following the exact finite secular formula and summable uniform spectral-tail proof. The original exploratory and held-out measurements remain M; this update does not retroactively preregister the proof.
