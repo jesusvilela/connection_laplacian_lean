@@ -89,8 +89,8 @@ operator, not rewriting another scalar cycle in grander notation.
 
 There is a separate, more delicate branch of the geometry:
 [IndefiniteFiber.lean](ConnectionLaplacian/Experimental/IndefiniteFiber.lean)
-uses a split (2,2) form (Q = \\mathrm{diag}(1,1,-1,-1)).
-The intended law is (U^\\mathsf{T} Q U = Q), including ordered compositions.
+uses a split-signature **(2,2)** fiber form, `Q = diag(+1,+1,-1,-1)`.
+The intended preservation law is `Uᵀ Q U = Q`, including ordered compositions.
 Its [numerical controls](research/covariant_observability/test_split22.py)
 compare noncommuting boosts with a commuting null and deliberately corrupt
 form preservation. **No positive energy or Riesz estimate transfers into
