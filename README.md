@@ -94,14 +94,23 @@ The intended preservation law is `Uᵀ Q U = Q`, including ordered compositions.
 Its [numerical controls](research/covariant_observability/test_split22.py)
 compare noncommuting boosts with a commuting null and deliberately corrupt
 form preservation. **No positive energy or Riesz estimate transfers into
-this indefinite regime without a new theorem.** These newly added Lean
-modules need their separate compilation and axiom gate; the verified count
-below refers only to declarations already accepted by CI.
+this indefinite regime without a new theorem.**
+
+The formal transport law now also permits **different local fiber types and
+forms**. If `Uᵀ Q_A U = Q_B` and `Wᵀ Q_B W = Q_C`, the composition `UW`
+preserves the appropriate form from C to A. The matrices may be rectangular;
+that is a one-way compatibility condition, **not automatically a reversible
+gauge equivalence**, nor a claim that a transport exists between arbitrary
+signatures. This is a typed foothold for geometric plurality, not a proof of
+new computational power.
 
 At the same time, the experimental Lean files connect the original
-fiber-valued edge Gram blocks to the actual graph Laplacian. The `dev` CI
-has checked **12 experimental declarations** against the standard Lean
-axiom allowlist, independently of the original verified import spine.
+fiber-valued edge Gram blocks to the actual graph Laplacian. The typed
+[directed-adjacency adapter](ConnectionLaplacian/Experimental/OrientedGraphBridge.lean)
+keeps the original graph, both edge directions, and every fiber coordinate.
+The [last verified `dev` CI run](https://github.com/jesusvilela/connection_laplacian_lean/actions/runs/40762662716)
+has now checked **21 experimental Lean declarations**, with only the three
+standard Lean axioms, independently of the submitted paper's import spine.
 The full graph-wide covariant incidence factorization remains a named
 **Lean** formalization target. [Its rank-independent finite-dimensional
 theorem](research/covariant_observability/GENERAL_INCIDENCE.md) is now stated
@@ -110,10 +119,18 @@ isolates; 45 complex-rank numerical controls pass. That mathematical result
 does not erase the missing proof that the original Lean objects instantiate
 the same operator. We are not going to conceal that gap behind notation.
 
+Matrix-valued gain-graph incidence and Laplacian theory already exists:
+for example, [Belardo and collaborators (2022)](https://doi.org/10.1016/j.laa.2021.09.009)
+develop quaternion-unit gain graphs. The present programme is about an
+explicit *Lean bridge*, trustworthy controls, and asking what survives
+transport across richer geometric regimes — **not** a claim to have invented
+nonabelian spectral graph theory.
+
 **Reconstruct the work:** [covariant-observability research map](research/covariant_observability/README.md)
 · [metric-graph calculation](research/covariant_observability/METRIC_GRAPH_LIMIT.md)
 · [heat-trace theorem and proof boundary](research/covariant_observability/HEAT_TRACE_THEOREM.md)
 · [noncommuting and commuting controls](research/covariant_observability/POLYHOLONOMY.md)
+· [general incidence and indefinite boundary](research/covariant_observability/GENERAL_INCIDENCE.md)
 · [experimental Lean modules](ConnectionLaplacian/Experimental/)
 · [latest tested dev workflow](.github/workflows/dev-covariant-observability.yml).
 
