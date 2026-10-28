@@ -179,7 +179,40 @@ def test():
                              "max_spectral_shift_vs_commuting": spectral_effect})
     assert len(data) == 24
     assert max(negative_controls) < 1e-10
+
+    # Adversarial matching: NONCOMMUTATIVITY IS NOT NECESSARY for spectral
+    # sensitivity. Both pairs (A,B+) and (A,B-) commute, with identical
+    # separate eigenvalues for A and B, yet they have distinct mixed traces.
+    # This kills the causal reading "spectral change => noncommutativity".
+    a, b_plus = matrices(0.)
+    b_minus = np.cos(B_ANGLE) * IDENTITY - 1j * np.sin(B_ANGLE) * SZ
+    assert np.max(abs(a @ b_plus - b_plus @ a)) < 1e-12
+    assert np.max(abs(a @ b_minus - b_minus @ a)) < 1e-12
+    assert abs(np.trace(b_plus) - np.trace(b_minus)) < 1e-12
+    commuting_only = []
+    for topology in ("theta", "wedge"):
+        n, eplus = subdivide(base_edges(topology, a, b_plus), 1)
+        _, eminus = subdivide(base_edges(topology, a, b_minus), 1)
+        lplus, lminus = block_laplacian(n, eplus), block_laplacian(n, eminus)
+        spectral_shift = float(np.max(abs(np.linalg.eigvalsh(lplus) -
+                                          np.linalg.eigvalsh(lminus))))
+        delta_moment = float(np.trace(np.linalg.matrix_power(lminus, 4) -
+                                      np.linalg.matrix_power(lplus, 4)).real)
+        delta_mixed = float(np.trace(a @ b_minus.conj().T).real -
+                            np.trace(a @ b_plus.conj().T).real)
+        if topology == "theta":
+            assert spectral_shift > 0.2
+            assert abs(delta_moment - 8 * delta_mixed) < 1e-8
+        else:
+            assert spectral_shift < 1e-10
+            assert abs(delta_moment) < 1e-10
+        commuting_only.append({"topology": topology,
+                               "both_pairs_commute": True,
+                               "individual_trace_B_matched": True,
+                               "spectral_shift": spectral_shift,
+                               "mixed_trace_shift": delta_mixed})
     return {"status": "pass", "cases": len(data),
+            "commuting_only_control": commuting_only,
             "theta_vs_wedge_confound": "same vertex/edge counts, cycle rank, fiber rank; DIFFERENT degree sequences; cross-graph topology-only causality NOT supported",
             "max_wedge_spectral_shift": max(negative_controls),
             "max_gauge_block_error": max_gauge_error,
