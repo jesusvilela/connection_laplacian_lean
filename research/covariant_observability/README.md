@@ -115,3 +115,11 @@ JSON output reports every case, errors, endpoint diagnostics, seed and NumPy ver
 4. Design a *separate* pre-registration for \(1<p<\infty\) bounds on specified graph families with degree, volume-growth, Poincare/heat-kernel assumptions; Tao's Euclidean theorems alone do not imply such bounds.
 
 **Provenance boundary:** This directory is a post-submission research extension. The HAL/arXiv candidate remains the historical, separately verifiable \(\mathbb Z/2\) paper; do not describe the new experiments as having been part of that submission.
+
+## 6. Polyholonomy: a controlled lift beyond the commuting manuscript fibers
+
+[POLYHOLONOMY.md](POLYHOLONOMY.md) records a post-submission experiment on two-cycle graphs with noncommuting complex rank-two SU(2) transports. Individual holonomy eigenvalues are fixed while their relative axis changes. A wedge of two triangles is a **negative control**: the spectrum is unchanged despite noncommuting holonomy. A theta graph is a **positive control**: its mixed-cycle trace enters the fourth Laplacian moment, and its spectrum changes. Both effects have elementary finite-matrix derivations and direct numerical regression in [test_polyholonomy.py](test_polyholonomy.py).
+
+The experimental Lean module [AbelianBoundary.lean](../../ConnectionLaplacian/Experimental/AbelianBoundary.lean) records why the submitted I₂ / σx model cannot encode this noncommutativity: its edge transports commute and share a common symmetric channel. The GitHub Actions axiom audit is the authority for whether those new declarations compile; this document is not a proof substitute.
+
+The controls are matched **within each topology** (graph, fiber rank, individual conjugacy classes and compute dimension). The two different topologies do *not* share the same degree sequence, so differences across them cannot be attributed exclusively to topology without further controls. No general hyperbolic or hypercomplex limit, Riesz bound or complexity advantage follows.
