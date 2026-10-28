@@ -105,6 +105,7 @@ jobs:
           lake build ConnectionLaplacian.Experimental.EdgeGram
           lake build ConnectionLaplacian.Experimental.AbelianBoundary
           lake build ConnectionLaplacian.Experimental.GlobalEntries
+          lake build ConnectionLaplacian.Experimental.GeneralFiberGauge
       - name: Report exact axiom dependency of new declarations
         shell: bash
         run: |
@@ -112,6 +113,7 @@ jobs:
           cat > ExperimentalAxiomAudit.lean <<'LEAN'
           import ConnectionLaplacian.Experimental.AbelianBoundary
           import ConnectionLaplacian.Experimental.GlobalEntries
+          import ConnectionLaplacian.Experimental.GeneralFiberGauge
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_involution
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal
@@ -124,6 +126,8 @@ jobs:
           #print axioms ConnectionLaplacian.ConnGraph.laplacian_diagonal_block
           #print axioms ConnectionLaplacian.ConnGraph.laplacian_edge_block
           #print axioms ConnectionLaplacian.ConnGraph.laplacian_nonedge_block
+          #print axioms ConnectionLaplacian.GeneralFiberGauge.transport_composes_in_gauge
+          #print axioms ConnectionLaplacian.GeneralFiberGauge.difference_gauge_covariant
           LEAN
           lake env lean ExperimentalAxiomAudit.lean 2>&1 | tee experimental-axioms.log
           python3 - <<'PY'
@@ -143,6 +147,8 @@ jobs:
               "ConnectionLaplacian.ConnGraph.laplacian_diagonal_block",
               "ConnectionLaplacian.ConnGraph.laplacian_edge_block",
               "ConnectionLaplacian.ConnGraph.laplacian_nonedge_block",
+              "ConnectionLaplacian.GeneralFiberGauge.transport_composes_in_gauge",
+              "ConnectionLaplacian.GeneralFiberGauge.difference_gauge_covariant",
           ]
           allowed = {"propext", "Classical.choice", "Quot.sound"}
           for name in names:
@@ -155,5 +161,5 @@ jobs:
                   used = {item.strip() for item in match.group(1).split(",") if item.strip()}
                   if not used.issubset(allowed):
                       raise SystemExit("Unexpected axiom in " + name + ": " + str(used - allowed))
-          print("Experimental declarations: 12/12 checked, no nonstandard axioms")
+          print("Experimental declarations: 14/14 checked, no nonstandard axioms")
           PY
