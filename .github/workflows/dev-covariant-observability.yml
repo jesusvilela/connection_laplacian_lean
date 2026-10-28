@@ -149,6 +149,7 @@ jobs:
           #print axioms ConnectionLaplacian.ArbitraryFiberIncidence.globalIncidence_gram
           #print axioms ConnectionLaplacian.IndefiniteFiber.preservesForm_mul
           #print axioms ConnectionLaplacian.IndefiniteFiber.preservesForm_one
+          #print axioms ConnectionLaplacian.IndefiniteFiber.compatibleLocalForms_compose
           #print axioms ConnectionLaplacian.IndefiniteFiber.split22_positive_direction
           #print axioms ConnectionLaplacian.IndefiniteFiber.split22_negative_direction
           #print axioms ConnectionLaplacian.ConnGraph.orientedIncidence_gram_assembled
@@ -176,6 +177,7 @@ jobs:
               "ConnectionLaplacian.ArbitraryFiberIncidence.globalIncidence_gram",
               "ConnectionLaplacian.IndefiniteFiber.preservesForm_mul",
               "ConnectionLaplacian.IndefiniteFiber.preservesForm_one",
+              "ConnectionLaplacian.IndefiniteFiber.compatibleLocalForms_compose",
               "ConnectionLaplacian.IndefiniteFiber.split22_positive_direction",
               "ConnectionLaplacian.IndefiniteFiber.split22_negative_direction",
               "ConnectionLaplacian.ConnGraph.orientedIncidence_gram_assembled",
@@ -191,5 +193,5 @@ jobs:
                   used = {item.strip() for item in match.group(1).split(",") if item.strip()}
                   if not used.issubset(allowed):
                       raise SystemExit("Unexpected axiom in " + name + ": " + str(used - allowed))
-          print("Experimental declarations: 20/20 checked, no nonstandard axioms")
+          print("Experimental declarations: 21/21 checked, no nonstandard axioms")
           PY
