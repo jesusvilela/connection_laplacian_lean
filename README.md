@@ -5,13 +5,22 @@
 [![Paper License: CC BY 4.0](https://img.shields.io/badge/paper-CC--BY--4.0-green.svg)](LICENSE-paper)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-orange.svg)](lean-toolchain)
 
-Take a finite simple graph, mark some of its edges as *wrap* edges, and build
-the ℤ/2 connection Laplacian. This repository formalizes the resulting theory
-end to end in Lean 4 / Mathlib — the block decomposition into scalar and
-signed Laplacians, the orientation double cover, and the headline facts that
-the kernel dimension of the signed Laplacian counts the *balanced* components
-and the full connection Laplacian satisfies exact kernel and spectral
-identities.
+**What happens to a signal when you carry it around a loop?** It might
+return unchanged. It might switch sheets. And, on a larger bundle, two
+different loops might not even agree about how to carry it home.
+
+This began with a finite graph, a handful of *wrap* edges and a ℤ/2
+connection. Rather than trusting the picture, I wanted to know which parts
+could be made precise — and which would survive an actual proof checker.
+The submitted formalization establishes exact kernel and spectral identities
+for that deliberately restricted model: scalar/signed decomposition,
+orientation double cover, balanced components and their relation to the
+connection Laplacian.
+
+The natural question is what survives when the fibers and their transports
+become richer. That is the **experimental `dev` programme**, separate from
+the paper and its verified import spine. We keep the geometric question
+alive; we don't pretend that a scalar cycle settles it.
 
 Everything on the verified spine is machine-checked from the three standard
 Lean axioms (`propext`, `Classical.choice`, `Quot.sound`) and nothing else.
@@ -20,8 +29,10 @@ under a real sandbox, an independent reimplementation of the paper's
 definitions, and exhaustive numerical sweeps — documented theorem by theorem
 in [`Hardening/EVIDENCE-MAP.md`](Hardening/EVIDENCE-MAP.md).
 
-The accompanying paper lives under `paper/` and has been submitted as a
-candidate to the upcoming FLoC Lisbon cycle.
+The accompanying paper lives under `paper/`. The author has submitted it to
+HAL and is pursuing an arXiv route; **submission is not acceptance or
+independent peer review**. The earlier FLoC-facing manuscript history is
+preserved in the repository.
 
 > **DOI:** <https://doi.org/10.5281/zenodo.19695396> (concept DOI). It
 > resolves to the latest archived release; each archived release is a
@@ -39,11 +50,55 @@ candidate to the upcoming FLoC Lisbon cycle.
 | Hardening harness | `Hardening/` | comparator challenge/solution modules, convention-anchor battery, run logs, evidence map, review adjudication |
 | Numerical cross-checks | `findings/` (rounds 2–6, 8–10; see methods note for omitted round 7) | Python; empirical evidence for the formal statements, not theorems |
 | Paper + guides | `paper/`, `docs/` | manuscript (LaTeX + PDF) and reader companions |
+| Experimental bundle research (`dev`) | `ConnectionLaplacian/Experimental/`, `research/covariant_observability/` | separately compiled Lean bridge lemmas, exact finite analysis, reproducible numerical tests, open geometric limits |
 
-The repository is scoped solely to the ℤ/2 connection-Laplacian
-kernel-dimension theory: the verified spine, the paper, its numerical
-cross-checks, and the hardening harness around them. Nothing else is
-maintained here.
+**On `main`**, the scope remains the ℤ/2 connection-Laplacian theory,
+its verification harness, and the submitted paper. **On `dev`**, a clearly
+separated research track investigates covariant incidence and richer
+fiber-valued observability. The two should not be conflated.
+
+## Beyond the first two fibers: the `dev` research track
+
+I am not trying to make the original ℤ/2 theorem say something it doesn't.
+Its edge matrices are `I₂` and the sheet swap `σx`; they **commute**. That
+makes scalar-channel decomposition legitimate *there*, not a universal
+description of connections.
+
+On `dev` we test more demanding transports, including complex rank-two
+`SU(2)` connections on graphs with independent cycles. The useful surprise
+is not simply "noncommutativity produces a signal": it doesn't, in general.
+On a wedge of two triangles, noncommuting holonomy can leave the Laplacian
+spectrum unchanged. On a theta graph, a mixed closed-walk character becomes
+visible. A commuting-only control can also change that theta spectrum. The
+distinguishing object is **what the chosen operator and geometry can observe**.
+
+Uniformly subdividing the theta graph gives a particularly clean problem:
+fixed-degree spectral moments lose the mixed-cycle signal at sufficiently
+large subdivisions, while a suitably rescaled heat observer retains it.
+The explicit secular determinant, a spectral-tail bound, and a conventional
+mathematical proof identify a **specific metric-graph heat-trace limit**.
+This is **not a Lean theorem** and does not establish arbitrary hyperbolic
+limits, hypercomplex advantages, or a complexity-theoretic result.
+
+At the same time, the experimental Lean files connect the original
+fiber-valued edge Gram blocks to the actual graph Laplacian. The `dev` CI
+has checked **12 experimental declarations** against the standard Lean
+axiom allowlist, independently of the original verified import spine.
+The full graph-wide covariant incidence factorization remains a named
+formalization target. We are not going to conceal that gap behind notation.
+
+**Reconstruct the work:** [covariant-observability research map](research/covariant_observability/README.md)
+· [metric-graph calculation](research/covariant_observability/METRIC_GRAPH_LIMIT.md)
+· [heat-trace theorem and proof boundary](research/covariant_observability/HEAT_TRACE_THEOREM.md)
+· [noncommuting and commuting controls](research/covariant_observability/POLYHOLONOMY.md)
+· [experimental Lean modules](ConnectionLaplacian/Experimental/)
+· [latest tested dev workflow](.github/workflows/dev-covariant-observability.yml).
+
+**Research contract.** `P-Lean` means the *stated* Lean proposition was
+compiled and its axioms audited; `P-math` means an explicit conventional
+argument needing independent review; `M` is bounded reproducible
+measurement; `H` is the open question; `R` records a superseded
+interpretation. We keep the mistakes, not only the pretty plots.
 
 ## Verified development (import spine)
 
