@@ -9,6 +9,10 @@ on:
       - '.github/workflows/dev-covariant-observability.yml'
   workflow_dispatch:
 
+concurrency:
+  group: covariant-observability-dev
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -28,11 +32,18 @@ jobs:
         run: |
           set -euo pipefail
           python research/covariant_observability/experiment.py --verify | tee /tmp/covariant-observability.json
+      - name: Verify exact flat-cycle Riesz cotangent kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_endpoint.py | tee /tmp/covariant-endpoint.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
           name: covariant-observability-seed-20261028
-          path: /tmp/covariant-observability.json
+          path: |
+            /tmp/covariant-observability.json
+            /tmp/covariant-endpoint.json
 
   experimental-lean:
     runs-on: ubuntu-latest
