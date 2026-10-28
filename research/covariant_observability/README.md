@@ -88,7 +88,7 @@ For the scalar cycle \(C_n\) with total phase \(0<\theta\le\pi\), the eigenvalue
 
 Consequently \(\|S_U\|_{2\to2}=1/\sqrt{\lambda_{\min}}\sim n/\theta\), while \(\|R_U\|_{2\to2}=1\). **Gap collapse does not by itself imply loss of the Riesz \(L^2\) bound**: the derivative cancels the normalization. In contrast, endpoint \(L^1/L^\infty\) estimates are not implied by the \(L^2\) identity.
 
-For \(\theta=1.2\) and \(n=8,16,32,64,128\), the deterministic rank-one experiment finds a log-log gap slope approximately \(-1.9994\). Its finite \(\ell^\infty\to\ell^\infty\) matrix norms grow from approximately \(2.287\) to \(4.051\), about \(0.441\) per doubling in this range. This is **M, finite-size evidence**, not an asymptotic proof of endpoint unboundedness. It is an excellent discriminator for future uniform-bound claims.
+For \(\theta=1.2\) and \(n=8,16,32,64,128\), the deterministic rank-one experiment finds a log-log gap slope approximately \(-1.9994\). Its finite \(\ell^\infty\to\ell^\infty\) matrix norms grow from approximately \(2.287\) to \(4.051\), about \(0.441\) per doubling in this range. This twisted-cycle trend is **M, finite-size evidence** and is not by itself an asymptotic proof. Separately, [ENDPOINT.md](ENDPOINT.md) gives an **exact elementary Fourier proof** that for *flat rank-one cycles* the induced \(\ell^1\) and \(\ell^\infty\) norms of the discrete Riesz transform diverge as \((2/\pi)\log n+O(1)\). Its cotangent kernel is checked independently in *test_endpoint.py*.
 
 ## 4. Pre-registration and negative controls
 
