@@ -22,6 +22,12 @@ order or orientation of the underlying unordered edge is required. -/
 def OrientedAdjacency : Type _ :=
   {uv : G.V × G.V // G.graph.Adj uv.1 uv.2}
 
+/-- The real graph's directed adjacency is finite, even with isolated vertices. -/
+noncomputable instance : Fintype G.OrientedAdjacency := by
+  classical
+  unfold OrientedAdjacency
+  infer_instance
+
 def orientedSource (e : G.OrientedAdjacency) : G.V := e.1.1
 
 def orientedTarget (e : G.OrientedAdjacency) : G.V := e.1.2
@@ -48,7 +54,7 @@ theorem orientedIncidence_gram_assembled (mobius : Bool) :
         G.orientedSource G.orientedTarget (G.orientedTransport mobius) := by
   classical
   exact ArbitraryFiberIncidence.globalIncidence_gram
-    G.orientedSource G.orientedTarget (G.orientedTransport mobius)
+    (G.orientedSource) (G.orientedTarget) (G.orientedTransport mobius)
 
 /-- Open target for the ORIGINAL manuscript Laplacian. Every actual edge
 appears twice, so normalization is by 1/2 at the Gram level.
