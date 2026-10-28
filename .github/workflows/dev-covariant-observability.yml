@@ -92,6 +92,7 @@ jobs:
           set -euo pipefail
           cat > ExperimentalAxiomAudit.lean <<'LEAN'
           import ConnectionLaplacian.Experimental.AbelianBoundary
+          import ConnectionLaplacian.Experimental.EdgeGram
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_involution
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_transpose_eq
           #print axioms ConnectionLaplacian.ConnGraph.edgeMatrix_orthogonal
@@ -121,7 +122,7 @@ jobs:
           allowed = {"propext", "Classical.choice", "Quot.sound"}
           for name in names:
               n = re.escape(name)
-              match = re.search(r"'" + n + r"' depends on axioms: \[([^\]]*)\]", output)
+              match = re.search(r"'" + n + r"' depends on axioms:\s*\[([^\]]*)\]", output)
               no_axioms = re.search(r"'" + n + r"' does not depend on any axioms", output)
               if not match and not no_axioms:
                   raise SystemExit("No axiom report for " + name)
