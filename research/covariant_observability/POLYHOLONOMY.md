@@ -76,6 +76,19 @@ Consequently the spectrum depends on the mixed trace w_t even though the two ind
 
 Reason: in the expansion of tr(L^4), degree and shorter/retracing walks do not depend on the relative axis. The mixed simple 4-cycle supplies four starting vertices times two orientations, giving coefficient 8. This is checked against the Schur-complement algebra and the direct block calculation. The first three trace moments remain fixed. No claim is made here that the entire spectrum uniquely reconstructs the underlying connection.
 
+### A matched commuting-only falsifier
+
+The theta spectral response **does not demonstrate that noncommutativity is necessary**. Fix A as above and replace B by either B_+=exp(ibZ) or B_-=exp(-ibZ). Both A/B pairs commute and have **exactly the same individual A and B eigenvalues**, but
+
+\[
+\operatorname{tr}(AB_+^\dagger)=2\cos(a-b),\qquad
+\operatorname{tr}(AB_-^\dagger)=2\cos(a+b).
+\]
+
+The two commuting connections on the base theta graph have a numerical maximum eigenvalue displacement of approximately 0.281275 and a fourth-moment contrast of -19.316299. The wedge spectra remain identical to roundoff. The same moment formula in the previous section predicts the contrast exactly.
+
+This is a decisive matched-null correction: *the mixed Wilson character*, not noncommutativity by itself, is the discriminating spectral quantity here. Noncommutativity is **neither necessary** (the commuting-only counterexample) **nor sufficient** (the noncommuting wedge counterexample) for a spectral change between otherwise matched members of these families. Do not infer a special hypercomplex advantage from these plots.
+
 ## C. Bounded numerical checks
 
 Instrument: numpy==2.3.5, fixed seed 20261028, direct block degree-minus-adjacency construction, separate incidence-factorization check, Hermitian eigensolver, random U(2) vertex gauges and vertex relabelings.
@@ -129,7 +142,7 @@ Instrument: [test_visibility_depth.py](test_visibility_depth.py) tests s=1,2,3 a
 - **M:** deterministic finite-size tests confirm these statements under the declared numerical instrument.
 - **H:** identify which observable families, comparison maps and graph geometries retain nonabelian information under a meaningful scaling or limit.
 - **S:** the polycosmic/Worldlet interpretation is a design lens, not a theorem or performance claim.
-- **R (interpretation):** replace the implicit equation "noncommuting structure automatically improves spectral observability" with the tested, topology-sensitive statement above.
+- **R (interpretation):** retire both implications that noncommutativity is sufficient or necessary for spectral variation. The mixed-cycle holonomy character and accessible closed walks are the load-bearing quantities in this finite example. The commuting-only test is a matched falsifier, not an auxiliary illustration.
 
 This is consonant with the corrected Manifold hardness studies: ambient graph structure, degree and representation can dominate apparent geometric signals. No SAT-to-bundle reduction or complexity implication is supplied here. Do not extrapolate from spectral sensitivity to solver advantage.
 
