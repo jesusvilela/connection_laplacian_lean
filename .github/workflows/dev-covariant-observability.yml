@@ -57,6 +57,11 @@ jobs:
         run: |
           set -euo pipefail
           python research/covariant_observability/test_visibility_depth.py | tee /tmp/visibility-depth.json
+      - name: Verify analytic SU2 Schur-complement characteristic polynomials
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_spectral_charpoly.py | tee /tmp/spectral-charpoly.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
@@ -68,6 +73,7 @@ jobs:
             /tmp/covariant-twisted-endpoint.json
             /tmp/polyholonomy.json
             /tmp/visibility-depth.json
+            /tmp/spectral-charpoly.json
 
   experimental-lean:
     runs-on: ubuntu-latest
