@@ -53,7 +53,7 @@ theorem globalIncidence_gram (src dst : E → V)
   classical
   ext a b
   simp [globalIncidence, assembledEdgeGram, edgeRow,
-        Matrix.mul_apply, Matrix.transpose_apply,
+        Matrix.mul_apply, Matrix.transpose_apply, Matrix.sum_apply,
         Fintype.sum_prod_type]
 
 end ArbitraryFiberIncidence
