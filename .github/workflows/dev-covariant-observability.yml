@@ -67,6 +67,11 @@ jobs:
         run: |
           set -euo pipefail
           OPENBLAS_NUM_THREADS=1 python research/covariant_observability/test_heat_visibility.py | tee /tmp/heat-visibility.json
+      - name: Verify all-subdivision SU2 theta characteristic-polynomial identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          OPENBLAS_NUM_THREADS=1 python research/covariant_observability/test_metric_graph_limit.py | tee /tmp/metric-graph-limit.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
@@ -80,6 +85,7 @@ jobs:
             /tmp/visibility-depth.json
             /tmp/spectral-charpoly.json
             /tmp/heat-visibility.json
+            /tmp/metric-graph-limit.json
 
   experimental-lean:
     runs-on: ubuntu-latest
