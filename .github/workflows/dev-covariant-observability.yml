@@ -72,6 +72,11 @@ jobs:
         run: |
           set -euo pipefail
           OPENBLAS_NUM_THREADS=1 python research/covariant_observability/test_metric_graph_limit.py | tee /tmp/metric-graph-limit.json
+      - name: Check split-signature (2,2) gauge transport and matched null
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/covariant_observability/test_split22.py | tee /tmp/split22.json
       - name: Archive finite-size evidence (not a Lean proof)
         uses: actions/upload-artifact@v4
         with:
@@ -86,6 +91,7 @@ jobs:
             /tmp/spectral-charpoly.json
             /tmp/heat-visibility.json
             /tmp/metric-graph-limit.json
+            /tmp/split22.json
 
   experimental-lean:
     runs-on: ubuntu-latest
