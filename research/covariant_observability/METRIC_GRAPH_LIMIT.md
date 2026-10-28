@@ -1,6 +1,6 @@
 # Metric-graph bridge: an exact secular determinant for every theta subdivision
 
-**Scope:** the concrete three-path theta connection, rank-two complex fundamental SU(2) representation, three paths of initial length two, every original edge subdivided into s equal combinatorial segments. **Dev only:** no change to main, HAL or arXiv submission. **Status:** the characteristic-polynomial formula and its compact spectral-parameter limit are proved by finite matrix elimination (P, ordinary mathematics); regression is M; heat-trace convergence and operator convergence are separate H until their tails and comparison maps are formally controlled. No Lean theorem is claimed here.
+**Scope:** the concrete three-path theta connection, rank-two complex fundamental SU(2) representation, three paths of initial length two, every original edge subdivided into s equal combinatorial segments. **Dev only:** no change to main, HAL or arXiv submission. **Status:** the characteristic-polynomial formula and its compact spectral-parameter limit are proved by finite matrix elimination (P, ordinary mathematics); regression is M; heat-trace convergence for this theta family is now P in ordinary mathematics via an interlacing tail bound (see HEAT_TRACE_THEOREM.md), while stronger norm-resolvent/operator convergence remains H. No Lean theorem is claimed here.
 
 ## 1. Exact finite operator and observables
 
@@ -110,14 +110,12 @@ For this generic chi regime, each root has complex multiplicity two. The first t
 
 Local uniform analytic convergence in (2), together with the multiplicity-sensitive root-continuity theorem (Hurwitz/Rouché on small disks around isolated zeros), yields the **bounded-window spectral convergence of the scaled eigenvalues** with multiplicities. It does not on its own control the *full spectral tail* in a trace.
 
-### Separate heat trace status
+### Superseding heat-trace theorem (P, ordinary mathematics; not Lean)
 
-Numerically the rescaled heat-trace contrast remains near -0.19 through s=24, whereas an unrescaled-time observer misses it. The determinant limit makes the persistence plausible and identifies its low-frequency candidate. It does **not**, without a uniform high-frequency tail estimate, prove
-\[
-\lim_{s\to\infty}\operatorname{tr}e^{-tH_s}
-=\operatorname{tr}e^{-t\Delta_\Gamma}.
-\]
-A defensible next theorem would combine min-max comparison/interpolation estimates with a uniform eigenvalue counting bound and then dominated convergence for each fixed \(t>0\). Until then, the heat-trace asymptotic remains H; its finite s=16,24 tests remain M.
+The earlier H status of the heat-trace limit for this precise theta family is **retired**. [HEAT_TRACE_THEOREM.md](HEAT_TRACE_THEOREM.md) supplies the previously missing uniform high-frequency tail estimate: delete the four pole-fiber coordinates of the scaled Hermitian matrix, apply Cauchy interlacing with six Dirichlet path blocks, and obtain \(\lambda_{i,s}\ge\lceil(i-4)/6\rceil^2\) for \(i\ge5\), uniformly in subdivisions and transports. Combining this summable Gaussian tail with the compact-window eigenvalue convergence already derived above proves full heat-trace convergence for every positive diffusion time. At time 3 the declared SU(2) contrast tends to approximately \(-0.191276891615\).
+
+This **does not** prove norm-resolvent convergence or quasi-unitary equivalence, which remain H. The finite values at \(s=16,24\) remain M and are not the basis of the theorem.
+
 
 ## 4. Independent oracles and strict boundary
 
@@ -125,9 +123,9 @@ Run
 \`python research/covariant_observability/test_metric_graph_limit.py\`.
 The script constructs \(L_s\) by an independent direct block-adjacency path, compares \(\log\det(L_s-zI)\) with (1) for subdivisions s=1,2,3,4,6, four holonomy axes and six off-spectrum real parameters per setting, and prints candidate continuum low modes from (2) for s=4,8,16,24.
 
-- **P:** (1), (2), and compact-window root convergence in this fixed SU(2) theta family.
+- **P:** (1), (2), compact-window root convergence, and the separate heat-trace theorem with a uniform interlacing tail (see HEAT_TRACE_THEOREM.md).
 - **M:** bounded numerical determinant and low-spectrum checks with a pinned NumPy runtime and direct eigensolvers.
-- **H:** heat-trace convergence in infinite dimension; quasi-unitary resolvent convergence under explicit \(J_s\); any general graph/hyperbolic/hypercomplex extension.
+- **H:** norm-resolvent or quasi-unitary operator convergence under explicit \(J_s\); any general graph/hyperbolic/hypercomplex extension.
 - **R:** interpreting a fixed low-order spectral-moment failure as an absolute information-theoretic obstruction.
 
 A comparison to metric graph literature should be made before any novelty claim. In particular, this is one classical graph discretization in an established spectral family, not a result about SAT hardness or an escape from universal complexity limits.
