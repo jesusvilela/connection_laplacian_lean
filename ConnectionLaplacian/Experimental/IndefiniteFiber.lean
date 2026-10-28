@@ -55,5 +55,26 @@ theorem split22_positive_direction : split22 0 0 = 1 := by
 theorem split22_negative_direction : split22 2 2 = -1 := by
   simp [split22]
 
+/-- Heterogeneous metric transport: the three fibers need not have the
+same rank, and their local bilinear forms need not be equal.
+
+A rectangular U transports from the B-fiber into the A-fiber; W transports
+from C into B. This is an implication under explicit compatibility laws,
+not a claim that such maps exist for arbitrary dimensions or signatures. -/
+theorem compatibleLocalForms_compose
+    {A B C : Type*} [Fintype A] [Fintype B] [Fintype C]
+    (QA : Matrix A A ℝ) (QB : Matrix B B ℝ) (QC : Matrix C C ℝ)
+    (U : Matrix A B ℝ) (W : Matrix B C ℝ)
+    (hU : U.transpose * QA * U = QB)
+    (hW : W.transpose * QB * W = QC) :
+    (U * W).transpose * QA * (U * W) = QC := by
+  calc
+    (U * W).transpose * QA * (U * W) =
+        W.transpose * (U.transpose * QA * U) * W := by
+          rw [Matrix.transpose_mul]
+          simp only [Matrix.mul_assoc]
+    _ = W.transpose * QB * W := by rw [hU]
+    _ = QC := hW
+
 end IndefiniteFiber
 end ConnectionLaplacian
