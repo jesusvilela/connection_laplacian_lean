@@ -18,10 +18,28 @@ class Connection:
     vertices: int
     edges: list[tuple[int, int]]
     transport: list[np.ndarray]  # U_uv maps fiber at v to fiber at u
+    rank: int | None = None       # mandatory on graphs with no edges
+
+    def fiber_rank(self) -> int:
+        if self.rank is not None:
+            if self.rank < 1:
+                raise ValueError("fiber rank must be positive")
+            return self.rank
+        if not self.transport:
+            raise ValueError("specify the fiber rank for an edgeless graph")
+        shape = self.transport[0].shape
+        if len(shape) != 2 or shape[0] != shape[1] or shape[0] < 1:
+            raise ValueError("transport must be a nonempty square matrix")
+        return int(shape[0])
 
     def incidence(self) -> np.ndarray:
-        assert len(self.edges) == len(self.transport)
-        rank = self.transport[0].shape[0] if self.transport else 1
+        if self.vertices < 1:
+            raise ValueError("this numerical harness requires at least one vertex")
+        if len(self.edges) != len(self.transport):
+            raise ValueError("each edge must have exactly one transport")
+        if len(set(self.edges)) != len(self.edges):
+            raise ValueError("duplicate edges violate the simple-graph contract")
+        rank = self.fiber_rank()
         mat = np.zeros((len(self.edges) * rank, self.vertices * rank), dtype=complex)
         for ei, ((u, v), U) in enumerate(zip(self.edges, self.transport)):
             if not (0 <= u < v < self.vertices):
@@ -33,9 +51,16 @@ class Connection:
         return mat
 
     def gauge(self, gs: list[np.ndarray]) -> "Connection":
+        r = self.fiber_rank()
+        if len(gs) != self.vertices or any(
+            g.shape != (r, r) or not np.allclose(g.conj().T @ g, np.eye(r), atol=1e-11)
+            for g in gs
+        ):
+            raise ValueError("provide one unitary gauge per vertex")
         return Connection(self.vertices, self.edges[:],
                           [gs[u] @ U @ gs[v].conj().T
-                           for (u, v), U in zip(self.edges, self.transport)])
+                           for (u, v), U in zip(self.edges, self.transport)],
+                          rank=r)
 
 
 def cycle(n: int, phase: float = 0.0, rank: int = 1) -> Connection:
@@ -44,7 +69,7 @@ def cycle(n: int, phase: float = 0.0, rank: int = 1) -> Connection:
     edges = [(i, i + 1) for i in range(n - 1)] + [(0, n - 1)]
     transports = [np.eye(rank, dtype=complex) for _ in edges]
     transports[-1][0, 0] = np.exp(1j * phase)
-    return Connection(n, edges, transports)
+    return Connection(n, edges, transports, rank=rank)
 
 
 def z2_bundle(vertices: int, edges: list[tuple[int, int]],
@@ -54,7 +79,7 @@ def z2_bundle(vertices: int, edges: list[tuple[int, int]],
         raise ValueError("all wrapped edges must exist")
     return Connection(vertices, edges,
                       [swap.copy() if edge in wrapped else np.eye(2, dtype=complex)
-                       for edge in edges])
+                       for edge in edges], rank=2)
 
 
 def random_unitary(rank: int, rng: np.random.Generator) -> np.ndarray:
@@ -114,7 +139,7 @@ def holonomy_fixed_dimension(conn: Connection) -> tuple[int, list[np.ndarray]]:
 
     Requires a connected graph. Tree-edge constraints cancel by construction.
     """
-    r = conn.transport[0].shape[0]
+    r = conn.fiber_rank()
     adj = [[] for _ in range(conn.vertices)]
     for ei, ((u, v), U) in enumerate(zip(conn.edges, conn.transport)):
         adj[u].append((v, U.conj().T, ei))
@@ -156,7 +181,7 @@ def verify_case(name: str, conn: Connection, rng: np.random.Generator,
         np.vdot(F @ f, F @ f).real for F in out["filters"])
     energy_err = abs(lhs - rhs) / max(1, abs(lhs))
     assert energy_err < 2e-9
-    rank = conn.transport[0].shape[0]
+    rank = conn.fiber_rank()
     gs = [random_unitary(rank, rng) for _ in range(conn.vertices)]
     G = block_diagonal(gs)
     H = block_diagonal([gs[u] for u, _ in conn.edges])
