@@ -5,7 +5,7 @@
 > results. This guide is an orientation aid, **not** a proof certificate for
 > the port. The canonical source formalization remains this repository.
 
-**Work in progress:** [Mathlib fork and contribution branch](https://github.com/jesusvilela/mathlib4/tree/feat/signed-graph-laplacian).
+**Work in progress:** [verified development branch](https://github.com/jesusvilela/mathlib4/tree/feat/signed-graph-laplacian) and [provisional clean submission branch](https://github.com/jesusvilela/mathlib4/tree/submission/signed-graph-laplacian).
 **First proposed library module:**
 [`SignedLapMatrix.lean`](https://github.com/jesusvilela/mathlib4/blob/feat/signed-graph-laplacian/Mathlib/Combinatorics/SimpleGraph/SignedLapMatrix.lean).
 
@@ -61,8 +61,11 @@ An ordinary edge contributes `(x_u - x_v)²`; a wrap edge contributes
 locally constant, *not* the nonnegativity of its energy.
 
 The source proof is in `ConnectionLaplacian/L13_PSD.lean`. The new Mathlib
-proof is being adapted to Mathlib's current APIs and needs a successful
-current-toolchain build before any claim of formal verification.
+proof has now compiled with Mathlib's current toolchain at commit
+[`c13c8a5`](https://github.com/jesusvilela/mathlib4/commit/c13c8a5c4107ecf0334f02e94705a44201171273)
+([successful build](https://github.com/jesusvilela/mathlib4/actions/runs/41430783636)).
+Later source-style edits must be compiled and audited independently before
+receiving the same status.
 
 ### 2. Null vectors are parallel sections
 
@@ -130,8 +133,8 @@ Never reintroduce the old total-parity criterion when porting to Mathlib.
 | Layer | Status | Source or gate |
 |---|---|---|
 | Original Z/2 development | Repository-reported Lean verification at **v4.11.0** | `ConnectionLaplacian.lean`, `Hardening/`, its CI and evidence map |
-| Current Mathlib definitions, symmetry, signless case | **Draft port** | Fork branch `feat/signed-graph-laplacian` |
-| General energy, PSD and edgewise-kernel theorems | **Draft Lean proofs, not yet accepted by Lean** | Same fork branch; targeted fork CI |
+| Current Mathlib definitions, symmetry, signless case | **Lean build passed at `c13c8a5`**; subsequent cleanup under review | [Successful build](https://github.com/jesusvilela/mathlib4/actions/runs/41430783636) |
+| General energy, PSD and edgewise-kernel theorems | **Lean build passed at `c13c8a5`**; latest warning cleanup awaits checks | [Targeted fork CI](https://github.com/jesusvilela/mathlib4/actions) |
 | Balance classification in Mathlib | **Future port**, mathematically justified by source | The future gauge/holonomy and componentwise kernel proofs |
 | Full two-layer connection Laplacian in Mathlib | **Future integration** | Keep its matrix identification and cover assumptions explicit |
 
