@@ -33,6 +33,10 @@ candidate to the upcoming FLoC Lisbon cycle.
 
 ## What is where
 
+**Mathlib contribution in progress.** [The staged Mathlib port field guide](docs/mathlib-port-bridge.md)
+explains the reusable signed-graph definitions, energy/kernel proofs, corrected
+balance invariant, and the separate compilation and upstream-review gates.
+
 | Layer | Contents | Epistemic status |
 |---|---|---|
 | Verified spine | everything imported by `ConnectionLaplacian.lean` | machine-checked Lean proofs, CI-enforced trust boundary |
