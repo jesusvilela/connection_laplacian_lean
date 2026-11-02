@@ -6,7 +6,7 @@
 > the port. The canonical source formalization remains this repository.
 
 **Work in progress:** [verified development branch](https://github.com/jesusvilela/mathlib4/tree/feat/signed-graph-laplacian) and [clean submission branch](https://github.com/jesusvilela/mathlib4/tree/submission/signed-graph-laplacian). The submission branch excludes the fork-only CI workflow; an upstream PR has **not** yet been opened.
-**Upstream-based, single-commit patch:** [`81a0413`](https://github.com/jesusvilela/mathlib4/commit/81a0413db77f574663207b64541350d493dcd2ce), containing only the signed-Laplacian module and its `Mathlib.lean` import. The separate [upstream-base verification run](https://github.com/jesusvilela/mathlib4/actions/runs/41434003371) independently tests the patch against synchronized Mathlib `master`.
+**Upstream-based, single-commit patch:** [`81a0413`](https://github.com/jesusvilela/mathlib4/commit/81a0413db77f574663207b64541350d493dcd2ce), containing only the signed-Laplacian module and its `Mathlib.lean` import. The separate [upstream-base verification run](https://github.com/jesusvilela/mathlib4/actions/runs/41434003371) **passed** against synchronized Mathlib `master`, including build, `mk_all` check, targeted `leanchecker`, declaration linter and `#print axioms` checks. The clean submission branch and verification branch contain identical source blobs for the two proposed Mathlib files; only the latter has a temporary workflow.
 **First proposed library module:**
 [`SignedLapMatrix.lean`](https://github.com/jesusvilela/mathlib4/blob/feat/signed-graph-laplacian/Mathlib/Combinatorics/SimpleGraph/SignedLapMatrix.lean).
 
@@ -138,6 +138,7 @@ Never reintroduce the old total-parity criterion when porting to Mathlib.
 | Current Mathlib definitions, symmetry, signless case | **Cleaned development build, Mathlib declaration linter and targeted checker passed at `b8c27d7`** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41433770120) |
 | General energy, PSD and edgewise-kernel theorems | **Compiled and Mathlib-linted at `b8c27d7`; four main theorems axiom-audited** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41433770120) |
 | Balance classification in Mathlib | **Future port**, mathematically justified by source | The future gauge/holonomy and componentwise kernel proofs |
+| One-commit upstream-based submission patch | **Compiler-, checker-, linter- and axiom-audited; community acceptance pending** | [Upstream-based verification CI](https://github.com/jesusvilela/mathlib4/actions/runs/41434003371) |
 | Full two-layer connection Laplacian in Mathlib | **Future integration** | Keep its matrix identification and cover assumptions explicit |
 
 A theorem's mathematical correctness, the fidelity of its Lean statement,
