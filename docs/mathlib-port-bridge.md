@@ -154,21 +154,23 @@ Run:
 python3 scripts/verify_signed_laplacian_small.py
 ```
 
-A current direct execution of that script reported:
+The [2026-11-02 GitHub Actions run](https://github.com/jesusvilela/connection_laplacian_lean/actions/runs/41429453701)
+passed the exact audit after adding orientation-cover tests. Its checks include:
 
-```text
-PASS: 760 exact signed graphs, n=1..4
-PASS: 59808 exact quadratic energy checks
-PASS: 420 full-graph gauge conjugation checks
-PASS: K4 balanced signings = 8; even-negative unbalanced signings = 28
-```
+- All **760** signed simple graphs on one through four labeled vertices.
+- **59,808** vector energy identities using `{-1,0,1}` entries.
+- **420** balanced whole-graph signings with a checked diagonal-gauge conjugation.
+- For every signed graph, the ordinary double cover satisfies
+  `components(cover) = components(base) + balancedComponents(base)`.
+- For every signed graph, exact rational rank confirms
+  `nullity(coverLap) = nullity(baseLap) + nullity(signedLap)`.
+- For `K4`, exactly **8** of 64 signings are balanced, while **28** of
+  the even-negative-edge signings are unbalanced.
 
-The checks compare the signed-Laplacian nullity with the number of balanced
-connected components; compare the matrix quadratic form with the edgewise
-sum of squares for every vector with entries in `{-1,0,1}`; and verify
-gauge conjugation when every component is balanced. They are independent
-finite examples and regression checks (**measured evidence**), not
-substitutes for the universally quantified Lean proofs.
+The script explicitly constructs the two-sheet cover and computes its
+connected components **independently** of matrix rank. These are bounded
+regression checks (**measured evidence**), not universally quantified
+Lean proofs.
 
 ## Review workflow
 
