@@ -6,6 +6,7 @@
 > the port. The canonical source formalization remains this repository.
 
 **Work in progress:** [verified development branch](https://github.com/jesusvilela/mathlib4/tree/feat/signed-graph-laplacian) and [clean submission branch](https://github.com/jesusvilela/mathlib4/tree/submission/signed-graph-laplacian). The submission branch excludes the fork-only CI workflow; an upstream PR has **not** yet been opened.
+**Upstream-based, single-commit patch:** [`81a0413`](https://github.com/jesusvilela/mathlib4/commit/81a0413db77f574663207b64541350d493dcd2ce), containing only the signed-Laplacian module and its `Mathlib.lean` import. The separate [upstream-base verification run](https://github.com/jesusvilela/mathlib4/actions/runs/41434003371) independently tests the patch against synchronized Mathlib `master`.
 **First proposed library module:**
 [`SignedLapMatrix.lean`](https://github.com/jesusvilela/mathlib4/blob/feat/signed-graph-laplacian/Mathlib/Combinatorics/SimpleGraph/SignedLapMatrix.lean).
 
@@ -134,8 +135,8 @@ Never reintroduce the old total-parity criterion when porting to Mathlib.
 | Layer | Status | Source or gate |
 |---|---|---|
 | Original Z/2 development | Repository-reported Lean verification at **v4.11.0** | `ConnectionLaplacian.lean`, `Hardening/`, its CI and evidence map |
-| Current Mathlib definitions, symmetry, signless case | **Current toolchain build passed at `45f9e71`** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41432293826) |
-| General energy, PSD and edgewise-kernel theorems | **Compiled and checked at `45f9e71`; four end theorems axiom-audited** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41432293826) |
+| Current Mathlib definitions, symmetry, signless case | **Cleaned development build, Mathlib declaration linter and targeted checker passed at `b8c27d7`** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41433770120) |
+| General energy, PSD and edgewise-kernel theorems | **Compiled and Mathlib-linted at `b8c27d7`; four main theorems axiom-audited** | [Verified CI](https://github.com/jesusvilela/mathlib4/actions/runs/41433770120) |
 | Balance classification in Mathlib | **Future port**, mathematically justified by source | The future gauge/holonomy and componentwise kernel proofs |
 | Full two-layer connection Laplacian in Mathlib | **Future integration** | Keep its matrix identification and cover assumptions explicit |
 
