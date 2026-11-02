@@ -193,6 +193,40 @@ Lean proofs.
    GitHub/Zulip discussions should be written by the contributor, in
    accordance with Mathlib's current policy.
 
+## Human reconstruction before approaching reviewers
+
+The code compiling is necessary but not sufficient for a useful Mathlib PR.
+The contributor should be able to answer the following without outsourcing
+the explanation to an AI assistant:
+
+1. **Model:** Why does an unoriented `SimpleGraph.EdgeLabeling Bool` supply
+   one consistent sign per edge? Why do negative labels encode a
+   `ℤ/2ℤ`-connection rather than arbitrary unitary transport?
+2. **Energy:** Starting from `Lσ = D - Aσ`, derive
+   `xᵀLσx = (1/2) Σ_{u~v} (x_u - σ_uv x_v)²`.
+   Explain the factor of one-half and the difference between ordered
+   vertex pairs and unordered edges.
+3. **Kernel:** Explain why vanishing of the sum of nonnegative squares is
+   equivalent to the edgewise relation `x_u = σ_uv x_v`, and why the
+   positive-semidefinite kernel theorem lets us replace zero *energy*
+   with zero *operator action*.
+4. **Topology:** On a connected component, explain how sign propagation
+   around a closed walk detects nontrivial holonomy. Give a small
+   example showing that an *even total number* of negative edges is
+   not sufficient for balance.
+5. **Library design:** Why is this first PR limited to reusable matrix
+   definitions, positivity and kernel characterization, leaving the
+   full double cover and balanced-component dimension theorem for
+   follow-up contributions? What generalizations might Mathlib
+   reviewers reasonably ask for?
+
+This is a **self-study checklist**, not a comment or PR description to
+paste into GitHub or Zulip. Mathlib's
+[AI contribution policy](https://leanprover-community.github.io/contribute/index.html#use-of-ai)
+requires substantial understanding and human-written GitHub/Zulip discussion.
+The precise extent of AI assistance must also be disclosed when a PR is
+eventually opened.
+
 The objective is not to transfer the entire research archive at once.
 It is to expose the smallest stable operators and invariants that other
 mathematicians can reuse, inspect and independently reconstruct.
