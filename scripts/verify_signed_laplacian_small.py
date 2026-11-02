@@ -84,10 +84,43 @@ def energy(edges, vector):
     return sum((vector[u] - sign * vector[v]) ** 2 for u, v, sign in edges)
 
 
+
+def cover_edges(edges):
+    """Ordinary edges of the two-sheet orientation cover on vertices 2*u+b."""
+    lifted = []
+    for u, v, sign in edges:
+        for sheet in (0, 1):
+            target_sheet = sheet if sign == 1 else 1 - sheet
+            lifted.append((2 * u + sheet, 2 * v + target_sheet, 1))
+    return lifted
+
+
+def component_count(n, edges):
+    adjacency = [[] for _ in range(n)]
+    for u, v, _ in edges:
+        adjacency[u].append(v)
+        adjacency[v].append(u)
+    seen = set()
+    components = 0
+    for start in range(n):
+        if start in seen:
+            continue
+        components += 1
+        seen.add(start)
+        todo = [start]
+        for u in todo:
+            for v in adjacency[u]:
+                if v not in seen:
+                    seen.add(v)
+                    todo.append(v)
+    return components
+
+
 def verify(max_n=4):
     case_count = 0
     energy_checks = 0
     gauge_checks = 0
+    cover_checks = 0
     for n in range(1, max_n + 1):
         possible = list(combinations(range(n), 2))
         for statuses in product((0, 1, -1), repeat=len(possible)):
@@ -96,6 +129,16 @@ def verify(max_n=4):
             balanced, tau, components, all_balanced = balanced_component_count(n, edges)
             nullity = n - exact_rank(lap)
             assert nullity == balanced, (n, statuses, nullity, balanced)
+            ordinary_nullity = n - exact_rank(
+                signed_matrix(n, [(u, v, 1) for u, v, _ in edges]))
+            assert ordinary_nullity == components, (n, statuses)
+            lifted = cover_edges(edges)
+            cover_components = component_count(2 * n, lifted)
+            cover_nullity = 2 * n - exact_rank(signed_matrix(2 * n, lifted))
+            assert cover_components == components + balanced, (n, statuses)
+            assert cover_nullity == cover_components, (n, statuses)
+            assert cover_nullity == ordinary_nullity + nullity, (n, statuses)
+            cover_checks += 1
             if all_balanced:
                 ordinary = signed_matrix(n, [(u, v, 1) for u, v, _ in edges])
                 for i in range(n):
@@ -121,6 +164,7 @@ def verify(max_n=4):
     print('PASS: {} exact signed graphs, n=1..{}'.format(case_count, max_n))
     print('PASS: {} exact quadratic energy checks'.format(energy_checks))
     print('PASS: {} full-graph gauge conjugation checks'.format(gauge_checks))
+    print('PASS: {} orientation-cover component and kernel-splitting checks'.format(cover_checks))
     print('PASS: K4 balanced signings = {}; even-negative unbalanced signings = {}'.format(
         balanced_k4, even_but_unbalanced_k4))
 
