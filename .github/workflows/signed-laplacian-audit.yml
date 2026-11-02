@@ -1,0 +1,24 @@
+name: Signed Laplacian finite audit
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_signed_laplacian_small.py'
+      - '.github/workflows/signed-laplacian-audit.yml'
+  pull_request:
+    paths:
+      - 'scripts/verify_signed_laplacian_small.py'
+      - '.github/workflows/signed-laplacian-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-signed-graphs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify finite signed-graph identities using exact arithmetic
+        run: python3 scripts/verify_signed_laplacian_small.py
