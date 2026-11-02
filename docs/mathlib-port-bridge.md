@@ -139,6 +139,37 @@ A theorem's mathematical correctness, the fidelity of its Lean statement,
 the acceptance of its proof by the current Lean kernel, and its suitability
 for Mathlib are **four different checks**.
 
+## Reproducible finite counterexample and energy audit
+
+The dependency-free script
+[`scripts/verify_signed_laplacian_small.py`](../scripts/verify_signed_laplacian_small.py)
+checks **all** signed simple graphs on labeled vertex sets of size 1 through 4:
+each potential unordered edge is absent, positive or negative (760 cases).
+It uses exact rational Gaussian elimination rather than floating-point
+rank thresholds.
+
+Run:
+
+```bash
+python3 scripts/verify_signed_laplacian_small.py
+```
+
+A current direct execution of that script reported:
+
+```text
+PASS: 760 exact signed graphs, n=1..4
+PASS: 59808 exact quadratic energy checks
+PASS: 420 full-graph gauge conjugation checks
+PASS: K4 balanced signings = 8; even-negative unbalanced signings = 28
+```
+
+The checks compare the signed-Laplacian nullity with the number of balanced
+connected components; compare the matrix quadratic form with the edgewise
+sum of squares for every vector with entries in `{-1,0,1}`; and verify
+gauge conjugation when every component is balanced. They are independent
+finite examples and regression checks (**measured evidence**), not
+substitutes for the universally quantified Lean proofs.
+
 ## Review workflow
 
 1. Compile the proposed module using the fork's `lean-toolchain`:
