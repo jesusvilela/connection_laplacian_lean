@@ -58,6 +58,8 @@ jobs:
             git -c user.name='github-actions[bot]' \
                 -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
                 commit -m 'paper: regenerate pagination-verified PDF for v0.0.8'
+            git fetch origin paper/hexagon-typography-v0.0.8
+            git rebase origin/paper/hexagon-typography-v0.0.8
             git push origin HEAD:paper/hexagon-typography-v0.0.8
           fi
       - name: Preserve PDF and build diagnostics
