@@ -7,6 +7,21 @@
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{longtable} % page-breaking formalisation index
+\usepackage{etoolbox}
+% TeX Live 2025 compatibility for the longtable output routine.
+% In its two page-output branches, longtable inserts \vss (infinite shrink).
+% The LaTeX mark-extraction \vsplit can then emit the otherwise harmless
+% "ignored error: Infinite glue shrinkage found in box being split" message.
+% Hexagon's strict preview reports that log message as a compilation error.
+% Replace both \vss tokens with finite shrink, following the LaTeX project's
+% upstream analysis: https://github.com/latex3/latex2e/issues/1907
+% On newer longtable versions without these \vss tokens, this is a no-op.
+\makeatletter
+\patchcmd{\LT@output}{\vss}%
+  {\vskip 0pt plus \maxdimen minus \normalbaselineskip}{}{}
+\patchcmd{\LT@output}{\vss}%
+  {\vskip 0pt plus \maxdimen minus \normalbaselineskip}{}{}
+\makeatother
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=black!70!blue,citecolor=black!70!blue,urlcolor=black!70!blue]{hyperref}
 \usepackage{xurl}
