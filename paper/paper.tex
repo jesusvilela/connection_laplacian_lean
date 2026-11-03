@@ -68,12 +68,12 @@ Kernel Dimension of the $\ZZ/2$ Connection Laplacian \\
 on a Finite Simple Graph \\
 {\small (A Formalisation in Lean~4 / Mathlib v4.11.0)}}
 
-\author{J.~Vilela}
-\address{Independent}
+\author{Jes\'us Vilela Jato}
+\address{Independent Researcher}
 \email{jesusvilela@outlook.com}
-\date{\today}
+\date{3 November 2026}
 
-\subjclass[2020]{05C50, 05C22, 55N31, 68V15}
+\subjclass[2020]{05C50, 05C22, 68V20, 68V15}
 \keywords{signed graph, connection Laplacian, double cover, balanced
   component, formal proof, Lean, Mathlib}
 
@@ -1132,10 +1132,19 @@ is to retain explicit counterexamples and verified replacement statements.
 
 \bigskip
 
-\noindent\textit{Acknowledgements.} This work was carried out as
-an independent formal-verification project on combinatorial
-spectral identities, guided by an initial written plan and
-adversarial review.
+\noindent\textit{Acknowledgements and AI provenance.} This work was carried
+out as an independent, AI-assisted formal-verification project on
+combinatorial spectral identities. The human author directed the research
+questions, mathematical scope, specification checks, and adversarial
+review. Language models, including OpenAI ChatGPT and Anthropic Claude,
+contributed substantially to exposition, Lean formalization, proof
+construction, testing, and review. The author does not claim to have
+independently reconstructed every formal proof. The source repository
+records the development, corrections, and evidence boundaries in
+\path{docs/methods-note.md} and \path{Hardening/EVIDENCE-MAP.md}.
+Lean kernel acceptance establishes the formalized statements under
+explicit assumptions, not their originality or their match to every
+informal interpretation.
 
 %=============================================================
 \section{Further Identities: Traces, Bounds, and the
@@ -1740,6 +1749,14 @@ version DOI
 \href{https://doi.org/10.5281/zenodo.23401896}{10.5281/zenodo.23401896})
 predates the full cycle-spectrum proofs and their comparator replay;
 \path{.github/release-notes/} lists what each later release adds.
+Release \href{https://github.com/jesusvilela/connection_laplacian_lean/releases/tag/v.0.0.6}{v.0.0.6}
+(18 October 2026; commit \texttt{58fe64b}) is the historical archived
+verification baseline. This manuscript also incorporates editorial and
+explanatory corrections made on the original repository's \texttt{main}
+branch through commit \texttt{ae64b5e} (2 November 2026). These
+subsequent corrections should not be mistaken for changes to the
+archived release's proof artifacts. The Lean 4.11.0 formalization remains
+pinned; the newer Mathlib port is separate research work.
 From the project root,
 \begin{quote}
 \verb|lake build|
