@@ -6,6 +6,7 @@
 \usepackage{stmaryrd}
 \usepackage{enumitem}
 \usepackage{booktabs}
+\usepackage{longtable} % page-breaking formalisation index
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=black!70!blue,citecolor=black!70!blue,urlcolor=black!70!blue]{hyperref}
 \usepackage{xurl}
@@ -1643,100 +1644,108 @@ in two separate runs; the evidence map records their exact scope. The file
 paths are relative to
 \path{connection_laplacian_lean/ConnectionLaplacian/}.
 
-\begin{center}\footnotesize
-\renewcommand{\arraystretch}{1.05}
-\begin{tabular}{@{}p{3.2cm}p{6.2cm}p{4.4cm}@{}}
+{\footnotesize
+\renewcommand{\arraystretch}{1.08}
+\setlength{\LTpre}{0.6\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}p{3.2cm}p{6.4cm}p{4.2cm}@{}}
 \toprule
-Paper statement & Lean name & File \\
+Paper statement & Lean declaration & Source file \\
 \midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\emph{Formalisation index (continued)}} \\[0.4em]
+\toprule
+Paper statement & Lean declaration & Source file \\
+\midrule
+\endhead
 Eq.~\eqref{eq:connection-laplacian}, \S\ref{sec:prelim} (data) &
-  \texttt{ConnGraph}, \texttt{laplacian} & \texttt{Basic.lean} \\
+  \path{ConnGraph}, \path{laplacian} & \path{Basic.lean} \\
 Thm.~\ref{thm:scalar-ker} &
-  \texttt{scalarLaplacian\_kernel\_dim} & \texttt{KernelDim.lean} \\
+  \path{scalarLaplacian_kernel_dim} & \path{KernelDim.lean} \\
 Thm.~\ref{thm:decomp} (direct sum) &
-  \texttt{laplacian\_decomposes} & \texttt{KernelDim.lean} \\
+  \path{laplacian_decomposes} & \path{KernelDim.lean} \\
 Thm.~\ref{thm:decomp} (ker dim) &
-  \path{laplacian_kernel_dim_decomposes} & \texttt{L8\_Recognition.lean} \\
+  \path{laplacian_kernel_dim_decomposes} & \path{L8_Recognition.lean} \\
 Thm.~\ref{thm:cover-splits} &
-  \texttt{scalarLap\_cover\_splits} & \texttt{L5\_Cover.lean} \\
+  \path{scalarLap_cover_splits} & \path{L5_Cover.lean} \\
 Def.~\ref{def:balanced} &
-  \texttt{isBalanced} & \texttt{L6\_Cohomology.lean} \\
+  \path{isBalanced} & \path{L6_Cohomology.lean} \\
 Thm.~\ref{thm:fiber-card} &
-  \texttt{componentProj\_fiber\_card} & \texttt{L6\_Cohomology.lean} \\
+  \path{componentProj_fiber_card} & \path{L6_Cohomology.lean} \\
 Thm.~\ref{thm:signed-kernel} &
-  \path{signedLaplacian_kernel_dim_general} & \texttt{L8\_Recognition.lean} \\
+  \path{signedLaplacian_kernel_dim_general} & \path{L8_Recognition.lean} \\
 Thm.~\ref{thm:connection-ker} &
-  \path{connectionLaplacian_kernel_dim_general} & \texttt{L8\_Recognition.lean} \\
+  \path{connectionLaplacian_kernel_dim_general} & \path{L8_Recognition.lean} \\
 Thm.~\ref{thm:strict} &
-  \path{mobius_kernel_strict_iff_general} & \texttt{L8\_Recognition.lean} \\
+  \path{mobius_kernel_strict_iff_general} & \path{L8_Recognition.lean} \\
 Prop.~\ref{prop:traces} (sc) &
-  \texttt{trace\_scalarLaplacian} & \texttt{L9\_Bounds.lean} \\
+  \path{trace_scalarLaplacian} & \path{L9_Bounds.lean} \\
 Prop.~\ref{prop:traces} (sg) &
-  \texttt{trace\_signedLaplacianMobius} & \texttt{L9\_Bounds.lean} \\
+  \path{trace_signedLaplacianMobius} & \path{L9_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (mono) &
-  \path{signed_kernel_le_scalar_kernel} & \texttt{L9\_Bounds.lean} \\
+  \path{signed_kernel_le_scalar_kernel} & \path{L9_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$=\#\comp-\beta$) &
-  \texttt{kernel\_drop\_eq\_unbalanced} & \texttt{L9\_Bounds.lean} \\
+  \path{kernel_drop_eq_unbalanced} & \path{L9_Bounds.lean} \\
 Prop.~\ref{prop:kernel-ineq} (drop~$\le\#\comp$) &
-  \path{kernel_drop_le_numComponents} & \texttt{L9\_Bounds.lean} \\
+  \path{kernel_drop_le_numComponents} & \path{L9_Bounds.lean} \\
 Lem.~\ref{lem:signed-psd} &
-  \path{signedLaplacianMobius_posSemidef} & \texttt{L13\_PSD.lean} \\
+  \path{signedLaplacianMobius_posSemidef} & \path{L13_PSD.lean} \\
 Thm.~\ref{thm:cover-charpoly} &
-  \path{cover_charpoly_eq_scalar_times_mobius} & \texttt{L10\_CoverCharpoly.lean} \\
+  \path{cover_charpoly_eq_scalar_times_mobius} & \path{L10_CoverCharpoly.lean} \\
 Cor.~\ref{cor:mult-pointwise} &
-  \multicolumn{2}{l}{\emph{corollary of} \texttt{cover\_charpoly\_eq\_scalar\_times\_mobius}} \\
+  \multicolumn{2}{p{10.6cm}}{\emph{corollary of} \path{cover_charpoly_eq_scalar_times_mobius}} \\
 Thm.~\ref{thm:tree-balanced} (balance) &
-  \texttt{tree\_isBalanced\_of\_isTree} & \texttt{L11\_Trees.lean} \\
+  \path{tree_isBalanced_of_isTree} & \path{L11_Trees.lean} \\
 \quad ($\beta=1$) &
-  \path{numBalancedComponents_of_isTree} & \texttt{L11\_Trees.lean} \\
+  \path{numBalancedComponents_of_isTree} & \path{L11_Trees.lean} \\
 \quad (ker dim) &
-  \path{connectionLaplacian_kernel_dim_tree_mobius} & \texttt{L11\_Trees.lean} \\
+  \path{connectionLaplacian_kernel_dim_tree_mobius} & \path{L11_Trees.lean} \\
 \quad (gap zero) &
-  \texttt{tree\_kernel\_gap\_zero} & \texttt{L11\_Trees.lean} \\
+  \path{tree_kernel_gap_zero} & \path{L11_Trees.lean} \\
 Cor.~\ref{cor:forest-star-path} &
   \multicolumn{2}{p{10.6cm}}{\emph{paths and stars specialise the tree theorem; the forest case is not a named Lean theorem}} \\
 Thm.~\ref{thm:walk-sum} &
-  \path{isBalanced_iff_closedWalk_wrap_even} & \texttt{L12\_WalkH1.lean} \\
+  \path{isBalanced_iff_closedWalk_wrap_even} & \path{L12_WalkH1.lean} \\
 Rem.~\ref{rem:cycle-spectrum-lean} (per-mode, flat) &
-  \texttt{scalarCycle\_eigenvalue} & \texttt{CycleSpectrum.lean} \\
+  \path{scalarCycle_eigenvalue} & \path{CycleSpectrum.lean} \\
 Rem.~\ref{rem:cycle-spectrum-lean} (per-mode, signed) &
-  \texttt{signedCycle\_eigenvalue} & \texttt{CycleSpectrum.lean} \\
+  \path{signedCycle_eigenvalue} & \path{CycleSpectrum.lean} \\
 Thm.~\ref{thm:flat-cycle} (charpoly) &
-  \texttt{scalarCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
+  \path{scalarCycle_charpoly_real} & \path{CycleMultiset.lean} \\
 Thm.~\ref{thm:flat-cycle} (root multiset) &
-  \texttt{scalarCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
+  \path{scalarCycle_roots_real} & \path{CycleMultiset.lean} \\
 Thm.~\ref{thm:mobius-cycle} (charpoly) &
-  \texttt{signedCycle\_charpoly\_real} & \texttt{CycleMultiset.lean} \\
+  \path{signedCycle_charpoly_real} & \path{CycleMultiset.lean} \\
 Thm.~\ref{thm:mobius-cycle} (root multiset) &
-  \texttt{signedCycle\_roots\_real} & \texttt{CycleMultiset.lean} \\
+  \path{signedCycle_roots_real} & \path{CycleMultiset.lean} \\
 \quad (graph-conditional transfer) &
-  \shortstack[l]{\texttt{mobius\_connection\_roots}\\\texttt{\_of\_cycle\_reindex}} & \texttt{CycleGraphTransfer.lean} \\
+  \path{mobius_connection_roots_of_cycle_reindex} & \path{CycleGraphTransfer.lean} \\
 Cor.~\ref{cor:cycle-ew} (weak, conditional; Rem.~\ref{rem:cycle-ew-lean}) &
-  \path{cycle_isBalanced_iff_even_wrap_weak} & \texttt{L14\_CycleEw.lean} \\
+  \path{cycle_isBalanced_iff_even_wrap_weak} & \path{L14_CycleEw.lean} \\
 Thm.~\ref{thm:bridge-monotone} &
-  \path{numBalancedComponents_monotone_remove_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
+  \path{numBalancedComponents_monotone_remove_nonbridge} & \path{L15_BridgeMonotone.lean} \\
 \quad (historical, unused non-wrap hypothesis) &
-  \path{numBalancedComponents_monotone_remove_nonwrap_nonbridge} & \texttt{L15\_BridgeMonotone.lean} \\
+  \path{numBalancedComponents_monotone_remove_nonwrap_nonbridge} & \path{L15_BridgeMonotone.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (direct charpoly) &
-  \path{mobius_charpoly_eq_scalar_times_signed} & \texttt{L16\_SpectrumUnion.lean} \\
+  \path{mobius_charpoly_eq_scalar_times_signed} & \path{L16_SpectrumUnion.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (spec union) &
-  \path{mobius_charpoly_roots_eq_union} & \texttt{L16\_SpectrumUnion.lean} \\
+  \path{mobius_charpoly_roots_eq_union} & \path{L16_SpectrumUnion.lean} \\
 Rem.~\ref{rem:direct-bundle-charpoly} (shifted det) &
-  \texttt{shiftedDet\_factorises} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{shiftedDet_factorises} & \path{L17_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces} ($\tr L_{\mathrm{flat}}$) &
-  \texttt{trace\_laplacian\_flat} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{trace_laplacian_flat} & \path{L17_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces} ($\tr L_{\mathrm{Mob}}$) &
-  \texttt{trace\_laplacian\_mobius} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{trace_laplacian_mobius} & \path{L17_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} ($\tr(\cdot^2)$) &
-  \path{trace_sq_laplacian_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{trace_sq_laplacian_decomposes} & \path{L17_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} (Frobenius) &
-  \path{frobenius_laplacian_decomposes} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{frobenius_laplacian_decomposes} & \path{L17_TracesAndLipschitz.lean} \\
 Prop.~\ref{prop:traces2} (polarisation) &
-  \texttt{trace\_mul\_scalar\_signed\_eq} & \texttt{L17\_TracesAndLipschitz.lean} \\
+  \path{trace_mul_scalar_signed_eq} & \path{L17_TracesAndLipschitz.lean} \\
 \bottomrule
-\end{tabular}
-\end{center}
-\noindent\footnotesize (File paths: \texttt{KernelDim.lean} abbreviates \texttt{KernelDimension.lean}.)\normalsize
+\end{longtable}
+}
+\noindent{\footnotesize (File paths: \texttt{KernelDim.lean} abbreviates \texttt{KernelDimension.lean}.)\par}
 
 \paragraph{Reproducibility.} The complete Lean and Python sources
 live at
