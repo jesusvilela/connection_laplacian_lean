@@ -1,0 +1,81 @@
+name: Temporary Hexagon TL2025 compatibility PDF check
+on:
+  push:
+    branches:
+      - paper/hexagon-tl2025-glue-v0.0.9
+    paths:
+      - .github/workflows/hexagon-tl2025-prepare-once.yml
+      - paper/paper.tex
+
+permissions:
+  contents: write
+
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-science texlive-fonts-extra \
+            cm-super poppler-utils
+      - name: Three-pass PDF compilation and strict diagnostics
+        run: |
+          set -euo pipefail
+          mkdir -p paperbuild
+          sha256sum paper/paper.tex > paperbuild/source-sha256.txt
+          git rev-parse HEAD > paperbuild/source-commit.txt
+          for i in 1 2 3; do
+            pdflatex -halt-on-error -file-line-error -no-shell-escape \
+              -interaction=nonstopmode -output-directory=paperbuild paper/paper.tex \
+              > "paperbuild/run-$i.out" 2>&1 || {
+                tail -n 110 "paperbuild/run-$i.out"
+                exit 1
+              }
+          done
+          test -s paperbuild/paper.pdf
+          pdfinfo paperbuild/paper.pdf | tee paperbuild/pdfinfo.txt
+          pdftotext -layout paperbuild/paper.pdf paperbuild/paper.txt
+          test -s paperbuild/paper.txt
+          if grep -nEi 'Infinite glue shrinkage found in box being split|^! |LaTeX Error:|Emergency stop|There were undefined references|LaTeX Warning: (Reference|Citation).*undefined' paperbuild/paper.log; then
+            echo 'ERROR: TeX preview contains an error-like diagnostic'
+            exit 1
+          fi
+          if grep -nEi 'Infinite glue shrinkage found in box being split|^! ' paperbuild/run-3.out; then
+            echo 'ERROR: PDF compiler output contains an error-like diagnostic'
+            exit 1
+          fi
+          pages=$(pdfinfo paperbuild/paper.pdf | awk '/^Pages:/{print $2}')
+          test "$pages" -ge 17
+          test "$pages" -le 20
+          pdftotext -f "$pages" -l "$pages" paperbuild/paper.pdf paperbuild/last-page.txt
+          echo "Last page words: $(wc -w < paperbuild/last-page.txt)"
+          for n in 1 16 17 "$pages"; do
+            if [ "$n" -le "$pages" ]; then
+              pdftoppm -f "$n" -l "$n" -scale-to 1500 -png -singlefile \
+                paperbuild/paper.pdf "paperbuild/page-$n"
+            fi
+          done
+          cp paperbuild/paper.pdf paper/paper.pdf
+          git add paper/paper.pdf
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'paper: regenerate Hexagon TL2025-compatible PDF'
+            git fetch origin paper/hexagon-tl2025-glue-v0.0.9
+            git rebase origin/paper/hexagon-tl2025-glue-v0.0.9
+            git push origin HEAD:paper/hexagon-tl2025-glue-v0.0.9
+          fi
+      - name: Preserve manuscript sources PDF and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hexagon-tl2025-paper-v009
+          path: |
+            paper/paper.tex
+            paperbuild/
+          retention-days: 45
