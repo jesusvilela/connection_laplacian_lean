@@ -13,6 +13,7 @@ import ConnectionLaplacian.L14_CycleEw
 import ConnectionLaplacian.L15_BridgeMonotone
 import ConnectionLaplacian.L16_SpectrumUnion
 import ConnectionLaplacian.L17_TracesAndLipschitz
+import ConnectionLaplacian.L18_RussellZ2Bridge
 
 import ConnectionLaplacian.CycleMultiset
 import ConnectionLaplacian.CycleGraphTransfer
