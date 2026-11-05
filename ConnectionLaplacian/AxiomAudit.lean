@@ -52,3 +52,8 @@ the workflow fail.
 #print axioms ConnectionLaplacian.ConnGraph.allNegative_balanced_count_eq_bipartite
 #print axioms ConnectionLaplacian.ConnGraph.allNegative_signless_kernel_dim
 #print axioms ConnectionLaplacian.ConnGraph.allNegative_connection_kernel_dim
+
+/-! L19: abstract finite-dimensional moving-frame covariance for matrix jets. -/
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport_of_intertwines
+#print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
