@@ -34,6 +34,10 @@ def isBipartiteComponent (C : G.graph.ConnectedComponent) : Prop :=
   ∃ ε : G.V → Bool, ∀ (u v : G.V), ∀ (_h : G.graph.Adj u v),
     G.graph.connectedComponentMk u = C → ε u ≠ ε v
 
+noncomputable instance decIsBipartiteComponent
+    (C : G.graph.ConnectedComponent) :
+    Decidable (G.isBipartiteComponent C) := Classical.dec _
+
 noncomputable def numBipartiteComponents : ℕ :=
   Fintype.card { C : G.graph.ConnectedComponent // G.isBipartiteComponent C }
 
