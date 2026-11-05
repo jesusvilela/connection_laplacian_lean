@@ -45,3 +45,15 @@ the workflow fail.
      theorem without the unused non-wrap hypothesis, and the flat trace. -/
 #print axioms ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonbridge
 #print axioms ConnectionLaplacian.ConnGraph.trace_laplacian_flat
+
+/-! L18: all-negative Russell Z/2 specialization. -/
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_signed_eq_signless
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_balanced_iff_bipartite
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_balanced_count_eq_bipartite
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_signless_kernel_dim
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_connection_kernel_dim
+
+/-! L19: abstract finite-dimensional moving-frame covariance for matrix jets. -/
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport_of_intertwines
+#print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
