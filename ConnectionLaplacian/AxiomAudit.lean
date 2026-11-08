@@ -54,6 +54,12 @@ the workflow fail.
 #print axioms ConnectionLaplacian.ConnGraph.allNegative_connection_kernel_dim
 
 /-! L19: abstract finite-dimensional moving-frame covariance for matrix jets. -/
-#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport_of_intertwines
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
+
+/-! L20: typed four-edge crosscovariance path defect and rank. -/
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.inverse_middle_block
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_natural
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.rank_covariant
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_rank_invariant_of_intertwines
 #print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
 #print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
