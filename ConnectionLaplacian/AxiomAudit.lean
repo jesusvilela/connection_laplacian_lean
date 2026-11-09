@@ -45,3 +45,25 @@ the workflow fail.
      theorem without the unused non-wrap hypothesis, and the flat trace. -/
 #print axioms ConnectionLaplacian.ConnGraph.numBalancedComponents_monotone_remove_nonbridge
 #print axioms ConnectionLaplacian.ConnGraph.trace_laplacian_flat
+
+/-! L18: all-negative Russell Z/2 specialization. -/
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_signed_eq_signless
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_balanced_iff_bipartite
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_balanced_count_eq_bipartite
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_signless_kernel_dim
+#print axioms ConnectionLaplacian.ConnGraph.allNegative_connection_kernel_dim
+
+/-! L19: abstract finite-dimensional moving-frame covariance for matrix jets. -/
+#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
+
+/-! L20: typed four-edge crosscovariance path defect and rank. -/
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.inverse_middle_block
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_natural
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.rank_covariant
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_rank_invariant
+#print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
+
+/-! L21: spectral pencil similarity and characteristic polynomial transport. -/
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.spectralPencil_covariant
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.charpoly_inverse_conjugate
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.spectralPencil_charpoly_invariant
