@@ -13,7 +13,6 @@ or exact R14/R15 equivalence is established by this module.
 -/
 
 import ConnectionLaplacian.L19_RussellMovingFrame
-import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic
 
 namespace ConnectionLaplacian
