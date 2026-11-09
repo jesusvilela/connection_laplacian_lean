@@ -39,7 +39,7 @@ theorem inverse_middle_block
     (F2 F3 C32 : Matrix n n ℝ) :
     (changeCovariance F3 C32 F2)⁻¹ =
       (F2.transpose)⁻¹ * C32⁻¹ * F3⁻¹ := by
-  simp only [changeCovariance, Matrix.mul_inv_rev]
+  simp only [changeCovariance, Matrix.mul_inv_rev, Matrix.mul_assoc]
 
 /-- Under independent frames at all four sensors, all internal frames
     cancel in the path defect. No matrix commutation is used. -/
@@ -67,19 +67,18 @@ theorem obstruction_natural
       _ = F1 * C12 * C32⁻¹ * C34 * F4.transpose := by
         simp only [hB, hF3inv, Matrix.mul_one, Matrix.one_mul]
   simp only [obstruction, changeCovariance, inverse_middle_block]
-  dsimp [changeCovariance] at hpath
   rw [hpath]
   noncomm_ring
 
 /-- In the pinned Mathlib/Lean v4.11 toolchain, define matrix rank via
     the finrank of the image of the corresponding linear map. -/
 noncomputable def observableRank (R : Matrix n n ℝ) : ℕ :=
-  Module.finrank ℝ (LinearMap.range (Matrix.toLin' R))
+  FiniteDimensional.finrank ℝ (LinearMap.range (Matrix.toLin' R))
 
 private theorem rank_left_invariant (R F : Matrix n n ℝ)
     (hF : IsUnit F.det) :
     observableRank (F * R) = observableRank R := by
-  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det).2 hF
+  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det F).2 hF
   have hinj : Function.Injective (Matrix.toLin' F) :=
     Matrix.mulVec_injective_iff_isUnit.mpr hUnit
   unfold observableRank
@@ -90,7 +89,7 @@ private theorem rank_left_invariant (R F : Matrix n n ℝ)
 private theorem rank_right_invariant (R F : Matrix n n ℝ)
     (hF : IsUnit F.det) :
     observableRank (R * F) = observableRank R := by
-  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det).2 hF
+  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det F).2 hF
   have hsur : Function.Surjective (Matrix.toLin' F) :=
     Matrix.mulVec_surjective_iff_isUnit.mpr hUnit
   have heq :
@@ -104,7 +103,7 @@ private theorem rank_right_invariant (R F : Matrix n n ℝ)
     · rintro ⟨x, hx⟩
       rcases hsur x with ⟨z, hz⟩
       exact ⟨z, by simpa only [hz] using hx⟩
-  exact congrArg (Module.finrank ℝ) heq
+  exact congrArg (FiniteDimensional.finrank ℝ) heq
 
 /-- The image dimension is invariant under invertible endpoint observation
     frames. This is precisely ordinary matrix rank over ℝ. -/
