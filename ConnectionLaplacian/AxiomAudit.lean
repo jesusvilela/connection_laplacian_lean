@@ -62,4 +62,3 @@ the workflow fail.
 #print axioms ConnectionLaplacian.RussellGaugeObstruction.rank_covariant
 #print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_rank_invariant
 #print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
-#print axioms ConnectionLaplacian.RussellMovingFrame.covariantDerivative_transport
