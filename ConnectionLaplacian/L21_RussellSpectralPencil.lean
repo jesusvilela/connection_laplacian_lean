@@ -73,21 +73,29 @@ theorem charpoly_inverse_conjugate
         Q * (Polynomial.C : ℝ →+* ℝ[X]).mapMatrix A * S := by
     dsimp [Q, S]
     rw [← Matrix.map_mul, ← Matrix.map_mul]
+  have hcomm :
+      (Matrix.scalar n (Polynomial.X : ℝ[X])) * Q =
+        Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) :=
+    Matrix.scalar_commute _ commute_X
   have hscalar :
       Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) * S =
         Matrix.scalar n (Polynomial.X : ℝ[X]) := by
     calc
       Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) * S =
-          Matrix.scalar n Polynomial.X * (Q * S) := by
-            rw [Matrix.mul_assoc, Matrix.scalar_commute _ commute_X]
+          ((Matrix.scalar n Polynomial.X) * Q) * S := by rw [hcomm]
+      _ = Matrix.scalar n Polynomial.X * (Q * S) := by rw [Matrix.mul_assoc]
       _ = Matrix.scalar n Polynomial.X := by rw [hQS, Matrix.mul_one]
   have hcharmatrix :
       Matrix.charmatrix (P⁻¹ * A * P) =
         Q * Matrix.charmatrix A * S := by
     unfold Matrix.charmatrix
     rw [hmap]
-    rw [← hscalar]
-    noncomm_ring
+    calc
+      (Matrix.scalar n Polynomial.X) - (Q * (Polynomial.C : ℝ →+* ℝ[X]).mapMatrix A * S) =
+          Q * (Matrix.scalar n Polynomial.X) * S -
+            (Q * (Polynomial.C : ℝ →+* ℝ[X]).mapMatrix A * S) := by rw [hscalar]
+      _ = Q * ((Matrix.scalar n Polynomial.X) -
+          (Polynomial.C : ℝ →+* ℝ[X]).mapMatrix A) * S := by noncomm_ring
   calc
     (P⁻¹ * A * P).charpoly = (Matrix.charmatrix (P⁻¹ * A * P)).det := rfl
     _ = (Q * Matrix.charmatrix A * S).det := by rw [hcharmatrix]
