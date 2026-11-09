@@ -66,7 +66,9 @@ theorem obstruction_natural
           C34 * F4.transpose := by noncomm_ring
       _ = F1 * C12 * C32⁻¹ * C34 * F4.transpose := by
         simp only [hB, hF3inv, Matrix.mul_one, Matrix.one_mul]
-  simp only [obstruction, changeCovariance, inverse_middle_block]
+  simp only [obstruction]
+  rw [inverse_middle_block F2 F3 C32]
+  simp only [changeCovariance]
   rw [hpath]
   noncomm_ring
 
@@ -103,7 +105,8 @@ private theorem rank_right_invariant (R F : Matrix n n ℝ)
     · rintro ⟨x, hx⟩
       rcases hsur x with ⟨z, hz⟩
       exact ⟨z, by simpa only [hz] using hx⟩
-  exact congrArg (FiniteDimensional.finrank ℝ) heq
+  unfold observableRank
+  rw [heq]
 
 /-- The image dimension is invariant under invertible endpoint observation
     frames. This is precisely ordinary matrix rank over ℝ. -/
