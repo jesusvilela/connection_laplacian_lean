@@ -62,3 +62,8 @@ the workflow fail.
 #print axioms ConnectionLaplacian.RussellGaugeObstruction.rank_covariant
 #print axioms ConnectionLaplacian.RussellGaugeObstruction.obstruction_rank_invariant
 #print axioms ConnectionLaplacian.RussellMovingFrame.gaugeConnection_intertwines
+
+/-! L21: spectral pencil similarity and characteristic polynomial transport. -/
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.spectralPencil_covariant
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.charpoly_inverse_conjugate
+#print axioms ConnectionLaplacian.RussellGaugeObstruction.spectralPencil_charpoly_invariant
