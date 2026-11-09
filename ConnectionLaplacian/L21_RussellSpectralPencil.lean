@@ -75,8 +75,8 @@ theorem charpoly_inverse_conjugate
     rw [← Matrix.map_mul, ← Matrix.map_mul]
   have hcomm :
       (Matrix.scalar n (Polynomial.X : ℝ[X])) * Q =
-        Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) :=
-    Matrix.scalar_commute _ commute_X
+        Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) := by
+    rw [Matrix.scalar_commute _ commute_X]
   have hscalar :
       Q * (Matrix.scalar n (Polynomial.X : ℝ[X])) * S =
         Matrix.scalar n (Polynomial.X : ℝ[X]) := by
