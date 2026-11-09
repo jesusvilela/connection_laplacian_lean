@@ -16,6 +16,7 @@ import ConnectionLaplacian.L17_TracesAndLipschitz
 import ConnectionLaplacian.L18_RussellZ2Bridge
 import ConnectionLaplacian.L19_RussellMovingFrame
 import ConnectionLaplacian.L20_RussellGaugeObstruction
+import ConnectionLaplacian.L21_RussellSpectralPencil
 
 import ConnectionLaplacian.CycleMultiset
 import ConnectionLaplacian.CycleGraphTransfer
