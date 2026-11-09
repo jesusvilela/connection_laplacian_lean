@@ -71,33 +71,67 @@ theorem obstruction_natural
   rw [hpath]
   noncomm_ring
 
-/-- The rank is invariant under invertible endpoint observation frames.
-    The internal frames play no role after naturality is established. -/
+/-- In the pinned Mathlib/Lean v4.11 toolchain, define matrix rank via
+    the finrank of the image of the corresponding linear map. -/
+noncomputable def observableRank (R : Matrix n n ℝ) : ℕ :=
+  Module.finrank ℝ (LinearMap.range (Matrix.toLin' R))
+
+private theorem rank_left_invariant (R F : Matrix n n ℝ)
+    (hF : IsUnit F.det) :
+    observableRank (F * R) = observableRank R := by
+  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det).2 hF
+  have hinj : Function.Injective (Matrix.toLin' F) :=
+    Matrix.mulVec_injective_iff_isUnit.mpr hUnit
+  unfold observableRank
+  rw [Matrix.toLin'_mul, LinearMap.range_comp]
+  exact (Submodule.equivMapOfInjective (Matrix.toLin' F) hinj
+    (LinearMap.range (Matrix.toLin' R))).finrank_eq.symm
+
+private theorem rank_right_invariant (R F : Matrix n n ℝ)
+    (hF : IsUnit F.det) :
+    observableRank (R * F) = observableRank R := by
+  have hUnit : IsUnit F := (Matrix.isUnit_iff_isUnit_det).2 hF
+  have hsur : Function.Surjective (Matrix.toLin' F) :=
+    Matrix.mulVec_surjective_iff_isUnit.mpr hUnit
+  have heq :
+      LinearMap.range (Matrix.toLin' (R * F)) =
+        LinearMap.range (Matrix.toLin' R) := by
+    ext y
+    simp only [Matrix.toLin'_mul, LinearMap.mem_range, LinearMap.comp_apply]
+    constructor
+    · rintro ⟨x, hx⟩
+      exact ⟨(Matrix.toLin' F) x, hx⟩
+    · rintro ⟨x, hx⟩
+      rcases hsur x with ⟨z, hz⟩
+      exact ⟨z, by simpa only [hz] using hx⟩
+  exact congrArg (Module.finrank ℝ) heq
+
+/-- The image dimension is invariant under invertible endpoint observation
+    frames. This is precisely ordinary matrix rank over ℝ. -/
 theorem rank_covariant
     (R F1 F4 : Matrix n n ℝ)
     (hF1 : IsUnit F1.det) (hF4 : IsUnit F4.det) :
-    (changeCovariance F1 R F4).rank = R.rank := by
+    observableRank (changeCovariance F1 R F4) = observableRank R := by
   have hF4T : IsUnit F4.transpose.det := by
     simpa only [Matrix.det_transpose] using hF4
   unfold changeCovariance
   calc
-    (F1 * R * F4.transpose).rank =
-      (F1 * R).rank := Matrix.rank_mul_eq_left_of_isUnit_det
-        F4.transpose (F1 * R) hF4T
-    _ = R.rank := Matrix.rank_mul_eq_right_of_isUnit_det F1 R hF1
+    observableRank (F1 * R * F4.transpose) =
+      observableRank (F1 * R) := rank_right_invariant (F1 * R) F4.transpose hF4T
+    _ = observableRank R := rank_left_invariant R F1 hF1
 
-/-- Rank invariant of the four-edge obstruction, valid for arbitrary
-    finite-dimensional matrix size n, including n = 1. -/
+/-- Rank invariant of the four-edge obstruction, valid for arbitrary finite
+    index types (including one-dimensional matrices). -/
 theorem obstruction_rank_invariant
     (C12 C32 C34 C14 F1 F2 F3 F4 : Matrix n n ℝ)
     (hF1 : IsUnit F1.det) (hF2 : IsUnit F2.det)
     (hF3 : IsUnit F3.det) (hF4 : IsUnit F4.det) :
-    (obstruction
+    observableRank (obstruction
       (changeCovariance F1 C12 F2)
       (changeCovariance F3 C32 F2)
       (changeCovariance F3 C34 F4)
-      (changeCovariance F1 C14 F4)).rank =
-    (obstruction C12 C32 C34 C14).rank := by
+      (changeCovariance F1 C14 F4)) =
+    observableRank (obstruction C12 C32 C34 C14) := by
   rw [obstruction_natural C12 C32 C34 C14 F1 F2 F3 F4 hF2 hF3]
   exact rank_covariant (obstruction C12 C32 C34 C14) F1 F4 hF1 hF4
 
